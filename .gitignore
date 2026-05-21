@@ -1,0 +1,22 @@
+# Sécurité : ne JAMAIS commit ces fichiers
+token github.txt
+*.env
+.env*
+*.token
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Logs
+*.log
+
+# Local build artefacts
+node_modules/

@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Back-Office — Pictocraft (ne pas mettre en ligne)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#003C78;--brand-dark:#002952;--brand-light:#1A5A9A;
+  --accent:#960F2D;--accent-dark:#6B0A21;
+  --ink:#1E1E1E;--ink-soft:#4A4A4A;
+  --bg:#F7F5F1;--paper:#FFFFFF;
+  --gray-100:#F2F2F4;--gray-200:#E5E5E9;--gray-300:#C9C9D0;
+  --success:#2E7D5F;--warning:#F59E0B;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif;letter-spacing:-.02em;color:var(--brand-dark)}
+h1{font-size:1.8rem;margin-bottom:8px}
+h2{font-size:1.3rem;margin-bottom:6px}
+h3{font-size:1.05rem;margin-bottom:4px}
+
+/* HEADER */
+.admin-header{
+  background:linear-gradient(135deg,var(--brand-dark) 0%,var(--brand) 100%);
+  color:#fff;padding:24px 0;position:sticky;top:0;z-index:20;
+  box-shadow:0 4px 20px rgba(0,0,0,.1);
+}
+.admin-header .container{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:24px}
+.admin-header h1{color:#fff;font-size:1.4rem;flex:1}
+.admin-header .badge{
+  background:var(--warning);color:#000;font-size:.7rem;font-weight:800;
+  padding:4px 10px;border-radius:99px;text-transform:uppercase;letter-spacing:.08em;
+}
+
+/* LAYOUT */
+.admin-layout{max-width:1280px;margin:32px auto;padding:0 24px;display:grid;grid-template-columns:240px 1fr;gap:24px}
+@media(max-width:880px){.admin-layout{grid-template-columns:1fr}}
+
+.sidebar{
+  background:#fff;border-radius:12px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.05);
+  position:sticky;top:100px;align-self:start;
+}
+.sidebar nav a{
+  display:block;padding:11px 14px;border-radius:8px;margin-bottom:4px;
+  text-decoration:none;color:var(--ink);font-weight:600;font-size:.92rem;
+  transition:all .2s;border-left:3px solid transparent;
+}
+.sidebar nav a:hover{background:var(--gray-100);color:var(--brand)}
+.sidebar nav a.active{background:#FDF0F3;color:var(--accent);border-left-color:var(--accent)}
+
+/* MAIN */
+.main{display:flex;flex-direction:column;gap:24px}
+.card{
+  background:#fff;border-radius:12px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,.05);
+  border:1px solid var(--gray-200);
+}
+.card-head{
+  display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px;flex-wrap:wrap;
+  border-bottom:1px solid var(--gray-200);padding-bottom:16px;
+}
+.card-head h2{margin:0}
+.card-head .subtitle{font-size:.88rem;color:var(--ink-soft);margin-top:4px}
+
+/* FIELDS */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.form-row.col-3{grid-template-columns:1fr 1fr 1fr}
+.form-row.col-4{grid-template-columns:1fr 1fr 1fr 1fr}
+@media(max-width:680px){.form-row, .form-row.col-3, .form-row.col-4{grid-template-columns:1fr}}
+.field{margin-bottom:14px}
+.field label{
+  display:block;font-size:.75rem;font-weight:700;color:var(--brand-dark);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;
+}
+.field label .hint{font-weight:500;color:var(--ink-soft);text-transform:none;letter-spacing:0;font-size:.78rem;margin-left:6px}
+.field input, .field select, .field textarea{
+  width:100%;padding:10px 12px;border:1.5px solid var(--gray-200);border-radius:6px;
+  font-family:inherit;font-size:.92rem;background:#fff;transition:border-color .2s,box-shadow .2s;
+}
+.field input:focus, .field select:focus, .field textarea:focus{
+  outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(0,60,120,.12);
+}
+.field textarea{resize:vertical;min-height:80px;font-family:inherit}
+
+/* BUTTONS */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 20px;border-radius:6px;font-weight:700;font-size:.9rem;
+  border:none;cursor:pointer;transition:all .2s;font-family:inherit;
+}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(150,15,45,.25)}
+.btn-primary:hover{background:var(--accent-dark);transform:translateY(-1px);box-shadow:0 6px 16px rgba(150,15,45,.35)}
+.btn-secondary{background:var(--brand);color:#fff}
+.btn-secondary:hover{background:var(--brand-dark);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--brand);border:1.5px solid var(--gray-200)}
+.btn-ghost:hover{border-color:var(--brand);background:var(--gray-100)}
+.btn-danger{background:#FEE2E2;color:#B91C1C;border:1.5px solid #FCA5A5}
+.btn-danger:hover{background:#FCA5A5;color:#fff}
+.btn-sm{padding:7px 12px;font-size:.8rem}
+
+/* PRODUITS */
+.product-row{
+  display:grid;grid-template-columns:80px 1fr 1fr 100px 100px 80px;
+  gap:12px;align-items:center;padding:14px;
+  background:var(--gray-100);border-radius:8px;margin-bottom:10px;
+}
+@media(max-width:880px){.product-row{grid-template-columns:1fr;padding:18px}}
+.product-row .thumb{aspect-ratio:1;background:#fff;border-radius:6px;border:1px solid var(--gray-200);overflow:hidden}
+.product-row .thumb img{width:100%;height:100%;object-fit:cover}
+.product-row input, .product-row select{font-size:.85rem;padding:8px 10px}
+.product-row .actions{display:flex;gap:6px;justify-content:flex-end}
+
+/* TARIFS GRID */
+.tarif-table{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:18px}
+.tarif-table.head{font-weight:700;color:var(--brand-dark);font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;padding-bottom:8px;border-bottom:2px solid var(--gray-200)}
+
+/* ALERT */
+.alert{padding:14px 18px;border-radius:8px;margin-bottom:18px;font-size:.92rem;display:flex;gap:10px;align-items:flex-start}
+.alert-info{background:#E0F2FE;color:#075985;border-left:4px solid #0EA5E9}
+.alert-warn{background:#FEF3C7;color:#92400E;border-left:4px solid var(--warning)}
+.alert-success{background:#D1FAE5;color:#065F46;border-left:4px solid var(--success)}
+.alert b{display:block;margin-bottom:2px}
+
+/* SECTIONS */
+.section{display:none}
+.section.active{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* PREVIEW BOX */
+.preview{
+  background:var(--bg);border:1.5px dashed var(--gray-300);border-radius:8px;
+  padding:18px;margin-top:14px;font-family:'Manrope',sans-serif;
+}
+.preview-title{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);font-weight:700;margin-bottom:10px}
+.preview-bar{
+  background:var(--accent);color:#fff;text-align:center;padding:6px 16px;font-size:.78rem;font-weight:600;border-radius:4px;margin-bottom:8px;
+}
+
+/* TARIF GROUPS */
+.tarif-group{background:var(--gray-100);border-radius:8px;padding:18px;margin-bottom:14px}
+.tarif-group h3{margin-bottom:12px;color:var(--brand)}
+
+/* FLOATING SAVE */
+.floating-save{
+  position:fixed;bottom:24px;right:24px;z-index:30;
+  background:#fff;border-radius:12px;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.18);
+  display:flex;gap:10px;align-items:center;border:1px solid var(--gray-200);
+}
+.floating-save .status{font-size:.85rem;color:var(--ink-soft)}
+
+</style>
+</head>
+<body>
+
+<header class="admin-header">
+  <div class="container">
+    <h1>⚙ Back-Office Pictocraft</h1>
+    <span class="badge">Usage interne · Ne pas mettre en ligne</span>
+  </div>
+</header>
+
+<div class="admin-layout">
+
+  <aside class="sidebar">
+    <nav>
+      <a href="#entreprise" class="active" data-tab="entreprise">🏢 Entreprise</a>
+      <a href="#contact" data-tab="contact">📞 Contacts</a>
+      <a href="#produits" data-tab="produits">🛍️ Produits & Prix</a>
+      <a href="#tarifs" data-tab="tarifs">💰 Tarifs flyers</a>
+      <a href="#export" data-tab="export">💾 Export / Import</a>
+      <a href="#aide" data-tab="aide">❓ Aide</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+
+    <!-- SECTION ENTREPRISE -->
+    <section class="section active" id="section-entreprise">
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h2>Informations entreprise</h2>
+            <p class="subtitle">Nom, slogan, tagline, raison sociale.</p>
+          </div>
+        </div>
+
+        <div class="alert alert-info">
+          <span>ℹ️</span>
+          <div><b>Comment ça marche</b>Modifiez les champs ci-dessous, cliquez sur "Télécharger config.js" en bas de page, puis remplacez le fichier dans <code>assets/js/config.js</code>. Le site se met à jour automatiquement.</div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>Nom commercial</label>
+            <input type="text" id="nom" value="Pictocraft">
+          </div>
+          <div class="field">
+            <label>Forme juridique</label>
+            <input type="text" id="forme" value="SARL">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Slogan officiel <span class="hint">(activités principales)</span></label>
+          <input type="text" id="slogan" value="Travaux d'imprimerie, Commerce général et prestation diverses">
+        </div>
+
+        <div class="field">
+          <label>Tagline <span class="hint">(phrase d'accroche)</span></label>
+          <input type="text" id="tagline" value="l'énergie créative au service de vos projets.">
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>Année de fondation</label>
+            <input type="number" id="annee" value="2016">
+          </div>
+          <div class="field">
+            <label>Fondateur</label>
+            <input type="text" id="fondateur" value="Franky KAMGANG">
+          </div>
+        </div>
+
+        <div class="preview">
+          <div class="preview-title">Aperçu bande slogan (haut de chaque page)</div>
+          <div class="preview-bar" id="preview-slogan">Travaux d'imprimerie · Commerce général · Prestations diverses · <em>« l'énergie créative au service de vos projets »</em></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION CONTACT -->
+    <section class="section" id="section-contact">
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h2>Contacts & adresse</h2>
+            <p class="subtitle">Téléphones, emails, adresse, horaires.</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>Téléphone principal</label>
+            <input type="tel" id="tel1" value="+237 6 75 14 08 43">
+          </div>
+          <div class="field">
+            <label>Téléphone secondaire</label>
+            <input type="tel" id="tel2" value="+237 6 94 93 08 04">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>Email principal</label>
+            <input type="email" id="email1" value="info@pictocraftcmr.com">
+          </div>
+          <div class="field">
+            <label>Email secondaire</label>
+            <input type="email" id="email2" value="pictocraft@outlook.fr">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>Site web</label>
+            <input type="url" id="site" value="https://www.pictocraftcmr.com">
+          </div>
+          <div class="field">
+            <label>WhatsApp</label>
+            <input type="text" id="whatsapp" value="237675140843" placeholder="indicatif + numéro sans espaces">
+          </div>
+        </div>
+
+        <h3 style="margin:24px 0 12px">Adresses</h3>
+
+        <div class="form-row">
+          <div class="field">
+            <label>Adresse principale (siège)</label>
+            <input type="text" id="adresse1" value="Tsinga, face à l'École de Police">
+          </div>
+          <div class="field">
+            <label>Ville · Pays</label>
+            <input type="text" id="ville" value="Yaoundé, Cameroun">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>Site de production 1</label>
+            <input type="text" id="prod1" value="Quartier Santa Barbara">
+          </div>
+          <div class="field">
+            <label>Site de production 2</label>
+            <input type="text" id="prod2" value="Quartier Nkoabang">
+          </div>
+        </div>
+
+        <h3 style="margin:24px 0 12px">Horaires</h3>
+        <div class="form-row col-3">
+          <div class="field">
+            <label>Lun-Ven</label>
+            <input type="text" id="horaires_lv" value="8h – 17h">
+          </div>
+          <div class="field">
+            <label>Samedi</label>
+            <input type="text" id="horaires_s" value="9h – 13h">
+          </div>
+          <div class="field">
+            <label>Dimanche</label>
+            <input type="text" id="horaires_d" value="Fermé">
+          </div>
+        </div>
+
+        <h3 style="margin:24px 0 12px">Réseaux sociaux</h3>
+        <div class="form-row">
+          <div class="field"><label>Facebook</label><input type="url" id="fb" value="" placeholder="https://facebook.com/votrepage"></div>
+          <div class="field"><label>Instagram</label><input type="url" id="ig" value="" placeholder="https://instagram.com/votrecompte"></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label>LinkedIn</label><input type="url" id="li" value="" placeholder="https://linkedin.com/company/..."></div>
+          <div class="field"><label>YouTube</label><input type="url" id="yt" value="" placeholder="https://youtube.com/@..."></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION PRODUITS -->
+    <section class="section" id="section-produits">
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h2>Produits & prix de départ</h2>
+            <p class="subtitle">Cartes produits affichées sur la page d'accueil et le catalogue.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="addProduit()">+ Ajouter un produit</button>
+        </div>
+
+        <div class="alert alert-warn">
+          <span>⚠️</span>
+          <div><b>Astuce images</b>Pour changer l'image d'un produit, glissez-déposez votre nouvelle photo dans le dossier <code>assets/images/products/</code> en gardant le même nom de fichier (ex: <code>flyers.jpg</code>). Pas besoin de toucher au code.</div>
+        </div>
+
+        <div id="produits-list">
+          <!-- généré par JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION TARIFS -->
+    <section class="section" id="section-tarifs">
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h2>Tarifs configurateur flyers</h2>
+            <p class="subtitle">Grille tarifaire utilisée par le configurateur (page produit-flyers.html).</p>
+          </div>
+        </div>
+
+        <div class="alert alert-info">
+          <span>ℹ️</span>
+          <div>Tous les prix sont en <b>FCFA HT</b>. Le configurateur calcule : <code>prix unitaire × multiplicateurs (papier × impression × finitions) × (1 - remise volume) × quantité + frais livraison</code>.</div>
+        </div>
+
+        <div class="tarif-group">
+          <h3>Prix de base par format (FCFA / exemplaire, papier standard, recto)</h3>
+          <div class="form-row col-4">
+            <div class="field"><label>A6 (105×148mm)</label><input type="number" id="prix_A6" value="50"></div>
+            <div class="field"><label>A5 (148×210mm)</label><input type="number" id="prix_A5" value="75"></div>
+            <div class="field"><label>A4 (210×297mm)</label><input type="number" id="prix_A4" value="120"></div>
+            <div class="field"><label>A3 (297×420mm)</label><input type="number" id="prix_A3" value="240"></div>
+          </div>
+        </div>
+
+        <div class="tarif-group">
+          <h3>Multiplicateurs papier</h3>
+          <div class="form-row col-4">
+            <div class="field"><label>Standard 135g</label><input type="number" step="0.05" id="mult_std" value="1.0"></div>
+            <div class="field"><label>Mat 170g</label><input type="number" step="0.05" id="mult_mat" value="1.18"></div>
+            <div class="field"><label>Luxe 300g</label><input type="number" step="0.05" id="mult_lux" value="1.45"></div>
+            <div class="field"><label>Recyclé 250g</label><input type="number" step="0.05" id="mult_recy" value="1.22"></div>
+          </div>
+        </div>
+
+        <div class="tarif-group">
+          <h3>Multiplicateur impression & finitions</h3>
+          <div class="form-row col-3">
+            <div class="field"><label>Recto/Verso (× mult.)</label><input type="number" step="0.05" id="mult_rv" value="1.55"></div>
+            <div class="field"><label>Pelliculage (+ %)</label><input type="number" step="0.01" id="mult_pelli" value="0.18"></div>
+            <div class="field"><label>Vernis sélectif (+ %)</label><input type="number" step="0.01" id="mult_vernis" value="0.25"></div>
+          </div>
+          <div class="form-row col-3">
+            <div class="field"><label>Coins arrondis (+ %)</label><input type="number" step="0.01" id="mult_arrondi" value="0.12"></div>
+            <div class="field"><label></label><span></span></div>
+            <div class="field"><label></label><span></span></div>
+          </div>
+        </div>
+
+        <div class="tarif-group">
+          <h3>Remises volume (%)</h3>
+          <div class="form-row col-4">
+            <div class="field"><label>≥ 250 ex.</label><input type="number" step="0.01" id="disc_250" value="0.12"></div>
+            <div class="field"><label>≥ 500 ex.</label><input type="number" step="0.01" id="disc_500" value="0.22"></div>
+            <div class="field"><label>≥ 1 000 ex.</label><input type="number" step="0.01" id="disc_1000" value="0.34"></div>
+            <div class="field"><label>≥ 2 500 ex.</label><input type="number" step="0.01" id="disc_2500" value="0.46"></div>
+          </div>
+          <div class="form-row col-4">
+            <div class="field"><label>≥ 5 000 ex.</label><input type="number" step="0.01" id="disc_5000" value="0.55"></div>
+            <div class="field"><label>≥ 10 000 ex.</label><input type="number" step="0.01" id="disc_10000" value="0.64"></div>
+            <div class="field"><label></label><span></span></div>
+            <div class="field"><label></label><span></span></div>
+          </div>
+        </div>
+
+        <div class="tarif-group">
+          <h3>Frais de livraison (FCFA)</h3>
+          <div class="form-row col-3">
+            <div class="field"><label>Standard 3-5j</label><input type="number" id="liv_std" value="0"></div>
+            <div class="field"><label>Express 24-48h</label><input type="number" id="liv_exp" value="5000"></div>
+            <div class="field"><label>Urgent jour-même</label><input type="number" id="liv_urg" value="12000"></div>
+          </div>
+        </div>
+
+        <button class="btn btn-secondary" onclick="testerConfigurateur()">🧮 Tester le calcul</button>
+        <div id="test-result" style="margin-top:14px"></div>
+      </div>
+    </section>
+
+    <!-- SECTION EXPORT -->
+    <section class="section" id="section-export">
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h2>Sauvegarder vos modifications</h2>
+            <p class="subtitle">Téléchargez le fichier <code>config.js</code> et placez-le dans <code>assets/js/</code>.</p>
+          </div>
+        </div>
+
+        <div class="alert alert-success">
+          <span>✓</span>
+          <div><b>Comment sauvegarder vos modifications :</b>
+          <ol style="margin-top:6px;padding-left:20px">
+            <li>Cliquez sur "Télécharger config.js" ci-dessous</li>
+            <li>Le fichier <code>config.js</code> sera téléchargé</li>
+            <li>Glissez ce fichier dans le dossier <code>assets/js/</code> de votre site (écrasez l'ancien)</li>
+            <li>Actualisez votre site : les modifications sont appliquées</li>
+          </ol></div>
+        </div>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px">
+          <button class="btn btn-primary" onclick="telechargerConfig()">⬇ Télécharger config.js</button>
+          <button class="btn btn-secondary" onclick="copierConfig()">📋 Copier dans le presse-papier</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('fileImport').click()">⬆ Importer un config.js existant</button>
+          <input type="file" id="fileImport" accept=".js,.json" style="display:none" onchange="importerConfig(event)">
+        </div>
+
+        <h3 style="margin:24px 0 10px">Aperçu du fichier généré</h3>
+        <textarea id="output-config" style="width:100%;height:240px;font-family:'Courier New',monospace;font-size:.82rem;padding:14px;border:1px solid var(--gray-200);border-radius:6px;background:#1E1E1E;color:#A7F3D0" readonly></textarea>
+      </div>
+    </section>
+
+    <!-- SECTION AIDE -->
+    <section class="section" id="section-aide">
+      <div class="card">
+        <h2>Comment utiliser ce back-office ?</h2>
+        <div style="margin-top:16px;line-height:1.7;color:var(--ink-soft)">
+          <h3 style="color:var(--brand-dark);margin-top:20px">📌 Modifier les informations</h3>
+          <p>Naviguez via le menu de gauche pour atteindre la section voulue : Entreprise, Contacts, Produits, Tarifs. Modifiez les champs directement dans les formulaires.</p>
+
+          <h3 style="color:var(--brand-dark);margin-top:20px">💾 Sauvegarder</h3>
+          <p>Une fois vos modifications faites, allez dans <b>Export / Import</b> et cliquez sur "Télécharger config.js". Remplacez l'ancien fichier <code>assets/js/config.js</code> par celui que vous venez de télécharger.</p>
+
+          <h3 style="color:var(--brand-dark);margin-top:20px">🖼️ Changer une image produit</h3>
+          <p>Préparez une nouvelle image au format JPG ou PNG (au moins 800×600px). Renommez-la exactement comme le fichier actuel (par exemple <code>flyers.jpg</code>). Glissez-la dans le dossier <code>assets/images/products/</code> en remplaçant l'ancienne. Pas besoin de toucher au code.</p>
+
+          <h3 style="color:var(--brand-dark);margin-top:20px">🎨 Changer le logo</h3>
+          <p>Préparez votre logo au format PNG (fond transparent, largeur 600px minimum) ou SVG. Nommez-le <code>logo.png</code> ou <code>logo.svg</code> et placez-le dans <code>assets/images/logo/</code>.</p>
+
+          <h3 style="color:var(--brand-dark);margin-top:20px">⚠️ Sécurité</h3>
+          <p>Le fichier <code>admin.html</code> ne doit <b>jamais</b> être mis en ligne publiquement. Utilisez-le uniquement sur votre ordinateur. Sur le serveur web, supprimez ce fichier ou protégez-le par mot de passe.</p>
+
+          <h3 style="color:var(--brand-dark);margin-top:20px">🆘 Besoin d'aide ?</h3>
+          <p>Contactez votre développeur web ou consultez le fichier <code>GUIDE-MODIFICATION.md</code> à la racine du projet.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="floating-save">
+  <span class="status" id="float-status">Modifications non sauvegardées</span>
+  <button class="btn btn-primary btn-sm" onclick="document.querySelector('[data-tab=export]').click()">Sauvegarder →</button>
+</div>
+
+<script>
+// ====================================================
+// PRODUITS PAR DÉFAUT
+// ====================================================
+const PRODUITS_DEFAUT = [
+  { id:'flyers', nom:'Flyers & Dépliants', desc:'Tirages de 100 à 100 000 ex.', prix:50, image:'flyers.jpg', categorie:'imprimerie', badge:'★ Best-seller' },
+  { id:'cartes-visite', nom:'Cartes de visite', desc:'Pelliculage, vernis, dorure, coins arrondis.', prix:15000, image:'cartes-visite.jpg', categorie:'imprimerie', badge:'★ Best' },
+  { id:'affiches', nom:'Affiches & Posters', desc:'Du A3 au format géant.', prix:2500, image:'affiche.jpg', categorie:'imprimerie', badge:'' },
+  { id:'brochures', nom:'Brochures & Catalogues', desc:'Reliure piquée, dos carré collé.', prix:800, image:'brochures.jpg', categorie:'imprimerie', badge:'' },
+  { id:'rollups', nom:'Roll-ups & Kakémonos', desc:'Pour salons et événements.', prix:45000, image:'rollup-echo.jpg', categorie:'evenementiel', badge:'Nouveau' },
+  { id:'textile', nom:'Sérigraphie textile', desc:'T-shirts, casquettes, sacs.', prix:3500, image:'textile.jpg', categorie:'textile', badge:'' },
+  { id:'calendriers', nom:'Calendriers', desc:'Muraux, de bureau, de poche.', prix:1800, image:'maquette.jpg', categorie:'imprimerie', badge:'' },
+  { id:'sites', nom:'Sites Internet', desc:'Vitrine, e-commerce, sur-mesure.', prix:250000, image:'workspace.jpg', categorie:'digital', badge:'Service' },
+];
+
+let produits = [...PRODUITS_DEFAUT];
+
+// ====================================================
+// NAVIGATION TABS
+// ====================================================
+document.querySelectorAll('.sidebar nav a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const tab = a.dataset.tab;
+    document.querySelectorAll('.sidebar nav a').forEach(x => x.classList.remove('active'));
+    a.classList.add('active');
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById('section-' + tab).classList.add('active');
+    window.scrollTo({ top: 0, behavior:'smooth' });
+  });
+});
+
+// ====================================================
+// PRODUITS RENDER
+// ====================================================
+function renderProduits() {
+  const c = document.getElementById('produits-list');
+  c.innerHTML = '';
+  produits.forEach((p, idx) => {
+    const row = document.createElement('div');
+    row.className = 'product-row';
+    // L'image peut être un nom (flyers.jpg) ou un dataURL
+    const imgSrc = (p.image && p.image.startsWith('data:'))
+      ? p.image
+      : 'assets/images/products/' + (p.image || 'flyers.jpg');
+    row.innerHTML = `
+      <div class="thumb" style="position:relative;cursor:pointer" onclick="document.getElementById('file-prod-${idx}').click()" title="Cliquer pour changer l'image">
+        <img src="${imgSrc}" onerror="this.style.display='none'" alt="">
+        <div style="position:absolute;inset:0;background:rgba(0,60,120,.85);color:#fff;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;font-size:.7rem;font-weight:700;text-align:center;padding:6px" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0">
+          📷<br>Changer
+        </div>
+        <input type="file" id="file-prod-${idx}" accept="image/*" style="display:none" onchange="uploadProductImage(${idx}, event)">
+      </div>
+      <div>
+        <label style="font-size:.7rem;color:#666;text-transform:uppercase;letter-spacing:.08em">Nom</label>
+        <input type="text" value="${escapeHtml(p.nom)}" oninput="produits[${idx}].nom=this.value;updateStatus()">
+        <label style="font-size:.7rem;color:#666;text-transform:uppercase;letter-spacing:.08em;margin-top:6px;display:block">Description</label>
+        <input type="text" value="${escapeHtml(p.desc)}" oninput="produits[${idx}].desc=this.value;updateStatus()">
+      </div>
+      <div>
+        <label style="font-size:.7rem;color:#666;text-transform:uppercase;letter-spacing:.08em">Image <span style="text-transform:none;letter-spacing:0;opacity:.7">${p.image && p.image.startsWith('data:') ? '(uploadée)' : '(fichier)'}</span></label>
+        <input type="text" value="${escapeHtml(p.image && p.image.startsWith('data:') ? '[image uploadée]' : (p.image || ''))}" ${p.image && p.image.startsWith('data:') ? 'readonly style="background:#E0F2FE"' : ''} oninput="if(!this.value.startsWith('[')) { produits[${idx}].image=this.value; updateStatus(); }">
+        <label style="font-size:.7rem;color:#666;text-transform:uppercase;letter-spacing:.08em;margin-top:6px;display:block">Badge</label>
+        <input type="text" value="${escapeHtml(p.badge||'')}" placeholder="ex: Nouveau" oninput="produits[${idx}].badge=this.value;updateStatus()">
+      </div>
+      <div>
+        <label style="font-size:.7rem;color:#666;text-transform:uppercase;letter-spacing:.08em">Prix départ (FCFA)</label>
+        <input type="number" value="${p.prix}" oninput="produits[${idx}].prix=parseInt(this.value);updateStatus()">
+      </div>
+      <div>
+        <label style="font-size:.7rem;color:#666;text-transform:uppercase;letter-spacing:.08em">Catégorie</label>
+        <select onchange="produits[${idx}].categorie=this.value;updateStatus()">
+          <option value="imprimerie" ${p.categorie==='imprimerie'?'selected':''}>Imprimerie</option>
+          <option value="evenementiel" ${p.categorie==='evenementiel'?'selected':''}>Événementiel</option>
+          <option value="textile" ${p.categorie==='textile'?'selected':''}>Textile & Objets</option>
+          <option value="digital" ${p.categorie==='digital'?'selected':''}>Digital & Web</option>
+          <option value="emballage" ${p.categorie==='emballage'?'selected':''}>Emballages</option>
+        </select>
+      </div>
+      <div class="actions">
+        <button class="btn btn-danger btn-sm" onclick="deleteProduit(${idx})" title="Supprimer">🗑</button>
+      </div>
+    `;
+    c.appendChild(row);
+  });
+}
+
+// Upload image produit : redimensionne + convertit en dataURL
+function uploadProductImage(idx, event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) {
+    alert("Image trop volumineuse (max 5 Mo). Compressez-la d'abord.");
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    // Redimensionne via canvas pour optimiser
+    const img = new Image();
+    img.onload = () => {
+      const MAX = 1200;
+      let w = img.width, h = img.height;
+      if (w > MAX || h > MAX) {
+        if (w > h) { h = h * MAX / w; w = MAX; }
+        else { w = w * MAX / h; h = MAX; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      const dataURL = canvas.toDataURL('image/jpeg', 0.85);
+      produits[idx].image = dataURL;
+      renderProduits();
+      updateStatus();
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function addProduit() {
+  produits.push({
+    id:'nouveau-'+Date.now(),
+    nom:'Nouveau produit',
+    desc:'Description du produit',
+    prix:1000,
+    image:'flyers.jpg',
+    categorie:'imprimerie',
+    badge:''
+  });
+  renderProduits();
+  updateStatus();
+}
+
+function deleteProduit(idx) {
+  if (confirm('Supprimer ce produit ?')) {
+    produits.splice(idx, 1);
+    renderProduits();
+    updateStatus();
+  }
+}
+
+function escapeHtml(s) {
+  return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ====================================================
+// PREVIEW SLOGAN
+// ====================================================
+function updatePreview() {
+  const slogan = document.getElementById('slogan').value;
+  const tagline = document.getElementById('tagline').value;
+  const parts = slogan.split(/[,·]/).map(s => s.trim()).filter(Boolean);
+  document.getElementById('preview-slogan').innerHTML =
+    parts.join(' · ') + ' · <em>« ' + tagline + ' »</em>';
+}
+['slogan','tagline'].forEach(id => {
+  document.getElementById(id).addEventListener('input', updatePreview);
+});
+
+// ====================================================
+// GENERATE CONFIG
+// ====================================================
+function getValue(id) { return document.getElementById(id).value; }
+function getNum(id) { return parseFloat(document.getElementById(id).value) || 0; }
+
+function generateConfig() {
+  const cfg = {
+    entreprise: {
+      nom: getValue('nom'),
+      forme: getValue('forme'),
+      slogan: getValue('slogan'),
+      tagline: getValue('tagline'),
+      annee: parseInt(getValue('annee')),
+      fondateur: getValue('fondateur'),
+    },
+    contact: {
+      tel1: getValue('tel1'),
+      tel2: getValue('tel2'),
+      email1: getValue('email1'),
+      email2: getValue('email2'),
+      site: getValue('site'),
+      whatsapp: getValue('whatsapp'),
+      adresse: { siege: getValue('adresse1'), ville: getValue('ville'), production1: getValue('prod1'), production2: getValue('prod2') },
+      horaires: { lv: getValue('horaires_lv'), s: getValue('horaires_s'), d: getValue('horaires_d') },
+      reseaux: { facebook: getValue('fb'), instagram: getValue('ig'), linkedin: getValue('li'), youtube: getValue('yt') }
+    },
+    produits: produits,
+    tarifs_flyers: {
+      formats: { A6:getNum('prix_A6'), A5:getNum('prix_A5'), A4:getNum('prix_A4'), A3:getNum('prix_A3') },
+      papiers: { std:getNum('mult_std'), mat:getNum('mult_mat'), lux:getNum('mult_lux'), recy:getNum('mult_recy') },
+      impression: { rv:getNum('mult_rv') },
+      finitions: { pelli:getNum('mult_pelli'), vernis:getNum('mult_vernis'), arrondi:getNum('mult_arrondi') },
+      remises: { q250:getNum('disc_250'), q500:getNum('disc_500'), q1000:getNum('disc_1000'), q2500:getNum('disc_2500'), q5000:getNum('disc_5000'), q10000:getNum('disc_10000') },
+      livraison: { std:getNum('liv_std'), exp:getNum('liv_exp'), urg:getNum('liv_urg') }
+    }
+  };
+  return cfg;
+}
+
+function renderConfigText() {
+  const cfg = generateConfig();
+  const text =
+`// ===========================================================
+// PICTOCRAFT — Configuration du site
+// Généré automatiquement par admin.html le ${new Date().toLocaleString('fr-FR')}
+// Pour modifier, ouvrez admin.html, éditez et téléchargez à nouveau.
+// ===========================================================
+
+window.PICTOCRAFT_CONFIG = ${JSON.stringify(cfg, null, 2)};
+`;
+  document.getElementById('output-config').value = text;
+  return text;
+}
+
+function telechargerConfig() {
+  const text = renderConfigText();
+  const blob = new Blob([text], { type:'application/javascript' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'config.js';
+  a.click();
+  URL.revokeObjectURL(url);
+  document.getElementById('float-status').textContent = '✓ Téléchargé — remplacez assets/js/config.js';
+  document.getElementById('float-status').style.color = '#065F46';
+}
+
+function copierConfig() {
+  const text = renderConfigText();
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('float-status').textContent = '✓ Copié dans le presse-papier';
+    document.getElementById('float-status').style.color = '#065F46';
+  });
+}
+
+function importerConfig(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const text = ev.target.result;
+      // Extraire le JSON
+      const match = text.match(/PICTOCRAFT_CONFIG\s*=\s*(\{[\s\S]*\});?/);
+      if (!match) throw new Error('Format invalide');
+      const cfg = JSON.parse(match[1]);
+      loadConfig(cfg);
+      alert('✓ Configuration importée avec succès');
+    } catch (err) {
+      alert('Erreur lors de l\'import : ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+function loadConfig(cfg) {
+  if (cfg.entreprise) {
+    if (cfg.entreprise.nom) document.getElementById('nom').value = cfg.entreprise.nom;
+    if (cfg.entreprise.forme) document.getElementById('forme').value = cfg.entreprise.forme;
+    if (cfg.entreprise.slogan) document.getElementById('slogan').value = cfg.entreprise.slogan;
+    if (cfg.entreprise.tagline) document.getElementById('tagline').value = cfg.entreprise.tagline;
+    if (cfg.entreprise.annee) document.getElementById('annee').value = cfg.entreprise.annee;
+    if (cfg.entreprise.fondateur) document.getElementById('fondateur').value = cfg.entreprise.fondateur;
+  }
+  if (cfg.contact) {
+    const c = cfg.contact;
+    if (c.tel1) document.getElementById('tel1').value = c.tel1;
+    if (c.tel2) document.getElementById('tel2').value = c.tel2;
+    if (c.email1) document.getElementById('email1').value = c.email1;
+    if (c.email2) document.getElementById('email2').value = c.email2;
+    if (c.site) document.getElementById('site').value = c.site;
+    if (c.whatsapp) document.getElementById('whatsapp').value = c.whatsapp;
+    if (c.adresse) {
+      if (c.adresse.siege) document.getElementById('adresse1').value = c.adresse.siege;
+      if (c.adresse.ville) document.getElementById('ville').value = c.adresse.ville;
+      if (c.adresse.production1) document.getElementById('prod1').value = c.adresse.production1;
+      if (c.adresse.production2) document.getElementById('prod2').value = c.adresse.production2;
+    }
+    if (c.horaires) {
+      if (c.horaires.lv) document.getElementById('horaires_lv').value = c.horaires.lv;
+      if (c.horaires.s) document.getElementById('horaires_s').value = c.horaires.s;
+      if (c.horaires.d) document.getElementById('horaires_d').value = c.horaires.d;
+    }
+    if (c.reseaux) {
+      if (c.reseaux.facebook) document.getElementById('fb').value = c.reseaux.facebook;
+      if (c.reseaux.instagram) document.getElementById('ig').value = c.reseaux.instagram;
+      if (c.reseaux.linkedin) document.getElementById('li').value = c.reseaux.linkedin;
+      if (c.reseaux.youtube) document.getElementById('yt').value = c.reseaux.youtube;
+    }
+  }
+  if (cfg.produits) {
+    produits = cfg.produits;
+    renderProduits();
+  }
+  if (cfg.tarifs_flyers) {
+    const t = cfg.tarifs_flyers;
+    if (t.formats) ['A6','A5','A4','A3'].forEach(k => { if (t.formats[k] != null) document.getElementById('prix_'+k).value = t.formats[k]; });
+    if (t.papiers) ['std','mat','lux','recy'].forEach(k => { if (t.papiers[k] != null) document.getElementById('mult_'+k).value = t.papiers[k]; });
+    if (t.impression && t.impression.rv != null) document.getElementById('mult_rv').value = t.impression.rv;
+    if (t.finitions) ['pelli','vernis','arrondi'].forEach(k => { if (t.finitions[k] != null) document.getElementById('mult_'+k).value = t.finitions[k]; });
+    if (t.remises) ['250','500','1000','2500','5000','10000'].forEach(k => { if (t.remises['q'+k] != null) document.getElementById('disc_'+k).value = t.remises['q'+k]; });
+    if (t.livraison) ['std','exp','urg'].forEach(k => { if (t.livraison[k] != null) document.getElementById('liv_'+k).value = t.livraison[k]; });
+  }
+  updateStatus();
+  renderConfigText();
+  updatePreview();
+}
+
+// =====

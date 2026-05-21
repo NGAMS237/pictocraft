@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 200" role="img" aria-label="Pictocraft SARL">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Pacifico&amp;family=Manrope:wght@800&amp;display=swap');
+      .p-script { font-family: 'Pacifico', cursive; font-size: 165px; fill: #960F2D; }
+      .name-text { font-family: 'Manrope', system-ui, sans-serif; font-weight: 800; font-size: 92px; fill: #003C78; letter-spacing: -0.02em; }
+      .sarl-text { font-family: 'Manrope', system-ui, sans-serif; font-weight: 700; font-size: 28px; fill: #1E1E1E; letter-spacing: 0.18em; }
+      .bar { stroke: #1E1E1E; stroke-width: 2.5; }
+    </style>
+  </defs>
+  <!-- P script bordeaux -->
+  <text x="14" y="138" class="p-script">P</text>
+  <!-- ictocraft bleu marine -->
+  <text x="118" y="138" class="name-text">ictocraft</text>
+  <!-- Barres + SARL -->
+  <line x1="170" y1="178" x2="246" y2="178" class="bar"/>
+  <text x="258" y="186" class="sarl-text">SARL</text>
+  <line x1="330" y1="178" x2="406" y2="178" class="bar"/>
+</svg>
