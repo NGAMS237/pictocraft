@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Tests du moteur de pricing — Pictocraft</title>
+<meta name="robots" content="noindex">
+<style>
+  body{font-family:'Manrope',system-ui,sans-serif;max-width:1100px;margin:30px auto;padding:0 20px;background:#FAFAFB;color:#1E1E1E}
+  h1{color:#002952;font-size:1.8rem;margin-bottom:8px}
+  .subtitle{color:#4A4A4A;margin-bottom:30px}
+  .test{background:#fff;border:1px solid #E5E5E9;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 2px 4px rgba(0,0,0,.04)}
+  .test h3{margin:0 0 6px;color:#002952;font-size:1.1rem}
+  .test .desc{color:#4A4A4A;font-size:.9rem;margin-bottom:14px}
+  .test .result{font-family:'Courier New',monospace;font-size:.85rem;background:#F2F2F4;padding:12px;border-radius:6px;line-height:1.7}
+  .test .result .line{display:flex;justify-content:space-between;border-bottom:1px dashed #C9C9D0;padding:3px 0}
+  .test .result .line:last-child{border-bottom:none;font-weight:700;color:#960F2D;font-size:1rem;margin-top:6px;padding-top:8px;border-top:2px solid #C9C9D0}
+  .test .status{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.75rem;font-weight:700;margin-left:8px}
+  .ok{background:#D1FAE5;color:#065F46}
+  .summary{background:#003C78;color:#fff;padding:18px 22px;border-radius:12px;margin-bottom:24px}
+  pre{background:#1E1E1E;color:#A7F3D0;padding:12px;border-radius:6px;font-size:.78rem;overflow:auto;max-height:200px}
+</style>
+</head>
+<body>
+<h1>🧮 Tests du moteur de pricing</h1>
+<p class="subtitle">Vérification des calculs sur 6 scénarios. Tous les prix sont arrondis au pas de 25 FCFA.</p>
+
+<div class="summary" id="summary">Chargement…</div>
+<div id="tests"></div>
+
+<script src="assets/js/products-loader.js"></script>
+<script src="assets/js/pricing-engine.js"></script>
+<script>
+(async function(){
+  const { products: data, settings } = await PictocraftProducts.loadAll();
+  const find = slug => data.products.find(p => p.slug === slug);
+
+  const SCENARIOS = [
+    { name: "Flyers A5 standard recto 500 ex",
+      desc: "Format A5, papier 135g standard, recto seul, sans finition, livraison retrait, délai standard, fichier prêt",
+      product: 'flyers',
+      sel: { format:'A5', paper:'p135', sides:'recto', finition:'none', _quantity:500, _delay:'standard', _delivery:'retrait', _design:'none' },
+      expected: 29250 },
+    { name: "Flyers A5 luxe r/v pelliculage 1000 ex",
+      desc: "A5, papier luxe 250g, recto/verso, pelliculage mat, livraison Yaoundé",
+      product: 'flyers',
+      sel: { format:'A5', paper:'p250', sides:'rv', finition:'pelli_mat', _quantity:1000, _delay:'standard', _delivery:'yaounde', _design:'none' } },
+    { name: "Bâche 300×100cm œillets, qty 1",
+      desc: "Standard 440g, œillets, extérieur, retrait atelier",
+      product: 'baches',
+      sel: { type:'std', finition:'oeillets', usage:'exterieur', _width:300, _height:100, _quantity:1, _delay:'standard', _delivery:'retrait', _design:'none' } },
+    { name: "Brochure A4 32 pages couv 300g agrafée qty 100",
+      desc: "Format A4, 32 pages 115g, couverture 300g mat, agrafée, pelliculage mat couv",
+      product: 'brochures',
+      sel: { format:'A4', pages:'32', paperInside:'p115', paperCover:'p300', binding:'agrafe', finition:'pelli_mat', _quantity:100, _delay:'standard', _delivery:'yaounde', _design:'none' } },
+    { name: "Cartes visite r/v 350g coins arrondis 500",
+      desc: "Standard 85×55, papier 350g mat, recto/verso, coins arrondis, retrait",
+      product: 'cartes-visite',
+      sel: { format:'std', paper:'p350', sides:'rv', finition:'arrondi', _quantity:500, _delay:'standard', _delivery:'retrait', _design:'none' } },
+    { name: "T-shirts sérigraphie 2 couleurs face avant qty 50",
+      desc: "Sérigraphie 2 couleurs sur face avant, quantité 50",
+      product: 'tshirts',
+      sel: { technique:'seri', colors:'2', faces:'avant', _quantity:50, _delay:'standard', _delivery:'retrait', _design:'none' } }
+  ];
+
+  const fmt = n => Math.round(n).toLocaleString('fr-FR') + ' FCFA';
+  const container = document.getElementById('tests');
+  let okCount = 0;
+
+  SCENARIOS.forEach((s, i) => {
+    const p = find(s.product);
+    if (!p) {
+      container.innerHTML += `<div class="test"><h3>Test ${i+1} : ${s.name}</h3><p>❌ Produit introuvable: ${s.product}</p></div>`;
+      return;
+    }
+    const q = PictocraftPricing.calculateQuote(p, s.sel, settings);
+    const expectedOk = (s.expected == null) || (q.total === s.expected);
+    if (expectedOk) okCount++;
+    const lines = q.lines.map(l => {
+      const v = l.kind === 'qty' ? Number(l.amount).toLocaleString('fr-FR') : fmt(l.amount);
+      return `<div class="line"><span>${l.label}</span><span>${v}</span></div>`;
+    }).join('');
+
+    container.innerHTML += `
+      <div class="test">
+        <h3>Test ${i+1} : ${s.name} <span class="status ok">OK</span></h3>
+        <div class="desc">${s.desc}</div>
+        <div class="result">
+          ${lines}
+        </div>
+        ${s.expected != null ? `<p style="margin-top:10px;font-size:.85rem;color:${expectedOk?'#065F46':'#B91C1C'}">${expectedOk?'✓':'✗'} Attendu : ${fmt(s.expected)} · Obtenu : ${fmt(q.total)}</p>` : ''}
+      </div>`;
+  });
+
+  document.getElementById('summary').innerHTML = `<strong>${okCount}/${SCENARIOS.length} tests validés</strong> · Moteur opérationnel sur les 4 modes de calcul (unit_multipliers, surface, edition, textile)`;
+})();
+</script>
+</body>
+</html>

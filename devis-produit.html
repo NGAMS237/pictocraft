@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Configurateur — Pictocraft</title>
+<meta name="description" content="Configurez votre devis en temps réel : options, quantité, livraison. Validation par WhatsApp.">
+<meta name="robots" content="index,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/devis.css">
+</head>
+<body>
+
+<div data-bind-slogan-bar style="background:#960F2D;color:#fff;text-align:center;padding:6px 16px;font-size:.78rem;font-weight:600;letter-spacing:.04em">
+  Travaux d'imprimerie · Commerce général · Prestations diverses · <em style="font-weight:500;opacity:.9">« l'énergie créative au service de vos projets »</em>
+</div>
+
+<div class="utility-bar">
+  <div class="container">
+    <div class="utility-left">
+      <span class="util-item"><a href="tel:+237675140843" data-bind-tel1>+237 6 75 14 08 43</a> · <a href="tel:+237694930804" data-bind-tel2>+237 6 94 93 08 04</a></span>
+      <span class="util-item"><a href="mailto:info@pictocraftcmr.com" data-bind-email1>info@pictocraftcmr.com</a></span>
+      <span class="util-item">Lun–Ven : 8h – 17h</span>
+    </div>
+    <div class="utility-right">
+      <a href="faq.html">Aide & FAQ</a>
+      <span>🇨🇲 Yaoundé · FR</span>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo" aria-label="Pictocraft" data-logo-host>
+      <span class="p">P</span><span class="name">ictocraft</span><span class="sarl">SARL</span>
+    </a>
+    <nav class="main-nav">
+      <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Accueil</a>
+      <a href="devis.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>Devis</a>
+      <a href="a-propos.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>À propos</a>
+      <a href="faq.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>FAQ</a>
+      <a href="contact.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a href="https://wa.me/237675140843" data-bind-whatsapp class="icon-btn" aria-label="WhatsApp" style="color:#25D366">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.8-2.9-1.5-4-3.5-.3-.5.3-.5.8-1.5.1-.2 0-.3 0-.5s-.7-1.6-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1.1 2.9 1.2 3.1.1.2 2.1 3.3 5.2 4.6 2 .8 2.7.9 3.7.8.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zm-5.5 7.6c-1.8 0-3.5-.5-5-1.4l-3.5 1.1 1.1-3.4c-1-1.6-1.6-3.5-1.6-5.5 0-5.6 4.5-10.1 10-10.1 5.6 0 10.1 4.5 10.1 10.1S17.5 22 12 22z"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<section style="padding-top:40px">
+  <div class="container">
+    <div id="cfg-loading" style="text-align:center;padding:60px;color:var(--ink-soft)">Chargement du configurateur…</div>
+    <div id="cfg-error" style="display:none;text-align:center;padding:60px;color:#B91C1C"></div>
+
+    <div id="cfg-product-header" class="cfg-product-header" style="display:none">
+      <img id="cfg-product-img" src="" alt="">
+      <div>
+        <div class="breadcrumb"><a href="index.html">Accueil</a> › <a href="devis.html">Devis</a> › <span id="cfg-breadcrumb-cat"></span></div>
+        <h1 id="cfg-product-name"></h1>
+        <p id="cfg-product-desc"></p>
+      </div>
+    </div>
+
+    <div id="cfg-layout" class="cfg-layout" style="display:none">
+      <div>
+        <div id="cfg-options" class="cfg-options-wrap"></div>
+
+        <div class="cfg-client-form">
+          <h2>Vos coordonnées</h2>
+          <form id="cfg-form" onsubmit="return false">
+            <div class="form-row">
+              <div class="field"><label>Nom *</label><input type="text" name="nom" required maxlength="80"></div>
+              <div class="field"><label>Entreprise</label><input type="text" name="entreprise" maxlength="120"></div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label>Téléphone / WhatsApp *</label><input type="tel" name="telephone" required maxlength="20" placeholder="+237 6…"></div>
+              <div class="field"><label>Email</label><input type="email" name="email" maxlength="120"></div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label>Ville</label><input type="text" name="ville" maxlength="80" placeholder="Yaoundé, Douala…"></div>
+              <div class="field"><label>Fichier prêt ?</label>
+                <select name="fichierPret">
+                  <option value="">À préciser</option>
+                  <option value="oui">Oui, fichiers prêts à l'impression</option>
+                  <option value="non">Non, j'ai besoin d'aide pour la conception</option>
+                </select>
+              </div>
+            </div>
+            <div class="field"><label>Commentaire</label><textarea name="commentaire" maxlength="500" placeholder="Précisions sur votre projet, contraintes, délais…"></textarea></div>
+
+            <div class="cfg-actions">
+              <button type="button" id="cfg-submit" class="btn-primary">📩 Valider mon devis</button>
+              <button type="button" id="cfg-whatsapp" class="btn-whatsapp">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.8-2.9-1.5-4-3.5-.3-.5.3-.5.8-1.5.1-.2 0-.3 0-.5s-.7-1.6-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1.1 2.9 1.2 3.1.1.2 2.1 3.3 5.2 4.6 2 .8 2.7.9 3.7.8.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zm-5.5 7.6c-1.8 0-3.5-.5-5-1.4l-3.5 1.1 1.1-3.4c-1-1.6-1.6-3.5-1.6-5.5 0-5.6 4.5-10.1 10-10.1 5.6 0 10.1 4.5 10.1 10.1S17.5 22 12 22z"/></svg>
+                Envoyer sur WhatsApp
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div>
+        <div id="cfg-summary" class="cfg-summary"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer style="margin-top:60px">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><span class="p" style="color:#FFB3C0">P</span><span class="name">ictocraft</span><span class="sarl">SARL</span></a>
+        <p style="font-style:italic;color:#FFB3C0;margin-bottom:8px">« l'énergie créative au service de vos projets. »</p>
+        <p>Travaux d'imprimerie, Commerce général et prestation diverses.</p>
+      </div>
+      <div><h4>Devis</h4><ul>
+        <li><a href="devis.html">Tous les supports</a></li>
+        <li><a href="devis-produit.html?produit=flyers">Flyers</a></li>
+        <li><a href="devis-produit.html?produit=cartes-visite">Cartes de visite</a></li>
+        <li><a href="devis-produit.html?produit=brochures">Brochures</a></li>
+        <li><a href="devis-produit.html?produit=baches">Bâches</a></li>
+      </ul></div>
+      <div><h4>Informations</h4><ul>
+        <li><a href="a-propos.html">À propos</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul></div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <div class="contact-block">
+          <strong><a href="tel:+237675140843" data-bind-tel1 style="color:#fff">+237 6 75 14 08 43</a></strong>
+          Lun–Ven : 8h–17h
+        </div>
+        <div class="contact-block">
+          <strong><a href="mailto:info@pictocraftcmr.com" data-bind-email1 style="color:#fff">info@pictocraftcmr.com</a></strong>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;padding:18px 0;font-size:.78rem;color:rgba(255,255,255,.4)">© 2026 Pictocraft SARL</div>
+  </div>
+</footer>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/binder.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/products-loader.js"></script>
+<script src="assets/js/pricing-engine.js"></script>
+<script src="assets/js/quote-configurator.js"></script>
+<script>
+(async function(){
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('produit');
+
+  const loadingEl = document.getElementById('cfg-loading');
+  const errorEl = document.getElementById('cfg-error');
+  const headerEl = document.getElementById('cfg-product-header');
+  const layoutEl = document.getElementById('cfg-layout');
+
+  function showError(msg){
+    loadingEl.style.display = 'none';
+    errorEl.style.display = '';
+    errorEl.innerHTML = msg + '<br><br><a href="devis.html" class="btn-primary">← Retour au catalogue</a>';
+  }
+
+  if (!slug) { showError('Aucun produit spécifié.'); return; }
+
+  try {
+    const { products: data, settings } = await PictocraftProducts.loadAll();
+    const product = PictocraftProducts.findProduct(data, slug);
+    if (!product) { showError('Produit « ' + slug + ' » introuvable ou désactivé.'); return; }
+
+    // Header
+    document.title = product.name + ' — Configurez votre devis | Pictocraft';
+    document.getElementById('cfg-product-img').src = product.image;
+    document.getElementById('cfg-product-img').alt = product.name;
+    document.getElementById('cfg-product-name').textContent = product.name;
+    document.getElementById('cfg-product-desc').textContent = product.description || '';
+    const cat = PictocraftProducts.findCategory(data, product.category);
+    document.getElementById('cfg-breadcrumb-cat').textContent = cat ? cat.name : '';
+
+    loadingEl.style.display = 'none';
+    headerEl.style.display = '';
+    layoutEl.style.display = '';
+
+    // Init configurateur
+    PictocraftConfigurator.init({
+      product: product,
+      settings: settings,
+      optionsContainer: document.getElementById('cfg-options'),
+      summaryContainer: document.getElementById('cfg-summary'),
+      formContainer: document.getElementById('cfg-form'),
+      submitBtn: document.getElementById('cfg-submit'),
+      whatsappBtn: document.getElementById('cfg-whatsapp')
+    });
+  } catch (err) {
+    showError('Erreur de chargement : ' + err.message);
+  }
+})();
+</script>
+</body>
+</html>
