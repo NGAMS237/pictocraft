@@ -1,0 +1,298 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-06-26",
+  "categories": [
+    { "slug": "impression-commerciale", "name": "Impressions commerciales", "icon": "printer" },
+    { "slug": "grand-format",          "name": "Grand format & signalétique", "icon": "panel" },
+    { "slug": "edition",               "name": "Brochures, magazines & catalogues", "icon": "book" },
+    { "slug": "packaging",             "name": "Packaging & étiquettes", "icon": "package" },
+    { "slug": "textile",               "name": "Textile & objets publicitaires", "icon": "shirt" },
+    { "slug": "evenementiel",          "name": "Événementiel", "icon": "event" },
+    { "slug": "digital",               "name": "Digital & création graphique", "icon": "monitor" }
+  ],
+  "products": [
+    {
+      "slug": "flyers",
+      "name": "Flyers & Dépliants",
+      "category": "impression-commerciale",
+      "description": "Flyers publicitaires pour promotions, événements et campagnes commerciales.",
+      "image": "assets/images/products/flyers.jpg",
+      "active": true,
+      "calcMode": "unit_multipliers",
+      "basePrice": 75,
+      "unit": "exemplaire",
+      "minimumOrder": 100,
+      "fields": [
+        { "key":"format","label":"Format","type":"choice","required":true,
+          "options":[
+            {"label":"A6 (105×148mm)","value":"A6","multiplier":0.7},
+            {"label":"A5 (148×210mm)","value":"A5","multiplier":1.0},
+            {"label":"A4 (210×297mm)","value":"A4","multiplier":1.7},
+            {"label":"A3 (297×420mm)","value":"A3","multiplier":3.2},
+            {"label":"DL (99×210mm)","value":"DL","multiplier":0.95}
+          ]},
+        { "key":"paper","label":"Papier","type":"choice","required":true,
+          "options":[
+            {"label":"Standard 115g","value":"p115","multiplier":0.9},
+            {"label":"Standard 135g brillant","value":"p135","multiplier":1.0},
+            {"label":"Mat 170g","value":"p170","multiplier":1.2},
+            {"label":"Luxe 250g","value":"p250","multiplier":1.5},
+            {"label":"Luxe 300g","value":"p300","multiplier":1.7}
+          ]},
+        { "key":"sides","label":"Impression","type":"choice","required":true,
+          "options":[
+            {"label":"Recto seul","value":"recto","multiplier":1.0},
+            {"label":"Recto / Verso","value":"rv","multiplier":1.55}
+          ]},
+        { "key":"finition","label":"Finition","type":"choice","required":false,
+          "options":[
+            {"label":"Aucune","value":"none","multiplier":1.0},
+            {"label":"Pelliculage mat","value":"pelli_mat","multiplier":1.18},
+            {"label":"Pelliculage brillant","value":"pelli_bril","multiplier":1.18},
+            {"label":"Vernis sélectif","value":"vernis","multiplier":1.25},
+            {"label":"Coins arrondis","value":"arrondi","multiplier":1.12}
+          ]}
+      ],
+      "quantities": [100, 250, 500, 1000, 2500, 5000, 10000],
+      "quantityDiscounts": [
+        {"min":100,"discount":0},
+        {"min":250,"discount":0.12},
+        {"min":500,"discount":0.22},
+        {"min":1000,"discount":0.34},
+        {"min":2500,"discount":0.46},
+        {"min":5000,"discount":0.55},
+        {"min":10000,"discount":0.64}
+      ]
+    },
+    {
+      "slug":"cartes-visite","name":"Cartes de visite","category":"impression-commerciale",
+      "description":"Cartes de visite professionnelles, papier épais, finitions premium au choix.",
+      "image":"assets/images/products/cartes-visite.jpg","active":true,
+      "calcMode":"unit_multipliers","basePrice":35,"unit":"carte","minimumOrder":100,
+      "fields":[
+        {"key":"format","label":"Format","type":"choice","required":true,"options":[
+          {"label":"Standard 85×55mm","value":"std","multiplier":1.0},
+          {"label":"Carré 55×55mm","value":"carre","multiplier":0.95},
+          {"label":"Mini 85×35mm","value":"mini","multiplier":0.85}]},
+        {"key":"paper","label":"Papier","type":"choice","required":true,"options":[
+          {"label":"300g brillant","value":"p300","multiplier":1.0},
+          {"label":"350g mat","value":"p350","multiplier":1.15},
+          {"label":"400g luxe texturé","value":"p400","multiplier":1.35}]},
+        {"key":"sides","label":"Impression","type":"choice","required":true,"options":[
+          {"label":"Recto seul","value":"recto","multiplier":1.0},
+          {"label":"Recto / Verso","value":"rv","multiplier":1.5}]},
+        {"key":"finition","label":"Finition","type":"choice","required":false,"options":[
+          {"label":"Aucune","value":"none","multiplier":1.0},
+          {"label":"Pelliculage mat","value":"pelli_mat","multiplier":1.2},
+          {"label":"Pelliculage brillant","value":"pelli_bril","multiplier":1.2},
+          {"label":"Vernis sélectif","value":"vernis","multiplier":1.3},
+          {"label":"Dorure à chaud","value":"dorure","multiplier":1.65},
+          {"label":"Coins arrondis","value":"arrondi","multiplier":1.15}]}
+      ],
+      "quantities":[100,250,500,1000,2500],
+      "quantityDiscounts":[
+        {"min":100,"discount":0},{"min":250,"discount":0.15},
+        {"min":500,"discount":0.25},{"min":1000,"discount":0.35},{"min":2500,"discount":0.45}]
+    },
+    {
+      "slug":"affiches","name":"Affiches & Posters","category":"impression-commerciale",
+      "description":"Affiches grand format pour intérieur ou extérieur.",
+      "image":"assets/images/products/affiche.jpg","active":true,
+      "calcMode":"unit_multipliers","basePrice":2500,"unit":"affiche","minimumOrder":1,
+      "fields":[
+        {"key":"format","label":"Format","type":"choice","required":true,"options":[
+          {"label":"A3 (297×420mm)","value":"A3","multiplier":1.0},
+          {"label":"A2 (420×594mm)","value":"A2","multiplier":1.8},
+          {"label":"A1 (594×841mm)","value":"A1","multiplier":3.2},
+          {"label":"A0 (841×1189mm)","value":"A0","multiplier":5.5}]},
+        {"key":"paper","label":"Papier","type":"choice","required":true,"options":[
+          {"label":"Standard 135g","value":"std","multiplier":1.0},
+          {"label":"Couché mat 170g","value":"mat","multiplier":1.2},
+          {"label":"Couché brillant 170g","value":"bril","multiplier":1.2},
+          {"label":"Photo premium 200g","value":"photo","multiplier":1.55}]},
+        {"key":"usage","label":"Utilisation","type":"choice","required":true,"options":[
+          {"label":"Intérieur","value":"interieur","multiplier":1.0},
+          {"label":"Extérieur (papier résistant)","value":"exterieur","multiplier":1.4}]},
+        {"key":"finition","label":"Finition","type":"choice","required":false,"options":[
+          {"label":"Aucune","value":"none","multiplier":1.0},
+          {"label":"Plastification","value":"plastif","multiplier":1.35},
+          {"label":"Pelliculage","value":"pelli","multiplier":1.25}]}
+      ],
+      "quantities":[1,5,10,20,50,100],
+      "quantityDiscounts":[
+        {"min":1,"discount":0},{"min":5,"discount":0.08},{"min":10,"discount":0.15},
+        {"min":20,"discount":0.25},{"min":50,"discount":0.35},{"min":100,"discount":0.42}]
+    },
+    {
+      "slug":"brochures","name":"Brochures & Catalogues","category":"edition",
+      "description":"Brochures, catalogues et magazines à pagination personnalisable.",
+      "image":"assets/images/products/brochures.jpg","active":true,
+      "calcMode":"edition","basePrice":350,"unit":"brochure","minimumOrder":50,
+      "fields":[
+        {"key":"format","label":"Format","type":"choice","required":true,"options":[
+          {"label":"A5 (148×210mm)","value":"A5","multiplier":0.8},
+          {"label":"A4 (210×297mm)","value":"A4","multiplier":1.0},
+          {"label":"Carré 21×21cm","value":"carre","multiplier":1.05}]},
+        {"key":"pages","label":"Nombre de pages","type":"choice","required":true,
+          "pricePerPage":25,
+          "options":[
+          {"label":"8 pages","value":"8","pageCount":8},
+          {"label":"12 pages","value":"12","pageCount":12},
+          {"label":"16 pages","value":"16","pageCount":16},
+          {"label":"20 pages","value":"20","pageCount":20},
+          {"label":"24 pages","value":"24","pageCount":24},
+          {"label":"32 pages","value":"32","pageCount":32},
+          {"label":"48 pages","value":"48","pageCount":48},
+          {"label":"64 pages","value":"64","pageCount":64},
+          {"label":"96 pages","value":"96","pageCount":96}]},
+        {"key":"paperInside","label":"Papier intérieur","type":"choice","required":true,"options":[
+          {"label":"90g","value":"p90","multiplier":0.85},
+          {"label":"115g","value":"p115","multiplier":1.0},
+          {"label":"135g","value":"p135","multiplier":1.15},
+          {"label":"170g","value":"p170","multiplier":1.4}]},
+        {"key":"paperCover","label":"Couverture","type":"choice","required":true,"options":[
+          {"label":"250g brillant","value":"p250","addUnit":0},
+          {"label":"300g mat","value":"p300","addUnit":80},
+          {"label":"350g luxe","value":"p350","addUnit":160}]},
+        {"key":"binding","label":"Reliure","type":"choice","required":true,"options":[
+          {"label":"Agrafée","value":"agrafe","addUnit":0},
+          {"label":"Spirale","value":"spirale","addUnit":350},
+          {"label":"Dos carré collé","value":"dcc","addUnit":500}]},
+        {"key":"finition","label":"Finition couverture","type":"choice","required":false,"options":[
+          {"label":"Aucune","value":"none","multiplier":1.0},
+          {"label":"Pelliculage mat","value":"pelli_mat","multiplier":1.08},
+          {"label":"Pelliculage brillant","value":"pelli_bril","multiplier":1.08},
+          {"label":"Vernis sélectif","value":"vernis","multiplier":1.15}]}
+      ],
+      "quantities":[50,100,250,500,1000,2500],
+      "quantityDiscounts":[
+        {"min":50,"discount":0},{"min":100,"discount":0.10},{"min":250,"discount":0.20},
+        {"min":500,"discount":0.30},{"min":1000,"discount":0.40},{"min":2500,"discount":0.50}]
+    },
+    {
+      "slug":"baches","name":"Bâches & Banderoles","category":"grand-format",
+      "description":"Bâches publicitaires sur mesure pour intérieur ou extérieur. Calcul au m².",
+      "image":"assets/images/products/billboard.jpg","active":true,
+      "calcMode":"surface","basePrice":8000,"unit":"m²","minimumOrder":1,
+      "dimensions":{"minWidth":50,"maxWidth":500,"minHeight":50,"maxHeight":500,"step":10,"unit":"cm"},
+      "fields":[
+        {"key":"type","label":"Type de bâche","type":"choice","required":true,"options":[
+          {"label":"Standard 440g","value":"std","multiplier":1.0},
+          {"label":"Renforcée 510g","value":"renforcee","multiplier":1.3},
+          {"label":"Microperforée 270g","value":"micro","multiplier":1.5}]},
+        {"key":"finition","label":"Finition","type":"choice","required":false,"options":[
+          {"label":"Aucune","value":"none","addPerM2":0},
+          {"label":"Œillets (tous les 50cm)","value":"oeillets","addPerM2":1500},
+          {"label":"Fourreaux haut/bas","value":"fourreaux","addPerM2":2500},
+          {"label":"Ourlets renforcés","value":"ourlets","addPerM2":1200}]},
+        {"key":"usage","label":"Utilisation","type":"choice","required":true,"options":[
+          {"label":"Intérieur","value":"interieur","multiplier":1.0},
+          {"label":"Extérieur résistant UV","value":"exterieur","multiplier":1.2}]}
+      ],
+      "quantities":[1,2,5,10,20]
+    },
+    {
+      "slug":"rollups","name":"Roll-ups & Kakémonos","category":"evenementiel",
+      "description":"Roll-ups complets avec structure et housse de transport.",
+      "image":"assets/images/products/rollup-echo.jpg","active":true,
+      "calcMode":"unit_multipliers","basePrice":45000,"unit":"roll-up","minimumOrder":1,
+      "fields":[
+        {"key":"format","label":"Format","type":"choice","required":true,"options":[
+          {"label":"85×200cm","value":"85x200","multiplier":1.0},
+          {"label":"100×200cm","value":"100x200","multiplier":1.18},
+          {"label":"120×200cm","value":"120x200","multiplier":1.4}]},
+        {"key":"structure","label":"Structure","type":"choice","required":true,"options":[
+          {"label":"Économique","value":"eco","multiplier":0.85},
+          {"label":"Standard","value":"std","multiplier":1.0},
+          {"label":"Premium","value":"premium","multiplier":1.4}]}
+      ],
+      "quantities":[1,2,5,10],
+      "quantityDiscounts":[
+        {"min":1,"discount":0},{"min":2,"discount":0.05},
+        {"min":5,"discount":0.12},{"min":10,"discount":0.20}]
+    },
+    {
+      "slug":"stickers","name":"Stickers & Étiquettes","category":"packaging",
+      "description":"Autocollants découpés sur mesure pour produits, packaging, événements.",
+      "image":"assets/images/gallery/gazette.jpg","active":true,
+      "calcMode":"unit_multipliers","basePrice":50,"unit":"sticker","minimumOrder":100,
+      "fields":[
+        {"key":"shape","label":"Forme","type":"choice","required":true,"options":[
+          {"label":"Ronde","value":"ronde","multiplier":1.0},
+          {"label":"Carrée","value":"carre","multiplier":1.0},
+          {"label":"Rectangulaire","value":"rect","multiplier":1.0},
+          {"label":"Ovale","value":"ovale","multiplier":1.05},
+          {"label":"Découpe personnalisée","value":"perso","multiplier":1.3}]},
+        {"key":"size","label":"Dimensions","type":"choice","required":true,"options":[
+          {"label":"Petit (3-5 cm)","value":"S","multiplier":0.7},
+          {"label":"Moyen (5-8 cm)","value":"M","multiplier":1.0},
+          {"label":"Grand (8-15 cm)","value":"L","multiplier":1.6},
+          {"label":"XL (15+ cm)","value":"XL","multiplier":2.4}]},
+        {"key":"material","label":"Support","type":"choice","required":true,"options":[
+          {"label":"Papier adhésif","value":"papier","multiplier":1.0},
+          {"label":"Vinyle blanc","value":"vinyle","multiplier":1.4},
+          {"label":"Vinyle transparent","value":"transp","multiplier":1.55},
+          {"label":"Waterproof premium","value":"wp","multiplier":1.8}]},
+        {"key":"finition","label":"Finition","type":"choice","required":false,"options":[
+          {"label":"Mate","value":"mate","multiplier":1.0},
+          {"label":"Brillante","value":"bril","multiplier":1.0},
+          {"label":"Plastifiée","value":"plastif","multiplier":1.2}]}
+      ],
+      "quantities":[100,250,500,1000,2500,5000],
+      "quantityDiscounts":[
+        {"min":100,"discount":0},{"min":250,"discount":0.15},{"min":500,"discount":0.28},
+        {"min":1000,"discount":0.42},{"min":2500,"discount":0.55},{"min":5000,"discount":0.65}]
+    },
+    {
+      "slug":"tshirts","name":"T-shirts personnalisés","category":"textile",
+      "description":"T-shirts coton ou mélangé, sérigraphie, flex, sublimation ou broderie.",
+      "image":"assets/images/products/textile.jpg","active":true,
+      "calcMode":"textile","basePrice":3500,"unit":"t-shirt","minimumOrder":10,
+      "fields":[
+        {"key":"technique","label":"Technique","type":"choice","required":true,"options":[
+          {"label":"Sérigraphie","value":"seri","addUnit":800},
+          {"label":"Flex / Transfert","value":"flex","addUnit":1200},
+          {"label":"Sublimation (full color)","value":"sublim","addUnit":2500},
+          {"label":"Broderie","value":"brod","addUnit":3500}]},
+        {"key":"colors","label":"Nombre de couleurs","type":"choice","required":true,"options":[
+          {"label":"1 couleur","value":"1","addUnit":0},
+          {"label":"2 couleurs","value":"2","addUnit":400},
+          {"label":"3 couleurs","value":"3","addUnit":800},
+          {"label":"Full quadri (illimité)","value":"quadri","addUnit":1800}]},
+        {"key":"faces","label":"Zones marquage","type":"choice","required":true,"options":[
+          {"label":"Face avant","value":"avant","addUnit":0},
+          {"label":"Face avant + dos","value":"avant_dos","addUnit":1500},
+          {"label":"Face avant + dos + manche","value":"3zones","addUnit":2800}]}
+      ],
+      "quantities":[10,25,50,100,250,500],
+      "quantityDiscounts":[
+        {"min":10,"discount":0},{"min":25,"discount":0.08},{"min":50,"discount":0.15},
+        {"min":100,"discount":0.22},{"min":250,"discount":0.30},{"min":500,"discount":0.38}]
+    },
+    {
+      "slug":"calendriers","name":"Calendriers","category":"impression-commerciale",
+      "description":"Calendriers muraux, de bureau ou de poche, personnalisés.",
+      "image":"assets/images/products/maquette.jpg","active":true,
+      "calcMode":"unit_multipliers","basePrice":1800,"unit":"calendrier","minimumOrder":25,
+      "fields":[
+        {"key":"format","label":"Format","type":"choice","required":true,"options":[
+          {"label":"Poche A6","value":"poche","multiplier":0.4},
+          {"label":"Bureau A5","value":"bureau","multiplier":0.85},
+          {"label":"Mural A4","value":"mural_a4","multiplier":1.0},
+          {"label":"Mural A3 grand","value":"mural_a3","multiplier":1.7}]},
+        {"key":"pages","label":"Pages","type":"choice","required":true,"options":[
+          {"label":"1 feuille annuelle","value":"1","multiplier":1.0},
+          {"label":"7 feuillets","value":"7","multiplier":1.4},
+          {"label":"13 feuillets","value":"13","multiplier":1.9}]},
+        {"key":"finition","label":"Finition","type":"choice","required":false,"options":[
+          {"label":"Aucune","value":"none","multiplier":1.0},
+          {"label":"Spirale","value":"spirale","multiplier":1.15},
+          {"label":"Pelliculage","value":"pelli","multiplier":1.12}]}
+      ],
+      "quantities":[25,50,100,250,500,1000],
+      "quantityDiscounts":[
+        {"min":25,"discount":0},{"min":50,"discount":0.10},{"min":100,"discount":0.20},
+        {"min":250,"discount":0.30},{"min":500,"discount":0.38},{"min":1000,"discount":0.45}]
+    }
+  ]
+}
