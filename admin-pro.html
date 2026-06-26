@@ -95,6 +95,30 @@ tr:hover{background:var(--gray-100)}
 
 .empty{padding:40px;text-align:center;color:var(--ink-soft);background:var(--gray-100);border-radius:8px}
 
+/* ===== MODALE PRODUITS ===== */
+.pc-modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto}
+.pc-modal-overlay{position:absolute;inset:0;background:rgba(0,41,82,.7);backdrop-filter:blur(4px)}
+.pc-modal-card{position:relative;background:#fff;border-radius:14px;max-width:780px;width:100%;box-shadow:0 30px 90px rgba(0,0,0,.4);margin:20px 0}
+.pc-modal-head{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--gray-200)}
+.pc-modal-head h2{margin:0;color:var(--brand-dark);font-size:1.2rem}
+.pc-modal-close{background:transparent;border:none;font-size:1.4rem;cursor:pointer;width:36px;height:36px;border-radius:6px;color:var(--ink-soft)}
+.pc-modal-close:hover{background:var(--gray-100)}
+.pc-form{padding:24px}
+.pc-form .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.pc-form .form-row:has(.field:nth-child(3)){grid-template-columns:1fr 1fr 1fr}
+@media(max-width:680px){.pc-form .form-row{grid-template-columns:1fr !important}}
+.pc-form .field{margin-bottom:10px}
+.pc-form label{display:block;font-size:.78rem;font-weight:700;color:var(--brand-dark);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.pc-form label.pc-check{display:flex;align-items:center;gap:8px;font-size:.88rem;text-transform:none;letter-spacing:0;font-weight:600;padding-top:18px}
+.pc-form input[type=text], .pc-form input[type=number], .pc-form input[type=tel], .pc-form input[type=email], .pc-form select, .pc-form textarea{
+  width:100%;padding:10px 12px;border:1.5px solid var(--gray-200);border-radius:6px;font-family:inherit;font-size:.92rem;background:#fff
+}
+.pc-form input:focus, .pc-form select:focus, .pc-form textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(0,60,120,.12)}
+.pc-form textarea{resize:vertical;min-height:60px}
+.pc-form h3{font-size:.85rem;color:var(--brand-dark);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.pc-image-edit{display:flex;gap:14px;align-items:flex-start;background:var(--gray-100);padding:12px;border-radius:8px}
+.pc-image-preview{flex-shrink:0;width:160px;height:120px;background:#fff;border:1px solid var(--gray-200);border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+
 .quote-detail{padding:14px;background:var(--gray-100);border-radius:8px;margin-top:8px;font-size:.85rem}
 .quote-detail dt{font-weight:700;color:var(--brand-dark);margin-top:8px}
 .quote-detail dd{margin-left:0;color:var(--ink-soft);margin-top:2px}
@@ -172,25 +196,111 @@ tr:hover{background:var(--gray-100)}
       </div>
     </section>
 
-    <!-- PRODUITS -->
+    <!-- PRODUITS (édition directe) -->
     <section class="section" id="s-products">
-      <div class="alert alert-info">
-        <span>ℹ️</span>
-        <div>
-          <strong>Édition produits</strong><br>
-          Pour modifier prix et options en détail, télécharge le fichier <code>products.json</code>, édite-le, puis recharge-le ici. Les modifications sont stockées de façon sécurisée et appliquées immédiatement sur le site.
-        </div>
-      </div>
       <div class="card">
         <div class="card-head">
           <h2>Catalogue produits</h2>
-          <div style="display:flex;gap:8px">
-            <button class="btn btn-ghost" onclick="downloadProducts()">⬇ Télécharger products.json</button>
-            <button class="btn btn-pri" onclick="document.getElementById('upload-products').click()">⬆ Importer products.json</button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-pri" onclick="openProductModal(null)">+ Ajouter un produit</button>
+            <button class="btn btn-ghost" onclick="downloadProducts()" title="Télécharger une sauvegarde">⬇ Export JSON</button>
+            <button class="btn btn-ghost" onclick="document.getElementById(\'upload-products\').click()" title="Importer en lot">⬆ Import JSON</button>
             <input type="file" id="upload-products" accept=".json" style="display:none" onchange="uploadProducts(event)">
+            <button class="btn btn-ghost" onclick="loadProductsView()" title="Rafraîchir">↻</button>
           </div>
         </div>
+        <p id="products-source" style="font-size:.85rem;color:var(--ink-soft);margin-bottom:14px"></p>
         <div id="products-list">Chargement…</div>
+      </div>
+
+      <!-- MODALE d\'édition produit -->
+      <div id="product-modal" class="pc-modal" style="display:none">
+        <div class="pc-modal-overlay" onclick="closeProductModal()"></div>
+        <div class="pc-modal-card">
+          <div class="pc-modal-head">
+            <h2 id="pm-title">Modifier le produit</h2>
+            <button class="pc-modal-close" onclick="closeProductModal()">✕</button>
+          </div>
+          <form id="product-form" onsubmit="return false" class="pc-form">
+            <input type="hidden" id="pm-id">
+            <div class="form-row">
+              <div class="field"><label>Nom du produit *</label><input type="text" id="pm-name" required maxlength="80" placeholder="ex: Flyers A5"></div>
+              <div class="field"><label>Identifiant interne (slug) *</label><input type="text" id="pm-slug" required maxlength="60" placeholder="ex: flyers" pattern="[a-z0-9-]+"></div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label>Catégorie</label>
+                <select id="pm-category"><option value="">— Aucune —</option></select>
+              </div>
+              <div class="field"><label>Ordre d\'affichage</label><input type="number" id="pm-sortOrder" min="0" max="9999" value="50"></div>
+            </div>
+            <div class="field"><label>Description courte</label>
+              <textarea id="pm-description" rows="2" maxlength="240" placeholder="Phrase de présentation visible sur la carte produit…"></textarea>
+            </div>
+            <div class="form-row">
+              <div class="field"><label>Prix de départ (FCFA)</label><input type="number" id="pm-priceFrom" min="0"></div>
+              <div class="field"><label>Texte avant prix</label><input type="text" id="pm-priceLabel" value="dès" maxlength="20"></div>
+              <div class="field"><label>Devise</label><input type="text" id="pm-currency" value="FCFA" maxlength="10"></div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label>Badge (BEST, NOUVEAU…)</label><input type="text" id="pm-badge" maxlength="30" placeholder="vide ou ex: NOUVEAU"></div>
+              <div class="field"><label>Texte du bouton</label><input type="text" id="pm-buttonLabel" maxlength="40" placeholder="ex: Configurer ou Devis sur mesure"></div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label class="pc-check"><input type="checkbox" id="pm-active" checked> ✓ Produit visible sur le site</label></div>
+              <div class="field"><label class="pc-check"><input type="checkbox" id="pm-configurable"> 🛠 Devis en ligne configurable (sinon : devis sur mesure)</label></div>
+            </div>
+
+            <h3 style="margin-top:14px">Image</h3>
+            <div class="pc-image-edit">
+              <div class="pc-image-preview"><img id="pm-image-preview" src="" style="max-width:160px;max-height:120px;display:none;border-radius:8px"></div>
+              <div style="flex:1">
+                <div class="field"><label>URL ou chemin d\'image</label><input type="text" id="pm-image" placeholder="assets/images/products/flyers.jpg"></div>
+                <button type="button" class="btn btn-ghost" onclick="document.getElementById(\'pm-image-file\').click()">⬆ Uploader une nouvelle image</button>
+                <input type="file" id="pm-image-file" accept="image/*" style="display:none" onchange="uploadProductImageInModal(event)">
+                <p style="font-size:.78rem;color:var(--ink-soft);margin-top:6px">Max 5 Mo. JPG, PNG, WEBP, SVG.</p>
+              </div>
+            </div>
+
+            <details style="margin-top:18px">
+              <summary style="cursor:pointer;font-weight:700;color:var(--brand);padding:8px 0">⚙ Options de devis avancées (mode configurable uniquement)</summary>
+              <div style="background:var(--gray-100);padding:14px;border-radius:8px;margin-top:8px">
+                <p style="font-size:.85rem;color:var(--ink-soft);margin-bottom:10px">
+                  Pour les produits avec devis en ligne : édite les options (format, papier, finition, etc.), multiplicateurs et remises volume au format JSON.
+                  <a href="https://github.com/NGAMS237/pictocraft/blob/main/data/products.json" target="_blank">Voir des exemples</a>.
+                </p>
+                <div class="field">
+                  <label>Mode de calcul</label>
+                  <select id="pm-calcMode">
+                    <option value="">— Aucun (produit sur mesure) —</option>
+                    <option value="unit_multipliers">Multiplicateurs (flyers, cartes, posters)</option>
+                    <option value="surface">Surface m² (bâches, grand format)</option>
+                    <option value="edition">Édition (brochures, magazines avec pages)</option>
+                    <option value="textile">Textile (technique + couleurs + zones)</option>
+                  </select>
+                </div>
+                <div class="form-row">
+                  <div class="field"><label>Prix de base unitaire</label><input type="number" id="pm-basePrice" min="0"></div>
+                  <div class="field"><label>Unité (exemplaire, m², carte…)</label><input type="text" id="pm-unit" maxlength="20"></div>
+                  <div class="field"><label>Quantité minimum</label><input type="number" id="pm-minimumOrder" min="1" value="1"></div>
+                </div>
+                <div class="field">
+                  <label>Champs/options (JSON)</label>
+                  <textarea id="pm-fields" rows="8" placeholder=\'[{"key":"format","label":"Format","type":"choice","required":true,"options":[...]}]\' style="font-family:monospace;font-size:.82rem"></textarea>
+                </div>
+                <div class="form-row">
+                  <div class="field"><label>Quantités proposées (séparées par virgules)</label><input type="text" id="pm-quantities" placeholder="100, 250, 500, 1000"></div>
+                  <div class="field"><label>Remises volume (JSON)</label><input type="text" id="pm-discounts" placeholder=\'[{"min":100,"discount":0},{"min":500,"discount":0.22}]\'></div>
+                </div>
+              </div>
+            </details>
+
+            <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px;padding-top:18px;border-top:1px solid var(--gray-200)">
+              <button type="button" class="btn btn-ghost" onclick="closeProductModal()">Annuler</button>
+              <button type="button" class="btn btn-danger" id="pm-delete-btn" onclick="deleteProduct()" style="margin-right:auto;display:none">🗑 Supprimer</button>
+              <button type="button" class="btn btn-pri" onclick="saveProduct()">💾 Enregistrer</button>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
 
@@ -433,38 +543,233 @@ let CURRENT_PRODUCTS = null;
 
 async function loadProductsView(){
   try {
-    // Essaie d'abord la config Supabase active, sinon le products.json statique
-    let data;
+    let data, source = 'static';
     try {
       const cfgArr = await fetch(SUPABASE_URL+'/rest/v1/pictocraft_products_config?active=eq.true&order=created_at.desc&limit=1', {headers:{apikey:SUPABASE_KEY}}).then(r=>r.json());
       if (cfgArr && cfgArr.length && cfgArr[0].config) {
-        data = cfgArr[0].config;
-        $('#products-list').dataset.source = 'supabase';
+        data = cfgArr[0].config; source = 'supabase';
       }
     } catch(e){}
-    if (!data) {
-      data = await fetch('data/products.json').then(r=>r.json());
-      $('#products-list').dataset.source = 'static';
-    }
+    if (!data) data = await fetch('data/products.json?v='+Date.now()).then(r=>r.json());
     CURRENT_PRODUCTS = data;
 
-    const src = $('#products-list').dataset.source;
-    const srcMsg = src === 'supabase' ? '✓ Version Supabase active' : 'Version statique data/products.json (aucune config Supabase active)';
+    $('#products-source').innerHTML = source === 'supabase'
+      ? `<span style="color:var(--success)">✓</span> Données live depuis Supabase · <b>${data.products.length}</b> produits · <b>${data.categories.length}</b> catégories`
+      : `📁 Données statiques (data/products.json) — toute modif sera publiée sur Supabase au save · <b>${data.products.length}</b> produits`;
 
+    const sorted = [...data.products].sort((a,b) => (a.sortOrder||999) - (b.sortOrder||999));
     $('#products-list').innerHTML = `
-      <p style="margin-bottom:14px;font-size:.85rem;color:var(--ink-soft)">${srcMsg} · ${data.products.length} produits · ${data.categories.length} catégories</p>
-      <table><thead><tr><th>Produit</th><th>Catégorie</th><th>Mode</th><th>Prix base</th><th>Statut</th></tr></thead><tbody>` +
-      data.products.map(p => {
+      <table><thead><tr><th style="width:50px">Ordre</th><th style="width:70px">Image</th><th>Produit</th><th>Catégorie</th><th>Mode</th><th>Prix dès</th><th>Visible</th><th>Action</th></tr></thead><tbody>` +
+      sorted.map(p => {
         const cat = data.categories.find(c => c.slug === p.category);
-        return `<tr>
-          <td><b>${escapeHtml(p.name)}</b><br><small>${escapeHtml(p.slug)}</small></td>
-          <td>${cat ? escapeHtml(cat.name) : '-'}</td>
-          <td><span class="badge" style="background:var(--gray-100);color:var(--ink)">${p.quotable===false?'Sur mesure':p.calcMode||'unit'}</span></td>
-          <td>${p.basePrice ? fmt(p.basePrice) : '-'}</td>
-          <td><span class="badge ${p.active!==false?'badge-valide':'badge-perdu'}">${p.active!==false?'Actif':'Inactif'}</span></td>
+        const visible = p.active !== false;
+        const isConfig = p.configurable !== false && p.quotable !== false && !!p.calcMode;
+        const imgSrc = p.image && p.image.startsWith('http') ? p.image : (p.image || '');
+        return `<tr style="${visible?'':'opacity:.5'}">
+          <td><b>${p.sortOrder||'-'}</b></td>
+          <td><img src="${escapeHtml(imgSrc)}" alt="" style="width:50px;height:50px;object-fit:cover;border-radius:6px;background:var(--gray-100)" onerror="this.style.background='var(--gray-200)';this.src=''"></td>
+          <td><b>${escapeHtml(p.name)}</b><br><small style="color:var(--ink-soft)">${escapeHtml(p.slug)}</small></td>
+          <td>${cat ? escapeHtml(cat.name) : '<i style="color:#888">aucune</i>'}</td>
+          <td><span class="badge" style="background:var(--gray-100);color:var(--ink)">${isConfig?(p.calcMode||'unit'):'Sur mesure'}</span></td>
+          <td>${p.priceFrom||p.basePrice ? fmt(p.priceFrom||p.basePrice) : '-'}</td>
+          <td><button class="btn btn-${visible?'success':'danger'}" style="padding:5px 10px;font-size:.72rem" onclick="toggleProductActive('${p.slug}')">${visible?'✓ Visible':'✗ Masqué'}</button></td>
+          <td>
+            <button class="btn btn-sec" style="padding:5px 12px;font-size:.78rem" onclick="openProductModal('${p.slug}')">✏ Modifier</button>
+          </td>
         </tr>`;
       }).join('') + '</tbody></table>';
-  } catch(e) { $('#products-list').innerHTML = '<div class="alert alert-warn">' + e.message + '</div>'; }
+  } catch(e) { $('#products-list').innerHTML = '<div class="alert alert-warn">Erreur : ' + e.message + '</div>'; }
+}
+
+// ===================================================
+// Édition directe produits
+// ===================================================
+async function publishProductsConfig() {
+  if (!CURRENT_PRODUCTS) throw new Error('Pas de config chargée');
+  await api('pictocraft_products_config?active=eq.true', { method:'PATCH', body: JSON.stringify({active:false}) });
+  await api('pictocraft_products_config', { method:'POST',
+    body: JSON.stringify({version: new Date().toISOString(), config: CURRENT_PRODUCTS, active: true})
+  });
+}
+
+async function toggleProductActive(slug) {
+  if (!CURRENT_PRODUCTS) return;
+  const p = CURRENT_PRODUCTS.products.find(x => x.slug === slug);
+  if (!p) return;
+  p.active = !(p.active !== false);
+  try {
+    await publishProductsConfig();
+    loadProductsView();
+  } catch(e) { alert('Erreur : ' + e.message); }
+}
+
+function openProductModal(slug) {
+  const modal = $('#product-modal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+
+  // Populer les catégories
+  const catSel = $('#pm-category');
+  catSel.innerHTML = '<option value="">— Aucune —</option>' +
+    (CURRENT_PRODUCTS?.categories || []).map(c => `<option value="${escapeHtml(c.slug)}">${escapeHtml(c.name)}</option>`).join('');
+
+  if (slug) {
+    const p = CURRENT_PRODUCTS.products.find(x => x.slug === slug);
+    if (!p) return;
+    $('#pm-title').textContent = 'Modifier : ' + p.name;
+    $('#pm-id').value = slug;
+    $('#pm-name').value = p.name || '';
+    $('#pm-slug').value = p.slug || '';
+    $('#pm-slug').readOnly = true;
+    $('#pm-category').value = p.category || '';
+    $('#pm-sortOrder').value = p.sortOrder || 50;
+    $('#pm-description').value = p.description || '';
+    $('#pm-priceFrom').value = p.priceFrom || p.basePrice || 0;
+    $('#pm-priceLabel').value = p.priceLabel || 'dès';
+    $('#pm-currency').value = p.currency || 'FCFA';
+    $('#pm-badge').value = p.badge || '';
+    $('#pm-buttonLabel').value = p.buttonLabel || '';
+    $('#pm-active').checked = p.active !== false;
+    $('#pm-configurable').checked = (p.configurable !== false) && !!p.calcMode;
+    $('#pm-image').value = p.image || '';
+    if (p.image) { $('#pm-image-preview').src = p.image; $('#pm-image-preview').style.display = ''; }
+    else $('#pm-image-preview').style.display = 'none';
+    $('#pm-calcMode').value = p.calcMode || '';
+    $('#pm-basePrice').value = p.basePrice || '';
+    $('#pm-unit').value = p.unit || '';
+    $('#pm-minimumOrder').value = p.minimumOrder || 1;
+    $('#pm-fields').value = p.fields ? JSON.stringify(p.fields, null, 2) : '';
+    $('#pm-quantities').value = p.quantities ? p.quantities.join(', ') : '';
+    $('#pm-discounts').value = p.quantityDiscounts ? JSON.stringify(p.quantityDiscounts) : '';
+    $('#pm-delete-btn').style.display = '';
+  } else {
+    $('#pm-title').textContent = '+ Nouveau produit';
+    $('#pm-id').value = '';
+    $('#product-form').reset();
+    $('#pm-slug').readOnly = false;
+    $('#pm-priceLabel').value = 'dès';
+    $('#pm-currency').value = 'FCFA';
+    $('#pm-active').checked = true;
+    $('#pm-sortOrder').value = ((CURRENT_PRODUCTS?.products?.length || 0) + 1) * 10;
+    $('#pm-image-preview').style.display = 'none';
+    $('#pm-delete-btn').style.display = 'none';
+  }
+}
+
+function closeProductModal() {
+  $('#product-modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// Mise à jour preview image quand on change l'URL
+document.addEventListener('input', (e) => {
+  if (e.target.id === 'pm-image') {
+    const v = e.target.value.trim();
+    if (v) { $('#pm-image-preview').src = v; $('#pm-image-preview').style.display = ''; }
+    else $('#pm-image-preview').style.display = 'none';
+  }
+});
+
+async function uploadProductImageInModal(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  if (file.size > 5*1024*1024) { alert('Max 5 Mo.'); return; }
+  const cleanName = Date.now() + '-' + file.name.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9.-]/g,'-').replace(/-+/g,'-');
+  try {
+    const r = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${cleanName}`, {
+      method:'POST',
+      headers: {'apikey':SUPABASE_KEY, 'Authorization':'Bearer '+ACCESS_TOKEN, 'Content-Type': file.type, 'x-upsert':'true'},
+      body: file
+    });
+    if (!r.ok) throw new Error('Upload : ' + r.status);
+    const url = `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${cleanName}`;
+    $('#pm-image').value = url;
+    $('#pm-image-preview').src = url;
+    $('#pm-image-preview').style.display = '';
+  } catch(e) { alert('Erreur upload : ' + e.message); }
+}
+
+async function saveProduct() {
+  const id = $('#pm-id').value;
+  const isNew = !id;
+  const name = $('#pm-name').value.trim();
+  const slug = $('#pm-slug').value.trim().toLowerCase().replace(/[^a-z0-9-]/g,'-');
+  if (!name || !slug) { alert('Nom et identifiant requis.'); return; }
+  if (!CURRENT_PRODUCTS) await loadProductsView();
+
+  // Vérifier unicité slug si nouveau
+  if (isNew && CURRENT_PRODUCTS.products.some(p => p.slug === slug)) {
+    alert('Un produit avec l\'identifiant "' + slug + '" existe déjà.');
+    return;
+  }
+
+  // Construire l'objet produit
+  const p = isNew ? {} : (CURRENT_PRODUCTS.products.find(x => x.slug === id) || {});
+  p.id = slug;
+  p.slug = slug;
+  p.name = name;
+  p.category = $('#pm-category').value;
+  p.sortOrder = parseInt($('#pm-sortOrder').value) || 50;
+  p.description = $('#pm-description').value.trim();
+  p.priceFrom = parseInt($('#pm-priceFrom').value) || 0;
+  p.priceLabel = $('#pm-priceLabel').value || 'dès';
+  p.currency = $('#pm-currency').value || 'FCFA';
+  p.badge = $('#pm-badge').value.trim();
+  p.buttonLabel = $('#pm-buttonLabel').value.trim();
+  p.active = $('#pm-active').checked;
+  p.configurable = $('#pm-configurable').checked;
+  p.quotable = p.configurable;
+  p.image = $('#pm-image').value.trim();
+
+  // Options avancées (si renseignées)
+  const calcMode = $('#pm-calcMode').value;
+  if (calcMode) {
+    p.calcMode = calcMode;
+    p.basePrice = parseInt($('#pm-basePrice').value) || 0;
+    p.unit = $('#pm-unit').value || 'exemplaire';
+    p.minimumOrder = parseInt($('#pm-minimumOrder').value) || 1;
+    const fieldsRaw = $('#pm-fields').value.trim();
+    if (fieldsRaw) {
+      try { p.fields = JSON.parse(fieldsRaw); }
+      catch(e) { alert('Erreur JSON dans "Champs/options" : ' + e.message); return; }
+    }
+    const qtyRaw = $('#pm-quantities').value.trim();
+    if (qtyRaw) p.quantities = qtyRaw.split(',').map(x => parseInt(x.trim())).filter(x => !isNaN(x));
+    const discRaw = $('#pm-discounts').value.trim();
+    if (discRaw) {
+      try { p.quantityDiscounts = JSON.parse(discRaw); }
+      catch(e) { alert('Erreur JSON dans "Remises volume" : ' + e.message); return; }
+    }
+  }
+
+  // Ajouter ou remplacer
+  if (isNew) {
+    CURRENT_PRODUCTS.products.push(p);
+  } else {
+    const idx = CURRENT_PRODUCTS.products.findIndex(x => x.slug === id);
+    CURRENT_PRODUCTS.products[idx] = p;
+  }
+
+  try {
+    await publishProductsConfig();
+    closeProductModal();
+    alert('✓ Produit ' + (isNew?'créé':'modifié') + ' et publié.');
+    loadProductsView();
+  } catch(e) { alert('Erreur de publication : ' + e.message); }
+}
+
+async function deleteProduct() {
+  const id = $('#pm-id').value;
+  if (!id) return;
+  if (!confirm('Supprimer définitivement « ' + $('#pm-name').value + ' » ?\nCette action est irréversible.')) return;
+  CURRENT_PRODUCTS.products = CURRENT_PRODUCTS.products.filter(p => p.slug !== id);
+  try {
+    await publishProductsConfig();
+    closeProductModal();
+    alert('✓ Produit supprimé.');
+    loadProductsView();
+  } catch(e) { alert('Erreur : ' + e.message); }
 }
 
 function downloadProducts(){
