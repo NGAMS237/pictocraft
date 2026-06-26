@@ -1505,6 +1505,199 @@
       "active": true,
       "quotable": false,
       "contactReason": "finitions"
+    },
+    {
+      "slug": "magazines",
+      "name": "Magazines & Journaux",
+      "category": "edition",
+      "description": "Magazines et journaux d'entreprise, tirages courts ou longs, à pagination personnalisable.",
+      "image": "assets/images/products/magazines.jpg",
+      "active": true,
+      "quotable": true,
+      "calcMode": "edition",
+      "basePrice": 280,
+      "unit": "magazine",
+      "minimumOrder": 100,
+      "fields": [
+        {
+          "key": "format",
+          "label": "Format",
+          "type": "choice",
+          "required": true,
+          "options": [
+            {
+              "label": "A4 (210×297mm)",
+              "value": "A4",
+              "multiplier": 1.0
+            },
+            {
+              "label": "A5 (148×210mm)",
+              "value": "A5",
+              "multiplier": 0.75
+            },
+            {
+              "label": "Tabloid (280×400mm)",
+              "value": "tab",
+              "multiplier": 1.5
+            }
+          ]
+        },
+        {
+          "key": "pages",
+          "label": "Nombre de pages",
+          "type": "choice",
+          "required": true,
+          "pricePerPage": 18,
+          "options": [
+            {
+              "label": "16 pages",
+              "value": "16",
+              "pageCount": 16
+            },
+            {
+              "label": "24 pages",
+              "value": "24",
+              "pageCount": 24
+            },
+            {
+              "label": "32 pages",
+              "value": "32",
+              "pageCount": 32
+            },
+            {
+              "label": "48 pages",
+              "value": "48",
+              "pageCount": 48
+            },
+            {
+              "label": "64 pages",
+              "value": "64",
+              "pageCount": 64
+            }
+          ]
+        },
+        {
+          "key": "paperInside",
+          "label": "Papier intérieur",
+          "type": "choice",
+          "required": true,
+          "options": [
+            {
+              "label": "90g",
+              "value": "p90",
+              "multiplier": 0.9
+            },
+            {
+              "label": "115g",
+              "value": "p115",
+              "multiplier": 1.0
+            },
+            {
+              "label": "135g brillant",
+              "value": "p135",
+              "multiplier": 1.15
+            }
+          ]
+        },
+        {
+          "key": "paperCover",
+          "label": "Couverture",
+          "type": "choice",
+          "required": true,
+          "options": [
+            {
+              "label": "Identique intérieur",
+              "value": "same",
+              "addUnit": 0
+            },
+            {
+              "label": "200g brillant",
+              "value": "p200",
+              "addUnit": 50
+            },
+            {
+              "label": "250g mat",
+              "value": "p250",
+              "addUnit": 90
+            }
+          ]
+        },
+        {
+          "key": "binding",
+          "label": "Reliure",
+          "type": "choice",
+          "required": true,
+          "options": [
+            {
+              "label": "Agrafée",
+              "value": "agrafe",
+              "addUnit": 0
+            },
+            {
+              "label": "Dos carré collé",
+              "value": "dcc",
+              "addUnit": 350
+            }
+          ]
+        },
+        {
+          "key": "finition",
+          "label": "Finition",
+          "type": "choice",
+          "required": false,
+          "options": [
+            {
+              "label": "Aucune",
+              "value": "none",
+              "multiplier": 1.0
+            },
+            {
+              "label": "Pelliculage mat",
+              "value": "pelli_mat",
+              "multiplier": 1.08
+            },
+            {
+              "label": "Pelliculage brillant",
+              "value": "pelli_bril",
+              "multiplier": 1.08
+            }
+          ]
+        }
+      ],
+      "quantities": [
+        100,
+        250,
+        500,
+        1000,
+        2500,
+        5000
+      ],
+      "quantityDiscounts": [
+        {
+          "min": 100,
+          "discount": 0
+        },
+        {
+          "min": 250,
+          "discount": 0.12
+        },
+        {
+          "min": 500,
+          "discount": 0.24
+        },
+        {
+          "min": 1000,
+          "discount": 0.36
+        },
+        {
+          "min": 2500,
+          "discount": 0.46
+        },
+        {
+          "min": 5000,
+          "discount": 0.55
+        }
+      ]
     }
   ]
 }

@@ -291,6 +291,21 @@
         } catch (err) {
           console.warn('Supabase quotes indisponible, fallback WhatsApp', err);
         }
+
+        // Notification email à l'admin (Edge Function — silencieux si échec)
+        try {
+          await fetch(`${settings.admin.supabaseUrl}/functions/v1/notify-new-quote`, {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ kind:'devis', quote: {
+              produit: product.slug, produit_nom: product.name,
+              quantite: selections._quantity, total: quote.total,
+              client_nom: client.nom, client_entreprise: client.entreprise,
+              client_email: client.email, client_telephone: client.telephone,
+              client_ville: client.ville, commentaire: client.commentaire
+            }})
+          });
+        } catch(e) { /* silent */ }
       }
 
       // Ouvre WhatsApp avec le message

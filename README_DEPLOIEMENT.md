@@ -130,3 +130,45 @@ Ouvrir `test-pricing.html` dans un navigateur. 6 scénarios sont validés automa
 **Repo GitHub :** https://github.com/NGAMS237/pictocraft  
 **Site en ligne :** https://ngams237.github.io/pictocraft/  
 **Supabase :** https://supabase.com/dashboard/project/dfdmasejsoibxrvubegu
+
+---
+
+## 11. Notifications email (Phase 3)
+
+Une **Edge Function Supabase** `notify-new-quote` est déployée. Elle envoie un email à `afterworkquebec2025@gmail.com` à chaque nouveau devis OU avis client reçu.
+
+### Activer les emails (gratuit)
+
+1. Crée un compte gratuit sur **[resend.com](https://resend.com)** (100 emails/jour gratuits)
+2. Récupère ta clé API (commence par `re_...`)
+3. Va dans le Dashboard Supabase :
+   - https://supabase.com/dashboard/project/dfdmasejsoibxrvubegu/settings/functions
+   - Onglet **Secrets** → **Add new secret**
+   - Ajoute 3 secrets :
+     - `RESEND_API_KEY` = `re_xxx` (ta clé)
+     - `NOTIFY_EMAIL` = `afterworkquebec2025@gmail.com`
+     - `FROM_EMAIL` = `onboarding@resend.dev` (par défaut Resend, ou ton propre domaine vérifié)
+4. C'est tout — la prochaine soumission de devis déclenche l'email automatiquement
+
+### Tester l'Edge Function
+
+```bash
+curl -X POST https://dfdmasejsoibxrvubegu.supabase.co/functions/v1/notify-new-quote \
+  -H "Content-Type: application/json" \
+  -d '{"kind":"devis","quote":{"produit_nom":"Flyers test","quantite":500,"total":29250,"client_nom":"Test","client_telephone":"+237 6 75 14 08 43","commentaire":"Test"}}'
+```
+
+Si RESEND_API_KEY n'est pas configurée, la fonction renvoie un statut "simulated" mais ne plante pas.
+
+## 12. Upload d'images via admin Supabase
+
+Le bucket Storage **`pictocraft-images`** est public en lecture, écriture protégée par auth admin.
+
+### Pour uploader une image
+1. Connecte-toi à `/admin-pro.html`
+2. Onglet **🖼️ Images** → bouton **⬆ Uploader une image**
+3. Une fois uploadée, clique sur **📋 Copier l'URL**
+4. Va dans **Produits** → télécharge `products.json`, colle l'URL dans le champ `image` du produit voulu, re-uploade le JSON
+
+### URL publique des images
+Format : `https://dfdmasejsoibxrvubegu.supabase.co/storage/v1/object/public/pictocraft-images/<nom-fichier>`
