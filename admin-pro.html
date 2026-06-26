@@ -396,10 +396,18 @@ function authHeaders(){
 
 async function api(path, opts){
   const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, Object.assign({headers: authHeaders()}, opts || {}));
-  if (r.status === 401) { logout(); throw new Error('Session expirée, reconnecte-toi.'); }
-  if (!r.ok) throw new Error('API error: ' + r.status);
+  if (r.status === 401) { logout(); throw new Error('Session expiree, reconnecte-toi.'); }
+  if (!r.ok) {
+    let detail = '';
+    try { detail = await r.text(); } catch(e) {}
+    throw new Error('API error ' + r.status + (detail ? ': ' + detail.slice(0,200) : ''));
+  }
   if (r.status === 204) return null;
-  return r.json();
+  const ct = r.headers.get('content-type') || '';
+  if (!ct.includes('json')) return null;
+  const txt = await r.text();
+  if (!txt) return null;
+  try { return JSON.parse(txt); } catch(e) { return null; }
 }
 
 // ===================================================
@@ -585,11 +593,26 @@ async function loadProductsView(){
 // Édition directe produits
 // ===================================================
 async function publishProductsConfig() {
-  if (!CURRENT_PRODUCTS) throw new Error('Pas de config chargée');
-  await api('pictocraft_products_config?active=eq.true', { method:'PATCH', body: JSON.stringify({active:false}) });
-  await api('pictocraft_products_config', { method:'POST',
-    body: JSON.stringify({version: new Date().toISOString(), config: CURRENT_PRODUCTS, active: true})
+  if (!CURRENT_PRODUCTS) throw new Error('Pas de config chargee');
+  const r1 = await fetch(`${SUPABASE_URL}/rest/v1/pictocraft_products_config?active=eq.true`, {
+    method: 'PATCH',
+    headers: Object.assign({}, authHeaders(), {'Prefer': 'return=minimal'}),
+    body: JSON.stringify({ active: false })
   });
+  if (!r1.ok && r1.status !== 204) {
+    const t = await r1.text().catch(()=>'');
+    throw new Error('Desactivation: HTTP ' + r1.status + ' ' + t.slice(0,150));
+  }
+  const r2 = await fetch(`${SUPABASE_URL}/rest/v1/pictocraft_products_config`, {
+    method: 'POST',
+    headers: Object.assign({}, authHeaders(), {'Prefer': 'return=minimal'}),
+    body: JSON.stringify({ version: new Date().toISOString(), config: CURRENT_PRODUCTS, active: true })
+  });
+  if (!r2.ok && r2.status !== 204 && r2.status !== 201) {
+    const t = await r2.text().catch(()=>'');
+    throw new Error('Insertion: HTTP ' + r2.status + ' ' + t.slice(0,150));
+  }
+  return true;
 }
 
 async function toggleProductActive(slug) {
@@ -673,21 +696,54 @@ document.addEventListener('input', (e) => {
 async function uploadProductImageInModal(event) {
   const file = event.target.files[0];
   if (!file) return;
-  if (file.size > 5*1024*1024) { alert('Max 5 Mo.'); return; }
-  const cleanName = Date.now() + '-' + file.name.toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9.-]/g,'-').replace(/-+/g,'-');
+  if (file.size > 5*1024*1024) { alert('Image trop volumineuse (max 5 Mo). Compresse-la d abord.'); event.target.value=''; return; }
+  if (!file.type.startsWith('image/')) { alert('Le fichier n est pas une image valide.'); event.target.value=''; return; }
+
+  const btn = event.target.previousElementSibling;
+  const originalBtnTxt = btn ? btn.innerHTML : null;
+  if (btn) { btn.innerHTML = 'Upload en cours...'; btn.disabled = true; }
+
+  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+  const slug = ($('#pm-slug').value || 'image').trim().toLowerCase().replace(/[^a-z0-9-]/g,'-');
+  const cleanName = slug + '-' + Date.now() + '.' + ext;
+
   try {
     const r = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${cleanName}`, {
       method:'POST',
-      headers: {'apikey':SUPABASE_KEY, 'Authorization':'Bearer '+ACCESS_TOKEN, 'Content-Type': file.type, 'x-upsert':'true'},
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + ACCESS_TOKEN,
+        'Content-Type': file.type || 'application/octet-stream',
+        'x-upsert': 'true',
+        'cache-control': '3600'
+      },
       body: file
     });
-    if (!r.ok) throw new Error('Upload : ' + r.status);
+    if (!r.ok) {
+      const errTxt = await r.text().catch(()=>r.statusText);
+      throw new Error('Supabase Storage: HTTP ' + r.status + ' - ' + errTxt.slice(0,200));
+    }
     const url = `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${cleanName}`;
     $('#pm-image').value = url;
     $('#pm-image-preview').src = url;
     $('#pm-image-preview').style.display = '';
-  } catch(e) { alert('Erreur upload : ' + e.message); }
+    if (btn) {
+      btn.innerHTML = 'OK image uploadee - clique Enregistrer pour publier';
+      btn.style.background = 'var(--success)';
+      btn.style.color = '#fff';
+      setTimeout(()=>{
+        btn.innerHTML = originalBtnTxt;
+        btn.disabled = false;
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 5000);
+    }
+  } catch(e) {
+    alert('Erreur upload image: ' + e.message + '\n\nVerifie ta connexion admin.');
+    if (btn) { btn.innerHTML = originalBtnTxt; btn.disabled = false; }
+  } finally {
+    event.target.value = '';
+  }
 }
 
 async function saveProduct() {

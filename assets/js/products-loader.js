@@ -16,7 +16,7 @@
     if (_productsCache) return _productsCache;
     // 1. Essai Supabase : config active (admin)
     try {
-      const r = await fetch(`${SUPABASE_URL}/rest/v1/pictocraft_products_config?active=eq.true&order=created_at.desc&limit=1`, {
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/pictocraft_products_config?active=eq.true&order=created_at.desc&limit=1&_=` + Math.floor(Date.now()/60000), {
         headers: { 'apikey': SUPABASE_KEY }
       });
       if (r.ok) {
