@@ -18,6 +18,8 @@
     <nav class="adm-nav">
       <a href="dashboard.php" <?= basename($_SERVER['PHP_SELF']) === 'dashboard.php' ? 'class="active"' : '' ?>>📊 Tableau de bord</a>
       <a href="products.php" <?= basename($_SERVER['PHP_SELF']) === 'products.php' ? 'class="active"' : '' ?>>🛍️ Produits</a>
+      <a href="services.php" <?= basename($_SERVER['PHP_SELF']) === 'services.php' ? 'class="active"' : '' ?>>🎯 Services</a>
+      <a href="realisations.php" <?= basename($_SERVER['PHP_SELF']) === 'realisations.php' ? 'class="active"' : '' ?>>🖼️ Réalisations</a>
       <a href="images.php" <?= basename($_SERVER['PHP_SELF']) === 'images.php' ? 'class="active"' : '' ?>>🖼️ Images</a>
       <a href="settings.php" <?= basename($_SERVER['PHP_SELF']) === 'settings.php' ? 'class="active"' : '' ?>>⚙ Paramètres</a>
       <a href="backup.php" <?= basename($_SERVER['PHP_SELF']) === 'backup.php' ? 'class="active"' : '' ?>>💾 Sauvegarde</a>

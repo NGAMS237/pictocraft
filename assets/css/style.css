@@ -885,3 +885,12 @@ footer ul a:hover{color:#fff;padding-left:6px}
   font-size:.95rem;background:#fff;transition:border-color .2s,box-shadow .2s;
 }
 .form-field input:f
+/* Drapeau Cameroun à côté du logo */
+.country-flag{
+  display:inline-block;margin-left:8px;
+  vertical-align:middle;border-radius:2px;
+  box-shadow:0 0 0 1px rgba(0,0,0,.08);
+  align-self:center;
+}
+@media(max-width:520px){.country-flag{display:none}}
+.util-flag img{display:inline-block;margin-right:4px}

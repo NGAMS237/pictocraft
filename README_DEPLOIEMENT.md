@@ -254,3 +254,75 @@ Sur GitHub Pages, utilise plutôt :
 3. **Ajouter d'autres produits configurables** (étiquettes, menus, etc. avec calcMode adapté)
 4. **Migrer le domaine** `pictocraftcmr.com` vers Hostinger si pas déjà fait
 5. **Ajouter `services.json` et `realisations.json`** pour éditer ces 2 pages depuis l'admin aussi
+
+---
+
+## 14. Phase 5 — Services, Réalisations, Drapeau, Upload PHP propre
+
+### Nouveaux fichiers
+- `data/services.json` — Catalogue des 6 pôles d'expertise
+- `data/realisations.json` — Galerie de réalisations
+- `api/upload.php` — Endpoint upload images sécurisé (auth + validation magic bytes)
+- `admin/services.php` — Gestion services depuis le back-office
+- `admin/realisations.php` — Gestion réalisations
+- `assets/images/icons/cameroon-flag.svg` — Drapeau officiel
+
+### Comment ça fonctionne maintenant
+
+**Page Services :**
+- Page descriptive avec 6 cartes "Vue d'ensemble" qui ouvrent les ancres internes (`#imprimerie`, `#communication-visuelle`…)
+- Chaque section ancrée affiche le titre, description complète, exemples, bouton CTA principal et "Nous contacter"
+- Le bouton "Configurer un devis" est secondaire et vers `devis.html`
+- Données lues depuis `data/services.json`
+
+**Page Réalisations :**
+- Filtres dynamiques par catégorie (Tous, Imprimerie, Grand format, Textile, Packaging, Digital, Événementiel)
+- Compteurs par catégorie
+- Données lues depuis `data/realisations.json`
+- Image, titre, catégorie, client, description
+
+**Drapeau Cameroun :**
+- SVG officiel (vert/rouge/jaune avec étoile) à côté du logo
+- Visible desktop, masqué mobile (espace)
+- Aussi présent dans la utility-bar : "🇨🇲 Yaoundé · FR"
+
+### Ajouter / modifier un service
+
+`admin/services.php` :
+- Titre, ancre URL (#), description courte, description complète
+- Liste d'exemples (1 par ligne)
+- Icône (printer / palette / monitor / event / shirt / package)
+- Texte et lien du bouton CTA
+- Upload image (max 5 Mo, vers `assets/images/services/`)
+- Toggle visible/masqué + ordre d'affichage
+
+### Ajouter / modifier une réalisation
+
+`admin/realisations.php` :
+- Titre, catégorie, client, description
+- Upload image (max 5 Mo, vers `assets/images/realisations/`)
+- Toggle visible/masqué + ordre d'affichage
+
+### Comment corriger les permissions Hostinger (upload qui ne marche pas)
+
+Sur Hostinger :
+1. Va dans Gestionnaire de fichiers
+2. Sélectionne `data/`, `backups/`, `assets/images/products/`, `assets/images/uploads/`, `assets/images/services/`, `assets/images/realisations/`
+3. Clic droit → **Permissions** → coche **755** (lecture/écriture pour propriétaire)
+4. Coche **Appliquer récursivement**
+
+Si l'upload renvoie une erreur, regarde le message JSON renvoyé par `api/upload.php` — il indique précisément le problème (taille, permission, MIME, etc.).
+
+### Tester l'upload
+
+1. Connecte-toi à `/admin/login.php`
+2. Va sur **Produits** → Modifier un produit → **Uploader une nouvelle image**
+3. Choisis un fichier (jpg/png/webp, max 5 Mo)
+4. Si erreur, le message est explicite : *"Image trop volumineuse"*, *"Type MIME non autorisé : application/pdf"*, *"Dossier de destination non accessible en écriture"*, etc.
+
+### Ce qui ne fonctionne PAS sur GitHub Pages
+- `api/upload.php` — pas de PHP
+- `admin/*.php` — pas de PHP
+- Tous les uploads via formulaire HTML
+
+→ Pour GitHub Pages, continuer à utiliser `/admin-pro.html` (Supabase Auth) qui marche partout.

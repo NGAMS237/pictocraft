@@ -60,7 +60,7 @@
     </div>
     <div class="utility-right">
       <a href="faq.html">Aide & FAQ</a>
-      <span>🇨🇲 Yaoundé · FR</span>
+      <span class="util-flag"><img src="assets/images/icons/cameroon-flag.svg" alt="Cameroun" width="20" height="13" style="vertical-align:middle;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.1)"> Yaoundé · FR</span>
     </div>
   </div>
 </div>
@@ -69,7 +69,7 @@
 <header class="site-header">
   <div class="container header-inner">
     <a href="index.html" class="logo" aria-label="Pictocraft" data-logo-host>
-      <span class="p">P</span><span class="name">ictocraft</span><span class="sarl">SARL</span>
+      <span class="p">P</span><span class="name">ictocraft</span><span class="sarl">SARL</span><img src="assets/images/icons/cameroon-flag.svg" alt="Cameroun" class="country-flag" width="20" height="13" title="Made in Cameroun">
     </a>
     <nav class="main-nav">
       ${navItems}

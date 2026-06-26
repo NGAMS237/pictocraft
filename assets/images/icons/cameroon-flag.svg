@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20" width="24" height="16" role="img" aria-label="Drapeau du Cameroun">
+  <rect width="10" height="20" x="0" fill="#007a5e"/>
+  <rect width="10" height="20" x="10" fill="#ce1126"/>
+  <rect width="10" height="20" x="20" fill="#fcd116"/>
+  <path d="M15 7.5 L15.95 10.43 L19.04 10.43 L16.55 12.24 L17.5 15.17 L15 13.36 L12.5 15.17 L13.45 12.24 L10.96 10.43 L14.05 10.43 Z" fill="#fcd116"/>
+</svg>

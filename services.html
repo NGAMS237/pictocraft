@@ -4,12 +4,54 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Services — Pictocraft</title>
-<meta name="description" content="Nos 4 pôles d'expertise : Imprimerie, Communication visuelle, Digital & Web, Événementiel.">
+<meta name="description" content="Découvrez les 6 pôles d'expertise Pictocraft : Imprimerie, Communication visuelle, Digital & Web, Événementiel, Sérigraphie textile, Packaging.">
 <meta name="robots" content="index,follow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=20260626c">
+<link rel="stylesheet" href="assets/css/style.css?v=20260626d">
+<style>
+/* Sections services dédiées */
+.svc-overview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}
+@media(max-width:980px){.svc-overview-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.svc-overview-grid{grid-template-columns:1fr}}
+.svc-card{background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:24px;transition:all .3s var(--ease-out);position:relative;overflow:hidden;display:flex;flex-direction:column}
+.svc-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--brand);transition:height .25s}
+.svc-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:transparent}
+.svc-card:hover::before{height:8px}
+.svc-card.accent::before{background:var(--accent)}
+.svc-icon{width:54px;height:54px;border-radius:12px;background:var(--gray-100);color:var(--brand);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.svc-card.accent .svc-icon{color:var(--accent)}
+.svc-card h3{margin-bottom:8px;font-size:1.15rem}
+.svc-card p{font-size:.9rem;color:var(--ink-soft);margin-bottom:14px;flex:1}
+.svc-card .ctas{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.svc-card .ctas a{font-size:.82rem;padding:8px 14px}
+
+.svc-section{padding:64px 0;border-bottom:1px solid var(--gray-200);scroll-margin-top:140px}
+.svc-section:nth-child(even){background:var(--cream)}
+.svc-section .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+@media(max-width:880px){.svc-section .grid{grid-template-columns:1fr;gap:28px}}
+.svc-section .kicker{color:var(--accent);font-weight:700;font-size:.78rem;letter-spacing:.15em;text-transform:uppercase}
+.svc-section h2{margin:8px 0 14px;font-size:clamp(1.5rem,2.6vw,2.1rem)}
+.svc-section p{color:var(--ink-soft);font-size:1rem;line-height:1.7;margin-bottom:16px}
+.svc-section .examples{list-style:none;margin:14px 0 22px}
+.svc-section .examples li{padding-left:24px;position:relative;margin-bottom:8px;font-size:.95rem}
+.svc-section .examples li::before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:800}
+.svc-image{border-radius:var(--radius-xl);overflow:hidden;aspect-ratio:4/3;box-shadow:var(--shadow);position:relative;background:var(--gray-100)}
+.svc-image img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.svc-image:hover img{transform:scale(1.05)}
+.svc-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+
+.svc-why{padding:64px 0;background:var(--brand-dark);color:#fff}
+.svc-why h2{color:#fff;text-align:center;margin-bottom:40px}
+.svc-why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:var(--container);margin:0 auto;padding:0 24px}
+@media(max-width:880px){.svc-why-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.svc-why-grid{grid-template-columns:1fr}}
+.svc-why-item{text-align:center}
+.svc-why-item .num{font-family:var(--font-display);font-size:2.2rem;font-weight:800;color:#FFB3C0;line-height:1;margin-bottom:8px}
+.svc-why-item h4{color:#fff;margin-bottom:6px;font-size:1rem}
+.svc-why-item p{font-size:.88rem;color:rgba(255,255,255,.85);line-height:1.5}
+</style>
 </head>
 <body>
 
@@ -18,48 +60,45 @@
 <section class="page-banner">
   <div class="container">
     <div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">›</span>Services</div>
-    <h1>4 pôles d'expertise pour votre communication</h1>
-    <p class="subtitle">De la conception graphique à la livraison de vos supports imprimés, en passant par la création web et l'événementiel, Pictocraft réunit tous les métiers de la communication sous un même toit.</p>
+    <h1>Nos 6 pôles d'expertise</h1>
+    <p class="subtitle">De la conception graphique à la production imprimée, en passant par le digital et l'événementiel, Pictocraft réunit tous les métiers de la communication sous un même toit. Découvrez ce que nous savons faire.</p>
   </div>
 </section>
 
-<section class="themes-section">
+<!-- Vue d'ensemble : cartes vers ancres internes -->
+<section style="padding:48px 0">
   <div class="container">
-    <div class="themes-grid">
-      <a href="devis.html#impression-commerciale" class="theme-card">
-        <div class="icon-wrap"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg></div>
-        <h3>Imprimerie</h3>
-        <p>Offset et numérique, finitions premium, tirages courts et longs. Flyers, cartes, brochures, affiches, catalogues.</p>
-        <span class="more">Configurer mon devis →</span>
-      </a>
-      <a href="devis.html#packaging" class="theme-card accent">
-        <div class="icon-wrap"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg></div>
-        <h3>Communication visuelle</h3>
-        <p>Infographie, sérigraphie textile, identité de marque, charte graphique, logos.</p>
-        <span class="more">Explorer →</span>
-      </a>
-      <a href="devis.html#digital" class="theme-card">
-        <div class="icon-wrap"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></div>
-        <h3>Digital & Web</h3>
-        <p>Sites internet vitrines et e-commerce, marketing digital, montage vidéo, contenus social media.</p>
-        <span class="more">Explorer →</span>
-      </a>
-      <a href="devis.html#evenementiel" class="theme-card accent">
-        <div class="icon-wrap"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 8-4 8 4"/><path d="m18 10 4 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l4-2"/><circle cx="12" cy="9" r="2"/></svg></div>
-        <h3>Événementiel</h3>
-        <p>Salons, conférences, lancements : roll-ups, banderoles, signalétique et supports clés en main.</p>
-        <span class="more">Explorer →</span>
-      </a>
+    <div class="section-head center"><span class="kicker">Vue d'ensemble</span><h2>6 expertises complémentaires</h2></div>
+    <div class="svc-overview-grid" id="svc-overview">Chargement…</div>
+  </div>
+</section>
+
+<!-- Détail de chaque service (sections ancrées) -->
+<div id="svc-details">Chargement…</div>
+
+<!-- Pourquoi Pictocraft -->
+<section class="svc-why">
+  <div class="container">
+    <h2>Pourquoi Pictocraft ?</h2>
+    <div class="svc-why-grid">
+      <div class="svc-why-item"><div class="num">40+</div><h4>Années d'expertise</h4><p>Héritage familial transmis depuis 1985 par l'Imprimerie ST JOHN.</p></div>
+      <div class="svc-why-item"><div class="num">500+</div><h4>Clients satisfaits</h4><p>Entreprises, ONG et institutions camerounaises et internationales.</p></div>
+      <div class="svc-why-item"><div class="num">2</div><h4>Sites de production</h4><p>Santa Barbara et Nkoabang à Yaoundé.</p></div>
+      <div class="svc-why-item"><div class="num">24h</div><h4>Réponse devis</h4><p>Conseil personnalisé sous 24h ouvrées.</p></div>
     </div>
   </div>
 </section>
 
-<section>
+<!-- CTA final -->
+<section style="padding:64px 0">
   <div class="container">
     <div class="cta-banner">
-      <h2>Tous nos services en un seul devis</h2>
-      <p>Configure ton projet en ligne et obtiens un prix instantané. Plus de 28 supports disponibles, du flyer au packaging personnalisé.</p>
-      <a href="devis.html" class="btn-primary btn-large">Configurer mon devis →</a>
+      <h2>Besoin d'un conseil pour votre projet ?</h2>
+      <p>Notre équipe vous aide à choisir le bon support, la bonne finition et le bon délai. Pas de jargon, juste des réponses claires.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2">
+        <a href="contact.html" class="btn-primary btn-large">📞 Demander un conseil</a>
+        <a href="devis.html" class="btn-outline btn-large" style="border-color:#fff;color:#fff !important">Configurer un devis →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -70,14 +109,19 @@
       <div class="footer-brand">
         <a href="index.html" class="logo"><span class="p" style="color:#FFB3C0">P</span><span class="name">ictocraft</span><span class="sarl">SARL</span></a>
         <p style="font-style:italic;color:#FFB3C0;margin-bottom:8px">« l'énergie créative au service de vos projets. »</p>
+        <p>Travaux d'imprimerie, Commerce général et prestation diverses.</p>
       </div>
       <div><h4>Services</h4><ul>
-        <li><a href="services.html">Tous nos services</a></li>
-        <li><a href="devis.html">Devis en ligne</a></li>
-        <li><a href="realisations.html">Réalisations</a></li>
+        <li><a href="services.html#imprimerie">Imprimerie</a></li>
+        <li><a href="services.html#communication-visuelle">Communication visuelle</a></li>
+        <li><a href="services.html#digital-web">Digital & Web</a></li>
+        <li><a href="services.html#evenementiel">Événementiel</a></li>
+        <li><a href="services.html#serigraphie-textile">Sérigraphie textile</a></li>
+        <li><a href="services.html#packaging">Packaging</a></li>
       </ul></div>
       <div><h4>Informations</h4><ul>
         <li><a href="a-propos.html">À propos</a></li>
+        <li><a href="realisations.html">Réalisations</a></li>
         <li><a href="faq.html">FAQ</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul></div>
@@ -91,9 +135,89 @@
   </div>
 </footer>
 
-<script src="assets/js/navbar.js?v=20260626c"></script>
-<script src="assets/js/config.js?v=20260626c"></script>
-<script src="assets/js/binder.js?v=20260626c"></script>
-<script src="assets/js/main.js?v=20260626c"></script>
+<script src="assets/js/navbar.js?v=20260626d"></script>
+<script src="assets/js/config.js?v=20260626d"></script>
+<script src="assets/js/binder.js?v=20260626d"></script>
+<script src="assets/js/main.js?v=20260626d"></script>
+<script>
+// Icônes SVG par clé
+const SVCICON = {
+  printer:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>',
+  palette:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>',
+  monitor:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>',
+  event:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 8-4 8 4"/><path d="m18 10 4 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l4-2"/><circle cx="12" cy="9" r="2"/></svg>',
+  shirt:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>',
+  package:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4 7.55 4.24"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" x2="12" y1="22.08" y2="12"/></svg>'
+};
+
+const escapeHtml = s => String(s||'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+
+async function loadServices(){
+  try {
+    const r = await fetch('data/services.json?v='+Math.floor(Date.now()/60000));
+    const data = await r.json();
+    const services = (data.services||[]).filter(s => s.active !== false)
+                     .sort((a,b) => (a.sortOrder||999)-(b.sortOrder||999));
+
+    // Vue d'ensemble
+    document.getElementById('svc-overview').innerHTML = services.map((s,i) => `
+      <div class="svc-card${i%2?' accent':''}">
+        <div class="svc-icon">${SVCICON[s.icon] || SVCICON.printer}</div>
+        <h3>${escapeHtml(s.title)}</h3>
+        <p>${escapeHtml(s.shortDescription)}</p>
+        <div class="ctas">
+          <a href="#${escapeHtml(s.anchor||s.id)}" class="btn-primary">Explorer →</a>
+        </div>
+      </div>
+    `).join('');
+
+    // Sections détaillées (ancrées)
+    document.getElementById('svc-details').innerHTML = services.map((s,i) => `
+      <section class="svc-section" id="${escapeHtml(s.anchor||s.id)}">
+        <div class="container">
+          <div class="grid">
+            ${i%2 === 0 ? `
+              <div>
+                <span class="kicker">Pôle ${s.sortOrder}</span>
+                <h2>${escapeHtml(s.title)}</h2>
+                <p>${escapeHtml(s.fullDescription)}</p>
+                <ul class="examples">${(s.examples||[]).map(e=>`<li>${escapeHtml(e)}</li>`).join('')}</ul>
+                <div class="svc-actions">
+                  ${s.primaryCta ? `<a href="${escapeHtml(s.primaryCta.href)}" class="btn-primary">${escapeHtml(s.primaryCta.label)} →</a>` : ''}
+                  <a href="contact.html" class="btn-outline">Nous contacter</a>
+                </div>
+              </div>
+              <div class="svc-image"><img src="${escapeHtml(s.image)}" alt="${escapeHtml(s.title)}" loading="lazy"></div>
+            ` : `
+              <div class="svc-image"><img src="${escapeHtml(s.image)}" alt="${escapeHtml(s.title)}" loading="lazy"></div>
+              <div>
+                <span class="kicker">Pôle ${s.sortOrder}</span>
+                <h2>${escapeHtml(s.title)}</h2>
+                <p>${escapeHtml(s.fullDescription)}</p>
+                <ul class="examples">${(s.examples||[]).map(e=>`<li>${escapeHtml(e)}</li>`).join('')}</ul>
+                <div class="svc-actions">
+                  ${s.primaryCta ? `<a href="${escapeHtml(s.primaryCta.href)}" class="btn-primary">${escapeHtml(s.primaryCta.label)} →</a>` : ''}
+                  <a href="contact.html" class="btn-outline">Nous contacter</a>
+                </div>
+              </div>
+            `}
+          </div>
+        </div>
+      </section>
+    `).join('');
+
+    // Scroll vers l'ancre si présente dans l'URL
+    if (location.hash) {
+      setTimeout(() => {
+        const el = document.querySelector(location.hash);
+        if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      }, 200);
+    }
+  } catch(e) {
+    document.getElementById('svc-overview').innerHTML = '<p style="color:#B91C1C">Erreur chargement services: ' + e.message + '</p>';
+  }
+}
+loadServices();
+</script>
 </body>
 </html>

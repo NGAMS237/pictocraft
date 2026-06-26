@@ -4,31 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Réalisations — Pictocraft</title>
-<meta name="description" content="Découvrez nos réalisations : flyers, brochures, roll-ups, packaging et plus pour entreprises et ONG camerounaises.">
+<meta name="description" content="Découvrez nos réalisations pour entreprises, ONG et institutions camerounaises : flyers, brochures, roll-ups, packaging, textile et plus.">
 <meta name="robots" content="index,follow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=20260626c">
+<link rel="stylesheet" href="assets/css/style.css?v=20260626d">
 <style>
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px}
+.real-filters{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 28px;padding:14px;background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius)}
+.real-filter{padding:8px 16px;border:1.5px solid var(--gray-200);background:#fff;border-radius:99px;font-weight:600;font-size:.85rem;color:var(--ink);cursor:pointer;transition:all .2s;font-family:inherit}
+.real-filter:hover{border-color:var(--brand);color:var(--brand)}
+.real-filter.active{background:var(--brand);border-color:var(--brand);color:#fff}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:8px}
 @media(max-width:880px){.gallery-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.gallery-grid{grid-template-columns:1fr}}
-.gallery-item{
-  position:relative;border-radius:var(--radius);overflow:hidden;
-  aspect-ratio:4/3;box-shadow:var(--shadow);background:var(--gray-100);
-  transition:all .35s var(--ease-out);
-}
+.gallery-item{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3;box-shadow:var(--shadow);background:var(--gray-100);transition:all .35s var(--ease-out)}
 .gallery-item:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
 .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
 .gallery-item:hover img{transform:scale(1.05)}
-.gallery-caption{
-  position:absolute;bottom:0;left:0;right:0;
-  background:linear-gradient(180deg,transparent,rgba(0,41,82,.92));
-  color:#fff;padding:24px 18px 16px;
-}
-.gallery-caption h3{color:#fff;font-size:1rem;margin-bottom:4px;font-family:var(--font-display);font-weight:700}
+.gallery-caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(180deg,transparent,rgba(0,41,82,.92));color:#fff;padding:24px 18px 16px}
+.gallery-caption .cat{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;opacity:.85;font-weight:700;color:#FFB3C0}
+.gallery-caption h3{color:#fff;font-size:1rem;margin:4px 0 4px;font-family:var(--font-display);font-weight:700}
 .gallery-caption p{font-size:.82rem;opacity:.9;margin:0}
+.gallery-empty{padding:60px;text-align:center;color:var(--ink-soft);background:var(--gray-100);border-radius:var(--radius)}
 </style>
 </head>
 <body>
@@ -39,31 +37,23 @@
   <div class="container">
     <div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">›</span>Réalisations</div>
     <h1>Nos réalisations</h1>
-    <p class="subtitle">Quelques projets réalisés pour nos clients : entreprises, ONG, institutions camerounaises et internationales.</p>
+    <p class="subtitle">Une sélection de projets réalisés pour nos clients : entreprises, ONG, institutions camerounaises et internationales. Filtrez par catégorie pour découvrir nos différents savoir-faire.</p>
   </div>
 </section>
 
 <section>
   <div class="container">
-    <div class="gallery-grid">
-      <div class="gallery-item"><img src="assets/images/products/rollup-onehealth.jpg" alt="Roll-up One Health" loading="lazy"><div class="gallery-caption"><h3>Roll-up One Health</h3><p>Production événementielle · OMS</p></div></div>
-      <div class="gallery-item"><img src="assets/images/products/rollup-ftic.jpg" alt="Roll-up FTIC" loading="lazy"><div class="gallery-caption"><h3>Roll-up FTIC 80×200</h3><p>Salon professionnel</p></div></div>
-      <div class="gallery-item"><img src="assets/images/products/rollup-echo.jpg" alt="Roll-up Echo" loading="lazy"><div class="gallery-caption"><h3>Roll-up campagne Echo</h3><p>ONG internationale</p></div></div>
-      <div class="gallery-item"><img src="assets/images/products/billboard.jpg" alt="Bâche grand format" loading="lazy"><div class="gallery-caption"><h3>Bâche grand format</h3><p>Communication extérieure</p></div></div>
-      <div class="gallery-item"><img src="assets/images/products/brochures.jpg" alt="Brochure entreprise" loading="lazy"><div class="gallery-caption"><h3>Brochure d'entreprise</h3><p>32 pages, dos carré collé</p></div></div>
-      <div class="gallery-item"><img src="assets/images/products/magazines.jpg" alt="Magazine institutionnel" loading="lazy"><div class="gallery-caption"><h3>Magazine institutionnel</h3><p>Tirage 2 500 exemplaires</p></div></div>
-      <div class="gallery-item"><img src="assets/images/products/cartes-visite.jpg" alt="Cartes de visite premium" loading="lazy"><div class="gallery-caption"><h3>Cartes de visite premium</h3><p>Pelliculage soft-touch · 400g</p></div></div>
-      <div class="gallery-item"><img src="assets/images/products/flyers.jpg" alt="Flyers A5" loading="lazy"><div class="gallery-caption"><h3>Flyers A5 quadrichromie</h3><p>Campagne sensibilisation</p></div></div>
-      <div class="gallery-item"><img src="assets/images/products/poster.jpg" alt="Poster grand format" loading="lazy"><div class="gallery-caption"><h3>Posters événementiels</h3><p>CHAN — Cameroun</p></div></div>
-      <div class="gallery-item"><img src="assets/images/products/textile.jpg" alt="T-shirts personnalisés" loading="lazy"><div class="gallery-caption"><h3>T-shirts sérigraphiés</h3><p>250 ex. · 2 couleurs</p></div></div>
-      <div class="gallery-item"><img src="assets/images/products/emballage.jpg" alt="Packaging" loading="lazy"><div class="gallery-caption"><h3>Packaging produit</h3><p>Branding alimentaire</p></div></div>
-      <div class="gallery-item"><img src="assets/images/products/chevalet.jpg" alt="Chevalet de table" loading="lazy"><div class="gallery-caption"><h3>Chevalets de table</h3><p>Restaurant · 100 ex.</p></div></div>
+    <div class="real-filters" id="real-filters"></div>
+    <div id="real-grid" class="gallery-grid">
+      <div class="gallery-empty">Chargement…</div>
     </div>
-
     <div class="cta-banner" style="margin-top:48px">
       <h2>Un projet en tête ?</h2>
       <p>Configurez votre devis en ligne ou contactez-nous pour un projet sur mesure.</p>
-      <a href="devis.html" class="btn-primary btn-large">Démarrer mon projet →</a>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2">
+        <a href="devis.html" class="btn-primary btn-large">Démarrer mon projet →</a>
+        <a href="contact.html" class="btn-outline btn-large" style="border-color:#fff;color:#fff !important">Nous contacter</a>
+      </div>
     </div>
   </div>
 </section>
@@ -76,8 +66,9 @@
         <p style="font-style:italic;color:#FFB3C0;margin-bottom:8px">« l'énergie créative au service de vos projets. »</p>
       </div>
       <div><h4>Services</h4><ul>
-        <li><a href="devis.html">Devis en ligne</a></li>
         <li><a href="services.html">Tous nos services</a></li>
+        <li><a href="devis.html">Devis en ligne</a></li>
+        <li><a href="realisations.html">Réalisations</a></li>
       </ul></div>
       <div><h4>Informations</h4><ul>
         <li><a href="a-propos.html">À propos</a></li>
@@ -94,9 +85,60 @@
   </div>
 </footer>
 
-<script src="assets/js/navbar.js?v=20260626c"></script>
-<script src="assets/js/config.js?v=20260626c"></script>
-<script src="assets/js/binder.js?v=20260626c"></script>
-<script src="assets/js/main.js?v=20260626c"></script>
+<script src="assets/js/navbar.js?v=20260626d"></script>
+<script src="assets/js/config.js?v=20260626d"></script>
+<script src="assets/js/binder.js?v=20260626d"></script>
+<script src="assets/js/main.js?v=20260626d"></script>
+<script>
+(async function(){
+  const escapeHtml = s => String(s||'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+  const grid = document.getElementById('real-grid');
+  const filtersEl = document.getElementById('real-filters');
+  let all = [], cats = [], activeCat = 'tous';
+
+  function render(){
+    const items = all
+      .filter(r => r.active !== false)
+      .filter(r => activeCat === 'tous' || r.category === activeCat)
+      .sort((a,b)=>(a.sortOrder||999)-(b.sortOrder||999));
+    if (!items.length) { grid.innerHTML = '<div class="gallery-empty">Aucune réalisation pour cette catégorie.</div>'; return; }
+    grid.innerHTML = items.map(r => {
+      const cat = cats.find(c => c.slug === r.category);
+      return `
+        <div class="gallery-item">
+          <img src="${escapeHtml(r.image)}" alt="${escapeHtml(r.title)}" loading="lazy" onerror="this.style.background='#003C78'">
+          <div class="gallery-caption">
+            ${cat ? `<div class="cat">${escapeHtml(cat.name)}</div>` : ''}
+            <h3>${escapeHtml(r.title)}</h3>
+            <p>${escapeHtml(r.description || (r.client ? r.client : ''))}</p>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  try {
+    const data = await fetch('data/realisations.json?v='+Math.floor(Date.now()/60000)).then(r=>r.json());
+    all = data.realisations || [];
+    cats = data.categories || [];
+    // Render filtres dynamiques basés sur les catégories utilisées
+    filtersEl.innerHTML = cats.map(c => {
+      const cnt = c.slug === 'tous' ? all.filter(r => r.active !== false).length : all.filter(r => r.category === c.slug && r.active !== false).length;
+      if (c.slug !== 'tous' && cnt === 0) return '';
+      return `<button class="real-filter${c.slug==='tous'?' active':''}" data-cat="${escapeHtml(c.slug)}">${escapeHtml(c.name)} (${cnt})</button>`;
+    }).join('');
+    filtersEl.querySelectorAll('.real-filter').forEach(b => {
+      b.addEventListener('click', () => {
+        activeCat = b.dataset.cat;
+        filtersEl.querySelectorAll('.real-filter').forEach(x => x.classList.toggle('active', x.dataset.cat === activeCat));
+        render();
+      });
+    });
+    render();
+  } catch(e) {
+    grid.innerHTML = '<div class="gallery-empty" style="color:#B91C1C">Erreur : ' + e.message + '</div>';
+  }
+})();
+</script>
 </body>
 </html>
