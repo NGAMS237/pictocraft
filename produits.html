@@ -3,432 +3,167 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Catalogue produits — Picto Craft</title>
-<meta name="description" content="Tous nos produits d'imprimerie, infographie, sérigraphie et événementiel. Devis en ligne sous 24h.">
+<title>Produits & Devis — Pictocraft</title>
+<meta name="description" content="Tous les produits Pictocraft : flyers, cartes de visite, brochures, bâches, t-shirts, calendriers, magazines et bien plus. Devis en ligne ou sur mesure.">
 <meta name="robots" content="index,follow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=20260626b">
+<link rel="stylesheet" href="assets/css/style.css?v=20260626c">
+<link rel="stylesheet" href="assets/css/devis.css?v=20260626c">
 </head>
 <body>
 
-<div data-bind-slogan-bar style="background:#960F2D;color:#fff;text-align:center;padding:6px 16px;font-size:.78rem;font-weight:600;letter-spacing:.04em">
-  Travaux d'imprimerie · Commerce général · Prestations diverses · <em style="font-weight:500;opacity:.9">« l'énergie créative au service de vos projets »</em>
-</div>
+<div id="pc-navbar" data-active="devis"></div>
 
-<div class="utility-bar">
-  <div class="container">
-    <div class="utility-left">
-      <span class="util-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:+237675140843" data-bind-tel1>+237 6 75 14 08 43</a></span>
-      <span class="util-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg><a href="mailto:info@pictocraftcmr.com" data-bind-email1>info@pictocraftcmr.com</a></span>
-      <span class="util-item">Lun–Ven : 8h – 17h</span>
-    </div>
-    <div class="utility-right">
-      <a href="faq.html">Aide & FAQ</a>
-      <a href="contact.html">Espace client</a>
-      <span>🇨🇲 Yaoundé · FR</span>
-    </div>
-  </div>
-</div>
-
-<!-- HEADER PILL FLOTTANT MODERNE -->
-<header class="site-header">
-  <div class="container header-inner">
-    <a href="index.html" class="logo" aria-label="Pictocraft" data-logo-host>
-      <span class="p">P</span><span class="name">ictocraft</span><span class="sarl">SARL</span>
-    </a>
-    <nav class="main-nav">
-      <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Accueil</a>
-      <div class="nav-item">
-        <a href="produits.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" x2="12" y1="22.08" y2="12"/></svg>Services <span class="caret">▾</span></a>
-        <div class="mega-menu">
-          <div class="mega-grid">
-            <div class="mega-col">
-              <div class="mega-col-head">
-                <div class="mega-col-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg></div>
-                <h5>Imprimerie<small>Offset & numérique</small></h5>
-              </div>
-              <ul>
-                <li><a href="produit-flyers.html">Flyers & Dépliants</a></li>
-                <li><a href="produits.html#cartes">Cartes de visite</a></li>
-                <li><a href="produits.html#brochures">Brochures & Catalogues</a></li>
-                <li><a href="produits.html#affiches">Affiches & Posters</a></li>
-                <li><a href="produits.html#calendriers">Calendriers</a></li>
-                <li><a href="produits.html#papeterie">Papeterie</a></li>
-              </ul>
-            </div>
-            <div class="mega-col accent">
-              <div class="mega-col-head">
-                <div class="mega-col-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 8-4 8 4"/><path d="m18 10 4 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l4-2"/><circle cx="12" cy="9" r="2"/></svg></div>
-                <h5>Événementiel<small>Salons & lancements</small></h5>
-              </div>
-              <ul>
-                <li><a href="produits.html#rollups">Roll-ups & Kakémonos</a></li>
-                <li><a href="produits.html#baches">Bâches & Banderoles</a></li>
-                <li><a href="produits.html#textile">Sérigraphie textile</a></li>
-                <li><a href="produits.html#displays">Displays publicitaires</a></li>
-                <li><a href="produits.html#stands">Stands & Comptoirs</a></li>
-                <li><a href="produits.html#signaletique">Signalétique</a></li>
-              </ul>
-            </div>
-            <div class="mega-col">
-              <div class="mega-col-head">
-                <div class="mega-col-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></div>
-                <h5>Digital & Création<small>Web · Vidéo · Logos</small></h5>
-              </div>
-              <ul>
-                <li><a href="produits.html#sites">Sites Internet</a></li>
-                <li><a href="produits.html#video">Montage vidéo</a></li>
-                <li><a href="produits.html#logo">Logos & Charte graphique</a></li>
-                <li><a href="produits.html#emballage">Emballages personnalisés</a></li>
-                <li><a href="produits.html#objets">Objets publicitaires</a></li>
-                <li><a href="produits.html">Tous les produits →</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="mega-footer">
-            <span>★ Plus de 24 produits disponibles</span>
-            <a href="produit-flyers.html">Configurer un devis instantané →</a>
-          </div>
-        </div>
-      </div>
-      <a href="a-propos.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>À propos</a>
-      <a href="faq.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>FAQ</a>
-      <a href="contact.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>Contact</a>
-    </nav>
-    <div class="header-actions">
-      <a href="https://wa.me/237675140843" data-bind-whatsapp class="icon-btn" aria-label="WhatsApp" title="WhatsApp" style="color:#25D366">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.8-2.9-1.5-4-3.5-.3-.5.3-.5.8-1.5.1-.2 0-.3 0-.5s-.7-1.6-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1.1 2.9 1.2 3.1.1.2 2.1 3.3 5.2 4.6 2 .8 2.7.9 3.7.8.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zm-5.5 7.6c-1.8 0-3.5-.5-5-1.4l-3.5 1.1 1.1-3.4c-1-1.6-1.6-3.5-1.6-5.5 0-5.6 4.5-10.1 10-10.1 5.6 0 10.1 4.5 10.1 10.1S17.5 22 12 22z"/></svg>
-      </a>
-      <a href="produit-flyers.html" class="btn-primary"><span class="long">Devis gratuit</span><span>→</span></a>
-      <button class="icon-btn menu-toggle" aria-label="Menu">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-      </button>
-    </div>
-  </div>
-</header>
-
-<div class="mobile-overlay"></div>
-<aside class="mobile-menu">
-  <button class="close-btn">✕</button>
-  <a href="index.html" class="logo" style="font-size:1.4rem"><span class="p">P</span><span class="name">ictocraft</span></a>
-  <nav>
-    <a href="index.html">Accueil</a>
-    <a href="produits.html">Services</a>
-    <a href="produit-flyers.html">Devis flyers</a>
-    <a href="a-propos.html">Qui sommes-nous</a>
-    <a href="faq.html">FAQ</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</aside>
-
-<!-- PAGE BANNER -->
 <section class="page-banner">
   <div class="container">
-    <div class="breadcrumb">
-      <a href="index.html">Accueil</a><span class="sep">›</span>Catalogue produits
-    </div>
-    <h1>Catalogue complet</h1>
-    <p class="subtitle">Tous vos imprimés professionnels, supports événementiels, créations digitales et objets publicitaires. Devis détaillé sous 24h.</p>
+    <div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">›</span>Produits & Devis</div>
+    <h1>Produits & Devis</h1>
+    <p class="subtitle">De la simple carte de visite au déploiement d'une campagne complète, choisissez votre support. Devis en ligne instantané ou personnalisé.</p>
   </div>
 </section>
 
-<!-- FILTRES -->
-<section class="tight" style="padding-top:32px;padding-bottom:24px">
+<section>
   <div class="container">
-    <div class="filter-bar">
-      <button class="filter-btn active" data-filter="all">Tous (24)</button>
-      <button class="filter-btn" data-filter="imprimerie">Imprimerie</button>
-      <button class="filter-btn" data-filter="evenementiel">Événementiel</button>
-      <button class="filter-btn" data-filter="textile">Textile & Objets</button>
-      <button class="filter-btn" data-filter="digital">Digital & Web</button>
-      <button class="filter-btn" data-filter="emballage">Emballages</button>
-    </div>
-  </div>
-</section>
 
-<!-- GRILLE PRODUITS -->
-<section style="padding-top:24px" id="catalogue">
-  <div class="container">
-    <div class="products-grid stagger reveal">
-
-      <a href="produit-flyers.html" class="product-card" data-product-id="flyers" data-cat="imprimerie">
-        <div class="product-thumb">
-          <span class="badge new">★ Best</span>
-          <span class="from-price">dès<strong>50 FCFA</strong></span>
-          <img src="assets/images/products/flyers.jpg" alt="Flyers">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Flyers & Dépliants</h3><p>Du A6 au A3. Recto ou recto/verso.</p><span class="arrow">Configurer →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-product-id="cartes-visite" data-cat="imprimerie" id="cartes">
-        <div class="product-thumb">
-          <span class="badge">★ Best</span>
-          <span class="from-price">dès<strong>15 000 FCFA</strong></span>
-          <img src="assets/images/products/cartes-visite.jpg" alt="Cartes de visite">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Cartes de visite</h3><p>Pelliculage, vernis, dorure, coins arrondis.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-product-id="brochures" data-cat="imprimerie" id="brochures">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>800 FCFA</strong></span>
-          <img src="assets/images/products/brochures.jpg" alt="Brochures">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Brochures & Catalogues</h3><p>Reliure piquée, dos carré collé.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-product-id="affiches" data-cat="imprimerie" id="affiches">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>2 500 FCFA</strong></span>
-          <img src="assets/images/products/affiche.jpg" alt="Affiches">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Affiches & Posters</h3><p>Du A3 au format géant. Papiers spéciaux.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-product-id="calendriers" data-cat="imprimerie" id="calendriers">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>1 800 FCFA</strong></span>
-          <img src="assets/images/products/maquette.jpg" alt="Calendriers">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Calendriers & Agendas</h3><p>Muraux, de bureau, de poche, personnalisés.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="imprimerie" id="papeterie">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>500 FCFA</strong></span>
-          <img src="assets/images/gallery/stationery.jpg" alt="Papeterie">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Papeterie d'entreprise</h3><p>En-têtes, enveloppes, blocs-notes, carnets.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="imprimerie">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>1 500 FCFA</strong></span>
-          <img src="assets/images/products/magazines.jpg" alt="Magazines">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Magazines & Journaux</h3><p>Reliure piquée ou dos carré. Tirages flexibles.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="imprimerie">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>400 FCFA</strong></span>
-          <img src="assets/images/products/poster.jpg" alt="Cartes de vœux">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Cartes de vœux & Invitations</h3><p>Pour mariages, événements, fêtes.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-product-id="rollups" data-cat="evenementiel" id="rollups">
-        <div class="product-thumb">
-          <span class="badge new">Nouveau</span>
-          <span class="from-price">dès<strong>45 000 FCFA</strong></span>
-          <img src="assets/images/products/rollup-echo.jpg" alt="Roll-up">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Roll-ups & Kakémonos</h3><p>85×200cm. Mécanisme tendu, transport inclus.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="evenementiel" id="baches">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>8 000 FCFA / m²</strong></span>
-          <img src="assets/images/products/billboard.jpg" alt="Bâches">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Bâches & Banderoles</h3><p>Intérieur ou extérieur. Œillets posés.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="evenementiel" id="displays">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>22 000 FCFA</strong></span>
-          <img src="assets/images/products/chevalet.jpg" alt="Displays">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Displays publicitaires</h3><p>Chevalets, totems, stands parapluie.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="evenementiel" id="signaletique">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>15 000 FCFA</strong></span>
-          <img src="assets/images/products/rollup-ftic.jpg" alt="Signalétique">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Signalétique & Adhésifs</h3><p>Vinyles, lettrage, plaques, panneaux.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-product-id="textile" data-cat="textile">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>3 500 FCFA</strong></span>
-          <img src="assets/images/products/textile.jpg" alt="T-shirts">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>T-shirts personnalisés</h3><p>Coton, mélangé. Sérigraphie ou broderie.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="textile">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>2 500 FCFA</strong></span>
-          <img src="assets/images/gallery/event.jpg" alt="Casquettes">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Casquettes & Bonnets</h3><p>Broderie ou impression. Plusieurs couleurs.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="textile">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>1 500 FCFA</strong></span>
-          <img src="assets/images/products/bureau.jpg" alt="Tote-bags">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Sacs & Tote-bags</h3><p>Tissu écologique, personnalisation 1-4 couleurs.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="textile">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>2 200 FCFA</strong></span>
-          <img src="assets/images/gallery/satisfaction.jpg" alt="Mugs">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Mugs & Tasses</h3><p>Céramique. Quadri ou monochrome.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="textile">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>1 800 FCFA</strong></span>
-          <img src="assets/images/gallery/desk.jpg" alt="Stylos">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Objets publicitaires</h3><p>Stylos, clés USB, powerbank, parapluies.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="textile">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>1 200 FCFA</strong></span>
-          <img src="assets/images/gallery/visite.jpg" alt="Badges">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Badges & Tours de cou</h3><p>PVC, cordons publicitaires.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="emballage" id="emballage">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>250 FCFA</strong></span>
-          <img src="assets/images/products/emballage.jpg" alt="Emballages">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Emballages personnalisés</h3><p>Étuis, fourreaux, boîtes cadeaux, sachets.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="emballage">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>180 FCFA</strong></span>
-          <img src="assets/images/gallery/gazette.jpg" alt="Étiquettes">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Étiquettes & Autocollants</h3><p>Rectangles, ronds, formes libres. Vernis dispo.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="digital" id="sites">
-        <div class="product-thumb">
-          <span class="badge new">Service</span>
-          <span class="from-price">dès<strong>250 000 FCFA</strong></span>
-          <img src="assets/images/gallery/workspace.jpg" alt="Sites web">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Sites Internet</h3><p>Vitrine, e-commerce, sur-mesure. SEO inclus.</p><span class="arrow">Découvrir →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="digital" id="video">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>80 000 FCFA</strong></span>
-          <img src="assets/images/gallery/impression.jpg" alt="Vidéo">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Montage vidéo</h3><p>Institutionnel, reportage, motion design.</p><span class="arrow">Découvrir →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="digital" id="logo">
-        <div class="product-thumb">
-          <span class="from-price">dès<strong>120 000 FCFA</strong></span>
-          <img src="assets/images/gallery/logo-mockup.jpg" alt="Logos">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Logo & Charte graphique</h3><p>Identité visuelle complète. 3 propositions.</p><span class="arrow">Commander →</span></div>
-      </a>
-
-      <a href="#" class="product-card" data-cat="digital">
-        <div class="product-thumb">
-          <span class="from-price">sur devis</span>
-          <img src="assets/images/gallery/team2.jpg" alt="Marketing">
-          <div class="overlay"></div>
-        </div>
-        <div class="product-body"><h3>Marketing digital</h3><p>Campagnes Facebook, Instagram, Google Ads.</p><span class="arrow">Découvrir →</span></div>
-      </a>
-
+    <div class="devis-toolbar">
+      <div class="devis-search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="search" id="search-input" placeholder="Rechercher un produit (flyers, cartes, t-shirts…)" aria-label="Rechercher">
+      </div>
+      <div class="devis-filters" id="filters">
+        <button class="devis-filter active" data-cat="all">Tous</button>
+      </div>
     </div>
 
-    <div class="cta-banner reveal-scale" style="margin-top:64px">
-      <h2>Vous ne trouvez pas ce que vous cherchez ?</h2>
-      <p>Notre équipe peut produire des supports sur-mesure adaptés à votre projet. Décrivez-nous votre besoin, on revient vers vous sous 24h.</p>
+    <div id="grid" class="devis-grid">
+      <div class="devis-empty">Chargement des produits…</div>
+    </div>
+
+    <div class="cta-banner" style="margin-top:64px">
+      <h2>Vous ne trouvez pas votre support ?</h2>
+      <p>Notre équipe peut produire tout type de support sur-mesure : signalétique spéciale, packaging complexe, objets publicitaires originaux…</p>
       <a href="contact.html" class="btn-primary btn-large">Demander un devis personnalisé →</a>
     </div>
+
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
+<footer style="margin-top:60px">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="index.html" class="logo"><span class="p" style="color:#FFB3C0">P</span><span class="name">ictocraft</span><span class="sarl">SARL</span></a>
-        <p style="font-style:italic;color:#FFB3C0;margin-bottom:8px">« l'énergie créative au service de vos projets. »</p><p>Travaux d'imprimerie, Commerce général et prestation diverses.</p>
-        <div class="socials">
-          <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg></a>
-          <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
-          <a href="https://wa.me/237675140843" data-bind-whatsapp aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.8-2.9-1.5-4-3.5-.3-.5.3-.5.8-1.5.1-.2 0-.3 0-.5s-.7-1.6-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1.1 2.9 1.2 3.1.1.2 2.1 3.3 5.2 4.6 2 .8 2.7.9 3.7.8.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zm-5.5 7.6c-1.8 0-3.5-.5-5-1.4l-3.5 1.1 1.1-3.4c-1-1.6-1.6-3.5-1.6-5.5 0-5.6 4.5-10.1 10-10.1 5.6 0 10.1 4.5 10.1 10.1S17.5 22 12 22z"/></svg></a>
-        </div>
+        <p style="font-style:italic;color:#FFB3C0;margin-bottom:8px">« l'énergie créative au service de vos projets. »</p>
+        <p>Travaux d'imprimerie, Commerce général et prestation diverses.</p>
       </div>
       <div><h4>Services</h4><ul>
-        <li><a href="produits.html#imprimerie">Imprimerie</a></li>
-        <li><a href="produits.html#infographie">Infographie</a></li>
-        <li><a href="produits.html#textile">Sérigraphie</a></li>
-        <li><a href="produits.html#sites">Sites Internet</a></li>
-        <li><a href="produits.html#evenementiel">Événementiel</a></li>
+        <li><a href="services.html">Imprimerie</a></li>
+        <li><a href="services.html">Infographie</a></li>
+        <li><a href="services.html">Sites web</a></li>
+        <li><a href="services.html">Événementiel</a></li>
       </ul></div>
       <div><h4>Informations</h4><ul>
         <li><a href="a-propos.html">À propos</a></li>
-        <li><a href="a-propos.html#engagements">Nos engagements</a></li>
+        <li><a href="realisations.html">Réalisations</a></li>
         <li><a href="faq.html">FAQ</a></li>
-        <li><a href="produit-flyers.html">Devis gratuit</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul></div>
       <div class="footer-contact">
         <h4>Contact</h4>
-        <div class="contact-block"><strong>+237 6 75 14 08 43<br>+237 6 94 93 08 04</strong>Lun–Ven : 8h–17h</div>
-        <div class="contact-block"><strong>info@pictocraftcmr.com</strong></div>
-        <h4 style="margin-top:24px">Newsletter</h4>
-        <form class="newsletter-form"><input type="email" placeholder="votre@email.com" required><button>S'inscrire</button></form>
-        <div class="newsletter-bonus">5 000 FCFA offerts sur votre prochaine commande</div>
+        <div class="contact-block"><strong><a href="tel:+237675140843" data-bind-tel1 style="color:#fff">+237 6 75 14 08 43</a></strong>Lun–Ven : 8h–17h</div>
+        <div class="contact-block"><strong><a href="mailto:info@pictocraftcmr.com" data-bind-email1 style="color:#fff">info@pictocraftcmr.com</a></strong></div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <div class="legal"><a href="#">Mentions légales</a><a href="#">CGV</a><a href="#">Cookies</a></div>
-      <div class="payments"><span>VISA</span><span>MASTERCARD</span><span class="om">Orange Money</span><span class="mtn">MTN MoMo</span><span>Virement</span></div>
-    </div>
-    <div style="text-align:center;padding:18px 0;font-size:.78rem;color:rgba(255,255,255,.4)">© 2026 Picto Craft SARL · Yaoundé, Cameroun</div>
+    <div style="text-align:center;padding:18px 0;font-size:.78rem;color:rgba(255,255,255,.4)">© 2026 Pictocraft SARL · <a href="admin-pro.html" style="opacity:.4">Administration</a></div>
   </div>
 </footer>
 
-<script src="assets/js/config.js?v=20260626b"></script>
-<script src="assets/js/binder.js?v=20260626b"></script>
-<script src="assets/js/main.js?v=20260626b"></script>
+<script src="assets/js/navbar.js?v=20260626c"></script>
+<script src="assets/js/config.js?v=20260626c"></script>
+<script src="assets/js/binder.js?v=20260626c"></script>
+<script src="assets/js/main.js?v=20260626c"></script>
+<script src="assets/js/products-loader.js?v=20260626c"></script>
+<script>
+(async function(){
+  const grid = document.getElementById('grid');
+  const filtersEl = document.getElementById('filters');
+  const search = document.getElementById('search-input');
+  let allProducts = [], allCategories = [], activeCat = 'all', q = '';
+
+  const escapeHtml = s => String(s||'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+  const fmt = (n,c) => Number(n||0).toLocaleString('fr-FR') + ' ' + (c||'FCFA');
+
+  function renderGrid(){
+    const filtered = allProducts
+      .filter(p => p.active !== false)
+      .filter(p => activeCat === 'all' || p.category === activeCat)
+      .filter(p => !q || (p.name+' '+(p.description||'')+' '+p.slug).toLowerCase().includes(q))
+      .sort((a,b) => (a.sortOrder||999) - (b.sortOrder||999));
+
+    if (!filtered.length) { grid.innerHTML = '<div class="devis-empty">Aucun produit ne correspond à votre recherche.</div>'; return; }
+
+    grid.innerHTML = filtered.map(p => {
+      const cat = allCategories.find(c => c.slug === p.category);
+      const configurable = p.configurable !== false;
+      const href = configurable
+        ? 'devis-produit.html?produit=' + encodeURIComponent(p.slug)
+        : 'devis-produit.html?produit=' + encodeURIComponent(p.slug);
+      const cta = escapeHtml(p.buttonLabel || (configurable ? 'Configurer →' : 'Devis sur mesure →'));
+      const ctaCls = configurable ? 'devis-card-cta' : 'devis-card-cta devis-card-cta-sur-mesure';
+      const badge = p.badge ? `<span class="devis-card-badge-mesure" style="background:var(--accent);color:#fff">${escapeHtml(p.badge)}</span>` : (!configurable ? '<span class="devis-card-badge-mesure">Sur mesure</span>' : '');
+      const price = p.priceFrom ? `<div style="font-size:.85rem;color:var(--accent);font-weight:700;margin-bottom:4px">${escapeHtml(p.priceLabel||'dès')} ${fmt(p.priceFrom, p.currency)}</div>` : '';
+
+      return `
+        <a href="${href}" class="devis-card">
+          <div class="devis-card-img">
+            <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy">
+            ${cat ? `<span class="devis-card-cat">${escapeHtml(cat.name)}</span>` : ''}
+            ${badge}
+          </div>
+          <div class="devis-card-body">
+            ${price}
+            <h3>${escapeHtml(p.name)}</h3>
+            <p>${escapeHtml(p.description || '')}</p>
+            <span class="${ctaCls}">${cta}</span>
+          </div>
+        </a>
+      `;
+    }).join('');
+  }
+
+  function setActiveCat(cat){
+    activeCat = cat;
+    filtersEl.querySelectorAll('.devis-filter').forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
+    renderGrid();
+  }
+  function renderFilters(){
+    const cats = allCategories.filter(c => allProducts.some(p => p.category === c.slug && p.active !== false));
+    cats.forEach(c => {
+      const cnt = allProducts.filter(p => p.category === c.slug && p.active !== false).length;
+      const btn = document.createElement('button');
+      btn.className = 'devis-filter';
+      btn.dataset.cat = c.slug;
+      btn.textContent = `${c.name} (${cnt})`;
+      btn.addEventListener('click', () => setActiveCat(c.slug));
+      filtersEl.appendChild(btn);
+    });
+    filtersEl.querySelector('[data-cat=all]').addEventListener('click', () => setActiveCat('all'));
+    filtersEl.querySelector('[data-cat=all]').textContent = `Tous (${allProducts.filter(p => p.active !== false).length})`;
+  }
+  search.addEventListener('input', () => { q = search.value.trim().toLowerCase(); renderGrid(); });
+
+  try {
+    const data = await PictocraftProducts.loadProducts();
+    allProducts = data.products || [];
+    allCategories = data.categories || [];
+    renderFilters();
+    renderGrid();
+  } catch (err) {
+    grid.innerHTML = '<div class="devis-empty" style="color:#B91C1C">Impossible de charger les produits : ' + err.message + '</div>';
+  }
+})();
+</script>
 </body>
 </html>

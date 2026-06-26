@@ -208,7 +208,15 @@
           "discount": 0.64
         }
       ],
-      "quotable": true
+      "quotable": true,
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": true,
+      "sortOrder": 10,
+      "buttonLabel": "Configurer",
+      "priceFrom": 75,
+      "id": "flyers"
     },
     {
       "slug": "cartes-visite",
@@ -354,7 +362,15 @@
           "discount": 0.45
         }
       ],
-      "quotable": true
+      "quotable": true,
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": true,
+      "sortOrder": 20,
+      "buttonLabel": "Configurer",
+      "priceFrom": 35,
+      "id": "cartes-visite"
     },
     {
       "slug": "affiches",
@@ -500,7 +516,15 @@
           "discount": 0.42
         }
       ],
-      "quotable": true
+      "quotable": true,
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": true,
+      "sortOrder": 30,
+      "buttonLabel": "Configurer",
+      "priceFrom": 2500,
+      "id": "affiches"
     },
     {
       "slug": "brochures",
@@ -728,7 +752,15 @@
           "discount": 0.5
         }
       ],
-      "quotable": true
+      "quotable": true,
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": true,
+      "sortOrder": 40,
+      "buttonLabel": "Configurer",
+      "priceFrom": 350,
+      "id": "brochures"
     },
     {
       "slug": "baches",
@@ -827,7 +859,15 @@
         10,
         20
       ],
-      "quotable": true
+      "quotable": true,
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": true,
+      "sortOrder": 50,
+      "buttonLabel": "Configurer",
+      "priceFrom": 8000,
+      "id": "baches"
     },
     {
       "slug": "rollups",
@@ -912,14 +952,22 @@
           "discount": 0.2
         }
       ],
-      "quotable": true
+      "quotable": true,
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": true,
+      "sortOrder": 60,
+      "buttonLabel": "Configurer",
+      "priceFrom": 45000,
+      "id": "rollups"
     },
     {
       "slug": "stickers",
       "name": "Stickers & Étiquettes",
       "category": "packaging",
       "description": "Autocollants découpés sur mesure pour produits, packaging, événements.",
-      "image": "assets/images/gallery/gazette.jpg",
+      "image": "assets/images/products/emballage.jpg",
       "active": true,
       "calcMode": "unit_multipliers",
       "basePrice": 50,
@@ -1073,7 +1121,15 @@
           "discount": 0.65
         }
       ],
-      "quotable": true
+      "quotable": true,
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": true,
+      "sortOrder": 70,
+      "buttonLabel": "Configurer",
+      "priceFrom": 50,
+      "id": "stickers"
     },
     {
       "slug": "tshirts",
@@ -1201,7 +1257,15 @@
           "discount": 0.38
         }
       ],
-      "quotable": true
+      "quotable": true,
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": true,
+      "sortOrder": 80,
+      "buttonLabel": "Configurer",
+      "priceFrom": 3500,
+      "id": "tshirts"
     },
     {
       "slug": "calendriers",
@@ -1324,7 +1388,15 @@
           "discount": 0.45
         }
       ],
-      "quotable": true
+      "quotable": true,
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": true,
+      "sortOrder": 90,
+      "buttonLabel": "Configurer",
+      "priceFrom": 1800,
+      "id": "calendriers"
     },
     {
       "slug": "depliants",
@@ -1334,17 +1406,31 @@
       "image": "assets/images/products/flyers3.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "plis"
+      "contactReason": "plis",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 100,
+      "buttonLabel": "Devis sur mesure",
+      "id": "depliants"
     },
     {
       "slug": "menus",
       "name": "Menus de restaurant",
       "category": "impression-commerciale",
       "description": "Menus plastifiés ou cartonnés pour restaurants, bars, hôtels.",
-      "image": "assets/images/products/maquette.jpg",
+      "image": "assets/images/products/flyers2.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "format-sur-mesure"
+      "contactReason": "format-sur-mesure",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 110,
+      "buttonLabel": "Devis sur mesure",
+      "id": "menus"
     },
     {
       "slug": "chemises-rabats",
@@ -1354,17 +1440,31 @@
       "image": "assets/images/products/cv.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "format-sur-mesure"
+      "contactReason": "format-sur-mesure",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 120,
+      "buttonLabel": "Devis sur mesure",
+      "id": "chemises-rabats"
     },
     {
       "slug": "blocs-notes",
       "name": "Blocs-notes",
       "category": "impression-commerciale",
       "description": "Blocs-notes personnalisés A5/A6, encollés ou spirale.",
-      "image": "assets/images/gallery/stationery.jpg",
+      "image": "assets/images/products/bureau.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "reliure"
+      "contactReason": "reliure",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 130,
+      "buttonLabel": "Devis sur mesure",
+      "id": "blocs-notes"
     },
     {
       "slug": "invitations",
@@ -1374,7 +1474,14 @@
       "image": "assets/images/products/poster.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "finitions"
+      "contactReason": "finitions",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 140,
+      "buttonLabel": "Devis sur mesure",
+      "id": "invitations"
     },
     {
       "slug": "tickets",
@@ -1384,7 +1491,14 @@
       "image": "assets/images/products/cv.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "numerotation"
+      "contactReason": "numerotation",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 150,
+      "buttonLabel": "Devis sur mesure",
+      "id": "tickets"
     },
     {
       "slug": "etiquettes",
@@ -1394,7 +1508,14 @@
       "image": "assets/images/products/emballage.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "decoupe"
+      "contactReason": "decoupe",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 160,
+      "buttonLabel": "Devis sur mesure",
+      "id": "etiquettes"
     },
     {
       "slug": "packaging-simple",
@@ -1404,7 +1525,14 @@
       "image": "assets/images/products/emballage.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "format-sur-mesure"
+      "contactReason": "format-sur-mesure",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 170,
+      "buttonLabel": "Devis sur mesure",
+      "id": "packaging-simple"
     },
     {
       "slug": "polos",
@@ -1414,7 +1542,14 @@
       "image": "assets/images/products/textile.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "technique"
+      "contactReason": "technique",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 180,
+      "buttonLabel": "Devis sur mesure",
+      "id": "polos"
     },
     {
       "slug": "casquettes",
@@ -1424,87 +1559,150 @@
       "image": "assets/images/products/textile.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "technique"
+      "contactReason": "technique",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 190,
+      "buttonLabel": "Devis sur mesure",
+      "id": "casquettes"
     },
     {
       "slug": "sacs-pub",
       "name": "Sacs publicitaires",
       "category": "textile",
       "description": "Tote-bags coton, sacs non-tissé, sacs cabas personnalisés.",
-      "image": "assets/images/products/bureau.jpg",
+      "image": "assets/images/products/textile.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "matiere"
+      "contactReason": "matiere",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 200,
+      "buttonLabel": "Devis sur mesure",
+      "id": "sacs-pub"
     },
     {
       "slug": "mugs",
       "name": "Mugs & Tasses",
       "category": "textile",
       "description": "Mugs céramique sublimés, quadri ou monochrome.",
-      "image": "assets/images/gallery/satisfaction.jpg",
+      "image": "assets/images/products/bureau.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "impression"
+      "contactReason": "impression",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 210,
+      "buttonLabel": "Devis sur mesure",
+      "id": "mugs"
     },
     {
       "slug": "stylos",
       "name": "Stylos personnalisés",
       "category": "textile",
       "description": "Stylos billes, gel, métal — marquage par tampographie ou laser.",
-      "image": "assets/images/gallery/desk.jpg",
+      "image": "assets/images/products/bureau.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "marquage"
+      "contactReason": "marquage",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 220,
+      "buttonLabel": "Devis sur mesure",
+      "id": "stylos"
     },
     {
       "slug": "gourdes",
       "name": "Gourdes & Bouteilles",
       "category": "textile",
       "description": "Gourdes inox isothermes, bouteilles d'eau personnalisées.",
-      "image": "assets/images/gallery/desk.jpg",
+      "image": "assets/images/products/bureau.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "marquage"
+      "contactReason": "marquage",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 230,
+      "buttonLabel": "Devis sur mesure",
+      "id": "gourdes"
     },
     {
       "slug": "parapluies",
       "name": "Parapluies",
       "category": "textile",
       "description": "Parapluies pliants ou droits avec impression sur les pans.",
-      "image": "assets/images/gallery/event.jpg",
+      "image": "assets/images/products/bureau.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "impression"
+      "contactReason": "impression",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 240,
+      "buttonLabel": "Devis sur mesure",
+      "id": "parapluies"
     },
     {
       "slug": "porte-cles",
       "name": "Porte-clés publicitaires",
       "category": "textile",
       "description": "Porte-clés métal, PVC, bois, simili-cuir personnalisés.",
-      "image": "assets/images/gallery/desk.jpg",
+      "image": "assets/images/products/bureau.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "matiere"
+      "contactReason": "matiere",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 250,
+      "buttonLabel": "Devis sur mesure",
+      "id": "porte-cles"
     },
     {
       "slug": "powerbank",
       "name": "Powerbank & USB",
       "category": "textile",
       "description": "Powerbanks et clés USB avec votre logo, idéal cadeaux d'affaires.",
-      "image": "assets/images/gallery/workspace.jpg",
+      "image": "assets/images/products/bureau.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "marquage"
+      "contactReason": "marquage",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 260,
+      "buttonLabel": "Devis sur mesure",
+      "id": "powerbank"
     },
     {
       "slug": "badges",
       "name": "Badges & Tours de cou",
       "category": "evenementiel",
       "description": "Badges PVC + cordons publicitaires pour salons et événements.",
-      "image": "assets/images/gallery/visite.jpg",
+      "image": "assets/images/products/cv.jpg",
       "active": true,
       "quotable": false,
-      "contactReason": "finitions"
+      "contactReason": "finitions",
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": false,
+      "sortOrder": 270,
+      "buttonLabel": "Devis sur mesure",
+      "id": "badges"
     },
     {
       "slug": "magazines",
@@ -1697,7 +1895,15 @@
           "min": 5000,
           "discount": 0.55
         }
-      ]
+      ],
+      "priceLabel": "dès",
+      "currency": "FCFA",
+      "badge": "",
+      "configurable": true,
+      "sortOrder": 280,
+      "buttonLabel": "Configurer",
+      "priceFrom": 280,
+      "id": "magazines"
     }
   ]
 }

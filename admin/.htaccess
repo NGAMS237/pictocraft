@@ -1,0 +1,5 @@
+# admin/ : autoriser PHP, refuser tout autre fichier sensible
+<Files "*.json">
+  Order Deny,Allow
+  Deny from all
+</Files>
