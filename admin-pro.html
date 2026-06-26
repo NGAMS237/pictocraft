@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Administration Pictocraft</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{ --brand:#003C78; --brand-dark:#002952; --accent:#960F2D; --accent-dark:#6B0A21;
+  --ink:#1E1E1E; --ink-soft:#4A4A4A; --bg:#F7F5F1; --gray-100:#F2F2F4; --gray-200:#E5E5E9; --gray-300:#C9C9D0;
+  --success:#2E7D5F; --warning:#F59E0B; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif;color:var(--brand-dark);letter-spacing:-.02em}
+
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
+  background:linear-gradient(135deg,var(--brand-dark) 0%,var(--brand) 100%);}
+.login-card{background:#fff;border-radius:16px;padding:40px;max-width:420px;width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.login-card h1{font-size:1.6rem;margin-bottom:6px;text-align:center}
+.login-card .subtitle{text-align:center;color:var(--ink-soft);font-size:.9rem;margin-bottom:24px}
+.login-card .field{margin-bottom:14px}
+.login-card label{display:block;font-size:.78rem;font-weight:700;color:var(--brand-dark);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.login-card input{width:100%;padding:12px 14px;border:1.5px solid var(--gray-200);border-radius:8px;
+  font-size:.95rem;font-family:inherit}
+.login-card input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(0,60,120,.12)}
+.login-card button{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;
+  border-radius:8px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;margin-top:8px;
+  transition:background .2s}
+.login-card button:hover{background:var(--accent-dark)}
+.login-error{padding:10px 14px;background:#FEE2E2;color:#B91C1C;border-radius:8px;margin-bottom:14px;font-size:.88rem;display:none}
+.login-error.show{display:block}
+
+/* APP */
+.app{display:none}
+.app.ready{display:block}
+.topbar{background:var(--brand-dark);color:#fff;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.topbar h1{color:#fff;font-size:1.1rem}
+.topbar .user{font-size:.85rem;opacity:.85}
+.topbar .user b{display:block;font-weight:700}
+.topbar button{background:rgba(255,255,255,.15);color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-family:inherit;font-size:.85rem;font-weight:600;transition:background .2s}
+.topbar button:hover{background:rgba(255,255,255,.25)}
+
+.tabs{background:#fff;display:flex;gap:0;border-bottom:1px solid var(--gray-200);overflow-x:auto}
+.tab{padding:14px 22px;cursor:pointer;font-weight:600;color:var(--ink-soft);
+  border-bottom:3px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit;font-size:.92rem;white-space:nowrap}
+.tab:hover{color:var(--brand)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+
+.content{padding:32px 24px;max-width:1280px;margin:0 auto}
+.section{display:none}
+.section.active{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px}
+@media(max-width:680px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+.stat-card{background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:18px;text-align:center}
+.stat-card .v{font-family:'Bricolage Grotesque',sans-serif;font-size:2.2rem;font-weight:800;color:var(--brand-dark);line-height:1}
+.stat-card .l{font-size:.78rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em;margin-top:6px;font-weight:600}
+
+.card{background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:24px;margin-bottom:18px}
+.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--gray-200)}
+.card-head h2{font-size:1.15rem}
+
+.btn{padding:10px 18px;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.85rem;display:inline-flex;align-items:center;gap:6px;transition:all .15s}
+.btn-pri{background:var(--accent);color:#fff}
+.btn-pri:hover{background:var(--accent-dark)}
+.btn-sec{background:var(--brand);color:#fff}
+.btn-sec:hover{background:var(--brand-dark)}
+.btn-ghost{background:transparent;color:var(--brand);border:1.5px solid var(--gray-200)}
+.btn-ghost:hover{border-color:var(--brand);background:var(--gray-100)}
+.btn-success{background:var(--success);color:#fff}
+.btn-danger{background:#FEE2E2;color:#B91C1C}
+
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--gray-200)}
+th{background:var(--gray-100);font-weight:700;color:var(--brand-dark);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+tr:hover{background:var(--gray-100)}
+.badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.badge-nouveau{background:#FEF3C7;color:#92400E}
+.badge-en-cours{background:#DBEAFE;color:#1E40AF}
+.badge-valide{background:#D1FAE5;color:#065F46}
+.badge-perdu{background:#FEE2E2;color:#B91C1C}
+.badge-annule{background:#F3F4F6;color:#374151}
+
+.alert{padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:.9rem;display:flex;gap:10px;align-items:flex-start}
+.alert-info{background:#E0F2FE;color:#075985;border-left:4px solid #0EA5E9}
+.alert-success{background:#D1FAE5;color:#065F46;border-left:4px solid var(--success)}
+.alert-warn{background:#FEF3C7;color:#92400E;border-left:4px solid var(--warning)}
+
+.empty{padding:40px;text-align:center;color:var(--ink-soft);background:var(--gray-100);border-radius:8px}
+
+.quote-detail{padding:14px;background:var(--gray-100);border-radius:8px;margin-top:8px;font-size:.85rem}
+.quote-detail dt{font-weight:700;color:var(--brand-dark);margin-top:8px}
+.quote-detail dd{margin-left:0;color:var(--ink-soft);margin-top:2px}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login" class="login-wrap">
+  <div class="login-card">
+    <h1>🔐 Administration Pictocraft</h1>
+    <p class="subtitle">Connectez-vous pour gérer le site</p>
+    <div id="login-error" class="login-error"></div>
+    <form id="login-form" onsubmit="return false">
+      <div class="field"><label>Email</label><input type="email" id="login-email" required autocomplete="email"></div>
+      <div class="field"><label>Mot de passe</label><input type="password" id="login-password" required autocomplete="current-password"></div>
+      <button type="submit">Se connecter</button>
+    </form>
+    <p style="text-align:center;margin-top:18px;font-size:.78rem;color:var(--ink-soft)">
+      Pas encore de compte ?<br>
+      Demandez à l'administrateur principal de vous en créer un via le dashboard Supabase.
+    </p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="app">
+  <header class="topbar">
+    <h1>⚙ Administration Pictocraft</h1>
+    <div style="display:flex;align-items:center;gap:14px">
+      <div class="user"><b id="user-email">…</b><span>Administrateur</span></div>
+      <button id="logout">Déconnexion</button>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="dashboard">📊 Tableau de bord</button>
+    <button class="tab" data-tab="quotes">📋 Devis reçus</button>
+    <button class="tab" data-tab="reviews">⭐ Avis clients</button>
+    <button class="tab" data-tab="products">🛍️ Produits</button>
+    <button class="tab" data-tab="settings">⚙ Paramètres</button>
+  </nav>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <section class="section active" id="s-dashboard">
+      <div class="stats-grid" id="stats-grid">Chargement…</div>
+      <div class="card">
+        <div class="card-head"><h2>Derniers devis reçus</h2><button class="btn btn-ghost" onclick="switchTab('quotes')">Voir tout →</button></div>
+        <div id="dashboard-quotes">Chargement…</div>
+      </div>
+    </section>
+
+    <!-- DEVIS -->
+    <section class="section" id="s-quotes">
+      <div class="card">
+        <div class="card-head">
+          <h2>Devis reçus</h2>
+          <button class="btn btn-ghost" onclick="loadQuotes()">↻ Rafraîchir</button>
+        </div>
+        <div id="quotes-list">Chargement…</div>
+      </div>
+    </section>
+
+    <!-- AVIS -->
+    <section class="section" id="s-reviews">
+      <div class="card">
+        <div class="card-head">
+          <h2>Avis clients en attente de modération</h2>
+          <button class="btn btn-ghost" onclick="loadReviews()">↻ Rafraîchir</button>
+        </div>
+        <div id="reviews-list">Chargement…</div>
+      </div>
+    </section>
+
+    <!-- PRODUITS -->
+    <section class="section" id="s-products">
+      <div class="alert alert-info">
+        <span>ℹ️</span>
+        <div>
+          <strong>Édition produits</strong><br>
+          Pour modifier prix et options en détail, télécharge le fichier <code>products.json</code>, édite-le, puis recharge-le ici. Les modifications sont stockées de façon sécurisée et appliquées immédiatement sur le site.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h2>Catalogue produits</h2>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-ghost" onclick="downloadProducts()">⬇ Télécharger products.json</button>
+            <button class="btn btn-pri" onclick="document.getElementById('upload-products').click()">⬆ Importer products.json</button>
+            <input type="file" id="upload-products" accept=".json" style="display:none" onchange="uploadProducts(event)">
+          </div>
+        </div>
+        <div id="products-list">Chargement…</div>
+      </div>
+    </section>
+
+    <!-- PARAMÈTRES -->
+    <section class="section" id="s-settings">
+      <div class="card">
+        <div class="card-head"><h2>Paramètres entreprise</h2></div>
+        <div class="alert alert-info">
+          <span>ℹ️</span>
+          <div>Pour modifier coordonnées, slogan, frais de livraison etc., édite <code>data/settings.json</code> dans le repo GitHub puis pousse la modification.</div>
+        </div>
+        <div id="settings-view">Chargement…</div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+// ===================================================
+// Supabase config
+// ===================================================
+const SUPABASE_URL = 'https://dfdmasejsoibxrvubegu.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_FUNJl2eCG1rDiEZOUJsQdA_GQIl2YZM';
+let ACCESS_TOKEN = null;
+let CURRENT_USER = null;
+
+// ===================================================
+// Auth
+// ===================================================
+async function login(email, password){
+  const r = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY},
+    body: JSON.stringify({email, password})
+  });
+  if (!r.ok) {
+    const e = await r.json().catch(()=>({}));
+    throw new Error(e.error_description || e.msg || 'Email ou mot de passe incorrect');
+  }
+  const data = await r.json();
+  ACCESS_TOKEN = data.access_token;
+  CURRENT_USER = data.user;
+  localStorage.setItem('pictocraft_token', ACCESS_TOKEN);
+  localStorage.setItem('pictocraft_user', JSON.stringify(CURRENT_USER));
+  return data;
+}
+
+function logout(){
+  ACCESS_TOKEN = null;
+  CURRENT_USER = null;
+  localStorage.removeItem('pictocraft_token');
+  localStorage.removeItem('pictocraft_user');
+  document.getElementById('app').classList.remove('ready');
+  document.getElementById('login').style.display = 'flex';
+}
+
+function checkAuth(){
+  const t = localStorage.getItem('pictocraft_token');
+  const u = localStorage.getItem('pictocraft_user');
+  if (t && u) {
+    ACCESS_TOKEN = t;
+    CURRENT_USER = JSON.parse(u);
+    return true;
+  }
+  return false;
+}
+
+function authHeaders(){
+  return {
+    'apikey': SUPABASE_KEY,
+    'Authorization': 'Bearer ' + ACCESS_TOKEN,
+    'Content-Type': 'application/json'
+  };
+}
+
+async function api(path, opts){
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, Object.assign({headers: authHeaders()}, opts || {}));
+  if (r.status === 401) { logout(); throw new Error('Session expirée, reconnecte-toi.'); }
+  if (!r.ok) throw new Error('API error: ' + r.status);
+  if (r.status === 204) return null;
+  return r.json();
+}
+
+// ===================================================
+// UI helpers
+// ===================================================
+const $ = s => document.querySelector(s);
+const escapeHtml = s => String(s||'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+const fmt = n => Number(n||0).toLocaleString('fr-FR') + ' FCFA';
+const fmtDate = d => new Date(d).toLocaleString('fr-FR', {dateStyle:'short', timeStyle:'short'});
+
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === 's-' + name));
+  if (name === 'quotes') loadQuotes();
+  if (name === 'reviews') loadReviews();
+  if (name === 'products') loadProductsView();
+  if (name === 'settings') loadSettingsView();
+  if (name === 'dashboard') loadDashboard();
+}
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => switchTab(t.dataset.tab)));
+
+// ===================================================
+// Dashboard
+// ===================================================
+async function loadDashboard(){
+  try {
+    const [quotes, reviews] = await Promise.all([
+      api('pictocraft_quotes?select=statut,total,created_at&order=created_at.desc&limit=100'),
+      api('pictocraft_reviews?select=approuve,created_at&limit=200')
+    ]);
+
+    const nouveaux = quotes.filter(q => q.statut === 'nouveau').length;
+    const valides = quotes.filter(q => q.statut === 'valide').length;
+    const ca = quotes.filter(q => q.statut === 'valide').reduce((s,q) => s + (q.total||0), 0);
+    const avisPending = reviews.filter(r => !r.approuve).length;
+
+    $('#stats-grid').innerHTML = `
+      <div class="stat-card"><div class="v">${quotes.length}</div><div class="l">Devis total</div></div>
+      <div class="stat-card"><div class="v" style="color:var(--accent)">${nouveaux}</div><div class="l">Nouveaux</div></div>
+      <div class="stat-card"><div class="v" style="color:var(--success)">${fmt(ca)}</div><div class="l">CA validé</div></div>
+      <div class="stat-card"><div class="v" style="color:var(--warning)">${avisPending}</div><div class="l">Avis à modérer</div></div>
+    `;
+
+    const recent = quotes.slice(0, 5);
+    if (!recent.length) {
+      $('#dashboard-quotes').innerHTML = '<div class="empty">Aucun devis pour le moment.</div>';
+    } else {
+      $('#dashboard-quotes').innerHTML = '<table><thead><tr><th>Date</th><th>Statut</th><th>Total</th></tr></thead><tbody>' +
+        recent.map(q => `<tr><td>${fmtDate(q.created_at)}</td><td><span class="badge badge-${q.statut}">${q.statut}</span></td><td><b>${fmt(q.total)}</b></td></tr>`).join('') +
+        '</tbody></table>';
+    }
+  } catch(e) {
+    $('#stats-grid').innerHTML = '<div class="alert alert-warn">Erreur : ' + e.message + '</div>';
+  }
+}
+
+// ===================================================
+// Devis
+// ===================================================
+async function loadQuotes(){
+  try {
+    const quotes = await api('pictocraft_quotes?select=*&order=created_at.desc&limit=200');
+    if (!quotes.length) { $('#quotes-list').innerHTML = '<div class="empty">Aucun devis reçu.</div>'; return; }
+
+    $('#quotes-list').innerHTML = '<table><thead><tr><th>Date</th><th>Client</th><th>Produit</th><th>Quantité</th><th>Total</th><th>Statut</th><th>Action</th></tr></thead><tbody>' +
+      quotes.map(q => `
+        <tr>
+          <td>${fmtDate(q.created_at)}</td>
+          <td><b>${escapeHtml(q.client_nom)}</b><br><small>${escapeHtml(q.client_telephone||'')} ${q.client_email ? '· '+escapeHtml(q.client_email) : ''}</small></td>
+          <td>${escapeHtml(q.produit_nom)}</td>
+          <td>${q.quantite}</td>
+          <td><b>${fmt(q.total)}</b></td>
+          <td><span class="badge badge-${q.statut}">${q.statut}</span></td>
+          <td>
+            <select onchange="updateQuoteStatus('${q.id}', this.value)" style="padding:6px 10px;border:1px solid var(--gray-200);border-radius:4px;font-size:.8rem">
+              <option ${q.statut==='nouveau'?'selected':''} value="nouveau">Nouveau</option>
+              <option ${q.statut==='en_cours'?'selected':''} value="en_cours">En cours</option>
+              <option ${q.statut==='valide'?'selected':''} value="valide">Validé</option>
+              <option ${q.statut==='perdu'?'selected':''} value="perdu">Perdu</option>
+              <option ${q.statut==='annule'?'selected':''} value="annule">Annulé</option>
+            </select>
+          </td>
+        </tr>
+        <tr><td colspan="7"><details><summary style="cursor:pointer;font-size:.85rem;color:var(--brand)">Voir détails</summary>
+          <dl class="quote-detail">
+            <dt>Commentaire</dt><dd>${escapeHtml(q.commentaire||'(aucun)')}</dd>
+            <dt>Ville</dt><dd>${escapeHtml(q.client_ville||'-')}</dd>
+            <dt>Entreprise</dt><dd>${escapeHtml(q.client_entreprise||'-')}</dd>
+            <dt>Configuration</dt><dd><pre style="white-space:pre-wrap;font-size:.78rem">${escapeHtml(JSON.stringify(q.configuration||{},null,2))}</pre></dd>
+          </dl>
+        </details></td></tr>
+      `).join('') +
+      '</tbody></table>';
+  } catch(e) { $('#quotes-list').innerHTML = '<div class="alert alert-warn">' + e.message + '</div>'; }
+}
+
+async function updateQuoteStatus(id, statut){
+  try {
+    await api('pictocraft_quotes?id=eq.' + id, { method:'PATCH', body: JSON.stringify({statut}) });
+  } catch(e) { alert('Erreur : ' + e.message); }
+}
+
+// ===================================================
+// Avis
+// ===================================================
+async function loadReviews(){
+  try {
+    const reviews = await api('pictocraft_reviews?select=*&order=created_at.desc&limit=200');
+    if (!reviews.length) { $('#reviews-list').innerHTML = '<div class="empty">Aucun avis.</div>'; return; }
+
+    $('#reviews-list').innerHTML = '<table><thead><tr><th>Date</th><th>Auteur</th><th>Note</th><th>Avis</th><th>Statut</th><th>Action</th></tr></thead><tbody>' +
+      reviews.map(r => `
+        <tr>
+          <td>${fmtDate(r.created_at)}</td>
+          <td><b>${escapeHtml(r.nom)}</b>${r.entreprise ? '<br><small>'+escapeHtml(r.entreprise)+'</small>' : ''}</td>
+          <td>${'★'.repeat(r.note)}${'☆'.repeat(5-r.note)}</td>
+          <td style="max-width:340px">${escapeHtml(r.avis)}</td>
+          <td><span class="badge ${r.approuve?'badge-valide':'badge-nouveau'}">${r.approuve?'Publié':'En attente'}</span></td>
+          <td>
+            ${r.approuve
+              ? `<button class="btn btn-danger" onclick="moderateReview('${r.id}',false)">Dépublier</button>`
+              : `<button class="btn btn-success" onclick="moderateReview('${r.id}',true)">✓ Publier</button>`}
+          </td>
+        </tr>
+      `).join('') + '</tbody></table>';
+  } catch(e) { $('#reviews-list').innerHTML = '<div class="alert alert-warn">' + e.message + '</div>'; }
+}
+
+async function moderateReview(id, approuve){
+  try {
+    await api('pictocraft_reviews?id=eq.' + id, { method:'PATCH', body: JSON.stringify({approuve}) });
+    loadReviews();
+  } catch(e) { alert('Erreur : ' + e.message); }
+}
+
+// ===================================================
+// Produits
+// ===================================================
+let CURRENT_PRODUCTS = null;
+
+async function loadProductsView(){
+  try {
+    // Essaie d'abord la config Supabase active, sinon le products.json statique
+    let data;
+    try {
+      const cfgArr = await fetch(SUPABASE_URL+'/rest/v1/pictocraft_products_config?active=eq.true&order=created_at.desc&limit=1', {headers:{apikey:SUPABASE_KEY}}).then(r=>r.json());
+      if (cfgArr && cfgArr.length && cfgArr[0].config) {
+        data = cfgArr[0].config;
+        $('#products-list').dataset.source = 'supabase';
+      }
+    } catch(e){}
+    if (!data) {
+      data = await fetch('data/products.json').then(r=>r.json());
+      $('#products-list').dataset.source = 'static';
+    }
+    CURRENT_PRODUCTS = data;
+
+    const src = $('#products-list').dataset.source;
+    const srcMsg = src === 'supabase' ? '✓ Version Supabase active' : 'Version statique data/products.json (aucune config Supabase active)';
+
+    $('#products-list').innerHTML = `
+      <p style="margin-bottom:14px;font-size:.85rem;color:var(--ink-soft)">${srcMsg} · ${data.products.length} produits · ${data.categories.length} catégories</p>
+      <table><thead><tr><th>Produit</th><th>Catégorie</th><th>Mode</th><th>Prix base</th><th>Statut</th></tr></thead><tbody>` +
+      data.products.map(p => {
+        const cat = data.categories.find(c => c.slug === p.category);
+        return `<tr>
+          <td><b>${escapeHtml(p.name)}</b><br><small>${escapeHtml(p.slug)}</small></td>
+          <td>${cat ? escapeHtml(cat.name) : '-'}</td>
+          <td><span class="badge" style="background:var(--gray-100);color:var(--ink)">${p.quotable===false?'Sur mesure':p.calcMode||'unit'}</span></td>
+          <td>${p.basePrice ? fmt(p.basePrice) : '-'}</td>
+          <td><span class="badge ${p.active!==false?'badge-valide':'badge-perdu'}">${p.active!==false?'Actif':'Inactif'}</span></td>
+        </tr>`;
+      }).join('') + '</tbody></table>';
+  } catch(e) { $('#products-list').innerHTML = '<div class="alert alert-warn">' + e.message + '</div>'; }
+}
+
+function downloadProducts(){
+  if (!CURRENT_PRODUCTS) { alert('Charge d\'abord les produits.'); return; }
+  const blob = new Blob([JSON.stringify(CURRENT_PRODUCTS,null,2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'products.json';
+  a.click();
+}
+
+async function uploadProducts(event){
+  const file = event.target.files[0];
+  if (!file) return;
+  if (!confirm('Cette nouvelle config va remplacer la précédente sur le site. Continuer ?')) return;
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+    if (!data.products || !Array.isArray(data.products)) throw new Error('Format invalide : champ products[] manquant');
+
+    // Désactiver l'ancienne config
+    await api('pictocraft_products_config?active=eq.true', { method:'PATCH', body: JSON.stringify({active:false}) });
+
+    // Insérer la nouvelle, active
+    await api('pictocraft_products_config', { method:'POST',
+      body: JSON.stringify({version: data.version || new Date().toISOString(), config: data, active: true})
+    });
+
+    alert('✓ Nouvelle config produits publiée. Rafraîchis le site pour voir les changements.');
+    loadProductsView();
+  } catch(e) { alert('Erreur : ' + e.message); }
+}
+
+async function loadSettingsView(){
+  try {
+    const s = await fetch('data/settings.json').then(r=>r.json());
+    $('#settings-view').innerHTML = `
+      <table>
+        <tr><th>Entreprise</th><td>${escapeHtml(s.company.name)}</td></tr>
+        <tr><th>Slogan</th><td>${escapeHtml(s.company.slogan)}</td></tr>
+        <tr><th>Adresse</th><td>${escapeHtml(s.company.address)}</td></tr>
+        <tr><th>Tél principal</th><td>${escapeHtml(s.contact.phone1)}</td></tr>
+        <tr><th>Tél secondaire</th><td>${escapeHtml(s.contact.phone2)}</td></tr>
+        <tr><th>WhatsApp</th><td>${escapeHtml(s.contact.whatsapp)}</td></tr>
+        <tr><th>Email principal</th><td>${escapeHtml(s.contact.email1)}</td></tr>
+        <tr><th>TVA activée</th><td>${s.tax.enabled ? 'Oui ('+(s.tax.rate*100).toFixed(2)+'%)' : 'Non'}</td></tr>
+      </table>
+      <p style="margin-top:14px;font-size:.85rem;color:var(--ink-soft)">Pour modifier ces paramètres, édite <code>data/settings.json</code> dans le repo GitHub.</p>
+    `;
+  } catch(e) { $('#settings-view').innerHTML = '<div class="alert alert-warn">' + e.message + '</div>'; }
+}
+
+// ===================================================
+// Init
+// ===================================================
+async function start(){
+  $('#user-email').textContent = CURRENT_USER.email;
+  $('#login').style.display = 'none';
+  $('#app').classList.add('ready');
+  loadDashboard();
+}
+
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const err = $('#login-error'); err.classList.remove('show');
+  try {
+    await login($('#login-email').value, $('#login-password').value);
+    start();
+  } catch(e) {
+    err.textContent = e.message;
+    err.classList.add('show');
+  }
+});
+
+document.getElementById('logout').addEventListener('click', logout);
+
+if (checkAuth()) start();
+</script>
+</body>
+</html>

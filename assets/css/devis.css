@@ -235,3 +235,36 @@
 @media(max-width:980px){
   .cfg-summary{ position:static; }
 }
+
+/* Variante "sur mesure" pour produits sans configurateur */
+.devis-card-cta-sur-mesure{
+  background:var(--brand-dark, #002952);
+}
+.devis-card:hover .devis-card-cta-sur-mesure{
+  background:var(--brand, #003C78);
+}
+.devis-card-badge-mesure{
+  position:absolute; top:10px; right:10px;
+  background:rgba(255,255,255,.95); color:var(--brand-dark, #002952);
+  font-size:.65rem; font-weight:700; letter-spacing:.08em;
+  padding:4px 10px; border-radius:99px; text-transform:uppercase;
+}
+
+/* Mode "sur mesure" : page produit sans configurateur */
+.cfg-sur-mesure{
+  background:#fff; border:1px solid var(--gray-200); border-radius:var(--radius-lg);
+  padding:32px; text-align:center;
+}
+.cfg-sur-mesure svg{ color:var(--accent); margin-bottom:14px; }
+.cfg-sur-mesure h2{ font-size:1.4rem; margin-bottom:10px; color:var(--brand-dark); }
+.cfg-sur-mesure p{ color:var(--ink-soft); margin-bottom:24px; line-height:1.6; }
+.cfg-sur-mesure .reasons{
+  display:flex; gap:16px; flex-wrap:wrap; justify-content:center; margin-bottom:24px;
+}
+.cfg-sur-mesure .reason{
+  background:var(--cream, #F7F5F1); padding:10px 16px; border-radius:99px;
+  font-size:.85rem; font-weight:600; color:var(--brand);
+}
+.cfg-sur-mesure .actions{
+  display:flex; gap:12px; justify-content:center; flex-wrap:wrap;
+}

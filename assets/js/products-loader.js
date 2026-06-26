@@ -9,8 +9,25 @@
   let _productsCache = null;
   let _settingsCache = null;
 
+  const SUPABASE_URL = 'https://dfdmasejsoibxrvubegu.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_FUNJl2eCG1rDiEZOUJsQdA_GQIl2YZM';
+
   async function loadProducts() {
     if (_productsCache) return _productsCache;
+    // 1. Essai Supabase : config active (admin)
+    try {
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/pictocraft_products_config?active=eq.true&order=created_at.desc&limit=1`, {
+        headers: { 'apikey': SUPABASE_KEY }
+      });
+      if (r.ok) {
+        const arr = await r.json();
+        if (arr && arr.length && arr[0].config && arr[0].config.products) {
+          _productsCache = arr[0].config;
+          return _productsCache;
+        }
+      }
+    } catch(e) { /* silencieux : fallback statique */ }
+    // 2. Fallback : products.json statique
     const r = await fetch('data/products.json?v=' + Date.now());
     if (!r.ok) throw new Error('Erreur chargement produits : ' + r.status);
     _productsCache = await r.json();

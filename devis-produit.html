@@ -187,9 +187,20 @@
 
     loadingEl.style.display = 'none';
     headerEl.style.display = '';
+
+    // Si le produit n'est pas configurable, afficher mode sur mesure
+    if (product.quotable === false) {
+      const layout = document.getElementById('cfg-layout');
+      layout.style.display = '';
+      layout.style.gridTemplateColumns = '1fr';
+      layout.innerHTML = renderSurMesure(product, settings);
+      bindSurMesure(product, settings);
+      return;
+    }
+
     layoutEl.style.display = '';
 
-    // Init configurateur
+    // Init configurateur classique
     PictocraftConfigurator.init({
       product: product,
       settings: settings,
@@ -201,6 +212,126 @@
     });
   } catch (err) {
     showError('Erreur de chargement : ' + err.message);
+  }
+
+  function renderSurMesure(product, settings){
+    const reasonsMap = {
+      'plis':'Nombre de plis',
+      'format-sur-mesure':'Format sur mesure',
+      'reliure':'Type de reliure',
+      'finitions':'Finitions spéciales',
+      'numerotation':'Numérotation',
+      'decoupe':'Découpe personnalisée',
+      'technique':'Technique d\'impression',
+      'matiere':'Matière à choisir',
+      'impression':'Type d\'impression',
+      'marquage':'Zone de marquage'
+    };
+    const reasonLbl = reasonsMap[product.contactReason] || 'Spécifications sur mesure';
+    return `
+      <div class="cfg-sur-mesure">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <h2>Devis personnalisé pour ${product.name}</h2>
+        <p>${product.description || ''}</p>
+        <p style="margin-top:6px">Ce produit nécessite un échange avec notre équipe pour déterminer les options exactes (${reasonLbl.toLowerCase()}, dimensions, quantité…). Réponse sous 24h ouvrées.</p>
+        <div class="reasons">
+          <span class="reason">✓ Devis sous 24h</span>
+          <span class="reason">✓ Conseil expert inclus</span>
+          <span class="reason">✓ Vérification fichiers gratuite</span>
+        </div>
+        <form id="sm-form" class="cfg-client-form" style="text-align:left;margin-top:24px">
+          <div class="form-row">
+            <div class="field"><label>Nom *</label><input type="text" name="nom" required maxlength="80"></div>
+            <div class="field"><label>Entreprise</label><input type="text" name="entreprise" maxlength="120"></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label>Téléphone / WhatsApp *</label><input type="tel" name="telephone" required maxlength="20"></div>
+            <div class="field"><label>Email</label><input type="email" name="email" maxlength="120"></div>
+          </div>
+          <div class="field"><label>Décrivez votre besoin *</label><textarea name="commentaire" required minlength="20" maxlength="1000" placeholder="Quantité souhaitée, dimensions, format, délai, options spéciales…"></textarea></div>
+          <div class="actions">
+            <button type="button" id="sm-submit" class="btn-primary btn-large">📩 Demander mon devis</button>
+            <button type="button" id="sm-whatsapp" class="btn-whatsapp">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.8-2.9-1.5-4-3.5-.3-.5.3-.5.8-1.5.1-.2 0-.3 0-.5s-.7-1.6-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1.1 2.9 1.2 3.1.1.2 2.1 3.3 5.2 4.6 2 .8 2.7.9 3.7.8.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zm-5.5 7.6c-1.8 0-3.5-.5-5-1.4l-3.5 1.1 1.1-3.4c-1-1.6-1.6-3.5-1.6-5.5 0-5.6 4.5-10.1 10-10.1 5.6 0 10.1 4.5 10.1 10.1S17.5 22 12 22z"/></svg>
+              WhatsApp direct
+            </button>
+          </div>
+        </form>
+      </div>
+    `;
+  }
+
+  function bindSurMesure(product, settings){
+    const form = document.getElementById('sm-form');
+    const getData = () => ({
+      nom: form.querySelector('[name=nom]').value.trim(),
+      entreprise: form.querySelector('[name=entreprise]').value.trim() || null,
+      telephone: form.querySelector('[name=telephone]').value.trim(),
+      email: form.querySelector('[name=email]').value.trim() || null,
+      commentaire: form.querySelector('[name=commentaire]').value.trim()
+    });
+
+    const buildMsg = (data) => {
+      let m = '*Demande de devis sur mesure*\n';
+      m += '\n*Produit :* ' + product.name;
+      m += '\n\n*Mon besoin :*\n' + data.commentaire;
+      m += '\n\n*Mes coordonnées :*';
+      m += '\nNom : ' + data.nom;
+      if (data.entreprise) m += '\nEntreprise : ' + data.entreprise;
+      m += '\nTéléphone : ' + data.telephone;
+      if (data.email) m += '\nEmail : ' + data.email;
+      return m;
+    };
+
+    document.getElementById('sm-whatsapp').addEventListener('click', () => {
+      const data = getData();
+      if (!data.commentaire || data.commentaire.length < 20) {
+        alert('Merci de décrire votre besoin (au moins 20 caractères).');
+        return;
+      }
+      const wa = (settings.contact && settings.contact.whatsapp) || '237675140843';
+      const url = 'https://wa.me/' + wa + '?text=' + encodeURIComponent(buildMsg(data));
+      window.open(url, '_blank');
+    });
+
+    document.getElementById('sm-submit').addEventListener('click', async () => {
+      const data = getData();
+      if (!data.nom || !data.telephone || !data.commentaire || data.commentaire.length < 20) {
+        alert('Merci de remplir nom, téléphone et description de votre besoin (au moins 20 caractères).');
+        return;
+      }
+      const btn = document.getElementById('sm-submit');
+      btn.disabled = true; const orig = btn.innerHTML; btn.innerHTML = '⏳ Envoi…';
+
+      if (settings.admin && settings.admin.supabaseEnabled) {
+        try {
+          await fetch(settings.admin.supabaseUrl + '/rest/v1/pictocraft_quotes', {
+            method:'POST',
+            headers: {
+              'Content-Type':'application/json',
+              'apikey': settings.admin.supabaseAnonKey,
+              'Authorization':'Bearer ' + settings.admin.supabaseAnonKey,
+              'Prefer':'return=minimal'
+            },
+            body: JSON.stringify({
+              produit: product.slug, produit_nom: product.name,
+              quantite: 1, configuration: { sur_mesure: true, demande: data.commentaire },
+              total: 0,
+              client_nom: data.nom, client_entreprise: data.entreprise,
+              client_email: data.email, client_telephone: data.telephone,
+              commentaire: data.commentaire
+            })
+          });
+        } catch(e) { console.warn(e); }
+      }
+
+      // Ouvre WhatsApp
+      const wa = (settings.contact && settings.contact.whatsapp) || '237675140843';
+      window.open('https://wa.me/' + wa + '?text=' + encodeURIComponent(buildMsg(data)), '_blank');
+
+      btn.innerHTML = '✓ Demande envoyée';
+      setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 3000);
+    });
   }
 })();
 </script>

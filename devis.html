@@ -157,16 +157,22 @@
 
     grid.innerHTML = filtered.map(p => {
       const cat = allCategories.find(c => c.slug === p.category);
+      const quotable = p.quotable !== false;
+      const href = 'devis-produit.html?produit=' + encodeURIComponent(p.slug);
+      const ctaText = quotable ? 'Configurer →' : 'Devis sur mesure →';
+      const ctaClass = quotable ? 'devis-card-cta' : 'devis-card-cta devis-card-cta-sur-mesure';
+      const badge = quotable ? '' : '<span class="devis-card-badge-mesure">Sur mesure</span>';
       return `
-        <a href="devis-produit.html?produit=${encodeURIComponent(p.slug)}" class="devis-card">
+        <a href="${href}" class="devis-card">
           <div class="devis-card-img">
             <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.background='#003C78'">
             ${cat ? `<span class="devis-card-cat">${escapeHtml(cat.name)}</span>` : ''}
+            ${badge}
           </div>
           <div class="devis-card-body">
             <h3>${escapeHtml(p.name)}</h3>
             <p>${escapeHtml(p.description || '')}</p>
-            <span class="devis-card-cta">Configurer →</span>
+            <span class="${ctaClass}">${ctaText}</span>
           </div>
         </a>
       `;
