@@ -264,8 +264,12 @@ tr:hover{background:var(--gray-100)}
             <div class="pc-image-edit">
               <div class="pc-image-preview"><img id="pm-image-preview" src="" style="max-width:160px;max-height:120px;display:none;border-radius:8px"></div>
               <div style="flex:1">
-                <div class="field"><label>URL ou chemin d\'image</label><input type="text" id="pm-image" placeholder="assets/images/products/flyers.jpg"></div>
-                <button type="button" class="btn btn-ghost" onclick="document.getElementById(\'pm-image-file\').click()">⬆ Uploader une nouvelle image</button>
+                <div class="field"><label>URL ou chemin d\'image</label><input type="text" id="pm-image" placeholder="assets/images/products/flyers.jpg" oninput="document.getElementById(\'pm-image-preview\').src=this.value;document.getElementById(\'pm-image-preview\').style.display=this.value?\'\':\''none\''"></div>
+                <details style="margin-top:10px" open>
+                  <summary style="cursor:pointer;font-weight:700;color:var(--brand);padding:6px 0;font-size:.88rem">🖼️ Galerie rapide — choisir une image en 1 clic</summary>
+                  <div id="quick-gallery" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:6px;max-height:280px;overflow-y:auto;padding:8px;background:var(--gray-100);border-radius:6px;margin-top:6px">Chargement…</div>
+                </details>
+                <button type="button" class="btn btn-ghost" style="margin-top:10px" onclick="document.getElementById(\'pm-image-file\').click()">⬆ Ou uploader une nouvelle image</button>
                 <input type="file" id="pm-image-file" accept="image/*" style="display:none" onchange="uploadProductImageInModal(event)">
                 <p style="font-size:.78rem;color:var(--ink-soft);margin-top:6px">Max 5 Mo. JPG, PNG, WEBP, SVG.</p>
               </div>
@@ -661,6 +665,38 @@ async function toggleProductActive(slug) {
   } catch(e) { alert('Erreur : ' + e.message); }
 }
 
+async function loadQuickGallery(){
+  try {
+    const data = await fetch('data/image-gallery.json?v='+Math.floor(Date.now()/60000)).then(r=>r.json());
+    const wrap = document.getElementById('quick-gallery');
+    if (!wrap) return;
+    wrap.innerHTML = data.images.map(img => `
+      <div style="cursor:pointer;border:2px solid transparent;border-radius:4px;overflow:hidden;background:#fff;transition:border-color .15s"
+           onmouseover="this.style.borderColor='var(--brand)'"
+           onmouseout="this.style.borderColor='transparent'"
+           onclick="pickImage('${img}')" title="${img}">
+        <img src="${img}" alt="" loading="lazy" style="width:100%;aspect-ratio:1;object-fit:cover;display:block" onerror="this.style.display='none'">
+      </div>
+    `).join('');
+  } catch(e) {
+    const wrap = document.getElementById('quick-gallery');
+    if (wrap) wrap.innerHTML = '<div style="color:#B91C1C;padding:10px">Erreur galerie : ' + e.message + '</div>';
+  }
+}
+
+function pickImage(path){
+  document.getElementById('pm-image').value = path;
+  document.getElementById('pm-image-preview').src = path;
+  document.getElementById('pm-image-preview').style.display = '';
+  // Feedback visuel
+  const wrap = document.getElementById('quick-gallery');
+  if (wrap) {
+    wrap.style.background = 'var(--success)';
+    wrap.style.transition = 'background .3s';
+    setTimeout(() => { wrap.style.background = 'var(--gray-100)'; }, 500);
+  }
+}
+
 function openProductModal(slug) {
   const modal = $('#product-modal');
   modal.style.display = 'flex';
@@ -670,6 +706,9 @@ function openProductModal(slug) {
   const catSel = $('#pm-category');
   catSel.innerHTML = '<option value="">— Aucune —</option>' +
     (CURRENT_PRODUCTS?.categories || []).map(c => `<option value="${escapeHtml(c.slug)}">${escapeHtml(c.name)}</option>`).join('');
+
+  // Charger la galerie rapide
+  loadQuickGallery();
 
   if (slug) {
     const p = CURRENT_PRODUCTS.products.find(x => x.slug === slug);
@@ -731,7 +770,7 @@ document.addEventListener('input', (e) => {
 async function uploadProductImageInModal(event) {
   const file = event.target.files[0];
   if (!file) return;
-  if (file.size > 5*1024*1024) { alert('Image trop volumineuse (max 5 Mo). Compresse-la d abord.'); event.target.value=''; return; }
+  if (file.size > 5*1024*1024) { alert('Image trop volumineuse (max 5 Mo).'); event.target.value=''; return; }
   if (!file.type.startsWith('image/')) { alert('Le fichier n est pas une image valide.'); event.target.value=''; return; }
 
   const btn = event.target.previousElementSibling;
@@ -743,20 +782,19 @@ async function uploadProductImageInModal(event) {
   const cleanName = slug + '-' + Date.now() + '.' + ext;
 
   try {
+    // POST sans x-upsert (evite erreur 400)
     const r = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${cleanName}`, {
       method:'POST',
       headers: {
         'apikey': SUPABASE_KEY,
         'Authorization': 'Bearer ' + ACCESS_TOKEN,
-        'Content-Type': file.type || 'application/octet-stream',
-        'x-upsert': 'true',
-        'cache-control': '3600'
+        'Content-Type': file.type
       },
       body: file
     });
     if (!r.ok) {
       const errTxt = await r.text().catch(()=>r.statusText);
-      throw new Error('Supabase Storage: HTTP ' + r.status + ' - ' + errTxt.slice(0,200));
+      throw new Error('HTTP ' + r.status + ' - ' + errTxt.slice(0,200));
     }
     const url = `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${cleanName}`;
     $('#pm-image').value = url;
@@ -774,7 +812,7 @@ async function uploadProductImageInModal(event) {
       }, 5000);
     }
   } catch(e) {
-    alert('Erreur upload image: ' + e.message + '\n\nVerifie ta connexion admin.');
+    alert('Erreur upload : ' + e.message + '\n\nAstuce : utilise la Galerie ci-dessus pour choisir une image existante en 1 clic.');
     if (btn) { btn.innerHTML = originalBtnTxt; btn.disabled = false; }
   } finally {
     event.target.value = '';
@@ -964,29 +1002,34 @@ async function loadImages(){
 async function uploadImage(event){
   const file = event.target.files[0];
   if (!file) return;
-  if (file.size > 5*1024*1024) { alert('Fichier trop volumineux (max 5 Mo).'); return; }
+  if (file.size > 5*1024*1024) { alert('Max 5 Mo.'); return; }
+  if (!file.type.startsWith('image/')) { alert('Fichier non-image refuse.'); return; }
 
-  // Nom propre : minuscules, sans accents, sans espaces
-  const cleanName = file.name.toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-    .replace(/[^a-z0-9.-]/g,'-')
-    .replace(/-+/g,'-')
-    .replace(/^-|-$/g,'');
-  const finalName = Date.now() + '-' + cleanName;
+  const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+  const cleanName = 'img-' + Date.now() + '-' + Math.floor(Math.random()*1000) + '.' + ext;
 
   try {
-    const r = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${finalName}`, {
+    // POST simple sans x-upsert (source d'erreur 400 courante)
+    const r = await fetch(`${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${cleanName}`, {
       method:'POST',
-      headers: {'apikey':SUPABASE_KEY, 'Authorization':'Bearer '+ACCESS_TOKEN, 'Content-Type': file.type, 'x-upsert':'true'},
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + ACCESS_TOKEN,
+        'Content-Type': file.type
+      },
       body: file
     });
     if (!r.ok) {
-      const e = await r.text();
-      throw new Error('Erreur upload: ' + r.status + ' ' + e);
+      const err = await r.text().catch(()=>'');
+      throw new Error('HTTP ' + r.status + ' - ' + err.slice(0,200));
     }
-    alert('✓ Image uploadée : ' + finalName);
+    alert('OK image uploadee : ' + cleanName);
     loadImages();
-  } catch(e) { alert('Erreur : ' + e.message); }
+  } catch(e) {
+    alert('Erreur : ' + e.message);
+  } finally {
+    event.target.value = '';
+  }
 }
 
 function copyImageUrl(url){
