@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Réalisations — Pictocraft</title>
 <meta name="description" content="Découvrez nos réalisations pour entreprises, ONG et institutions camerounaises : flyers, brochures, roll-ups, packaging, textile et plus.">
 <meta name="robots" content="index,follow">
@@ -93,7 +96,12 @@
 (async function(){
   const escapeHtml = s => String(s||'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
   const CACHE_V = Math.floor(Date.now() / 60000);
-  const bust = url => !url ? '' : (url.startsWith('http') ? url : (url.includes('?') ? url + '&v='+CACHE_V : url + '?v='+CACHE_V));
+  const bust = url => {
+    if (!url) return '';
+    if (url.startsWith('http')) return url;
+    const encoded = url.split('/').map(encodeURIComponent).join('/');
+    return encoded.includes('?') ? encoded + '&v='+CACHE_V : encoded + '?v='+CACHE_V;
+  };
   const grid = document.getElementById('real-grid');
   const filtersEl = document.getElementById('real-filters');
   let all = [], cats = [], activeCat = 'tous';
@@ -120,7 +128,21 @@
   }
 
   try {
-    const data = await fetch('data/realisations.json?v='+Math.floor(Date.now()/60000)).then(r=>r.json());
+    let data = null;
+    // 1) Essai Supabase (réalisations live)
+    try {
+      const SUP='https://dfdmasejsoibxrvubegu.supabase.co';
+      const KEY='sb_publishable_FUNJl2eCG1rDiEZOUJsQdA_GQIl2YZM';
+      const r = await fetch(SUP+'/rest/v1/pictocraft_realisations_config?active=eq.true&order=created_at.desc&limit=1&_='+Date.now(), {
+        headers:{apikey:KEY,'Cache-Control':'no-cache'}, cache:'no-store'
+      });
+      if (r.ok) {
+        const arr = await r.json();
+        if (arr && arr.length && arr[0].config && arr[0].config.realisations) data = arr[0].config;
+      }
+    } catch(_) {}
+    // 2) Fallback : JSON statique
+    if (!data) data = await fetch('data/realisations.json?v='+Date.now(), {cache:'no-store'}).then(r=>r.json());
     all = data.realisations || [];
     cats = data.categories || [];
     // Render filtres dynamiques basés sur les catégories utilisées

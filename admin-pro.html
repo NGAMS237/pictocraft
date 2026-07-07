@@ -169,6 +169,7 @@ tr:hover{background:var(--gray-100)}
     <button class="tab" data-tab="quotes">📋 Devis reçus</button>
     <button class="tab" data-tab="reviews">⭐ Avis clients</button>
     <button class="tab" data-tab="products">🛍️ Produits</button>
+    <button class="tab" data-tab="realisations">🎨 Réalisations</button>
     <button class="tab" data-tab="images">🖼️ Images</button>
     <button class="tab" data-tab="settings">⚙ Paramètres</button>
   </nav>
@@ -328,7 +329,77 @@ tr:hover{background:var(--gray-100)}
     </section>
 
     
-    <!-- IMAGES -->
+    <!-- RÉALISATIONS -->
+    <section class="section" id="s-realisations">
+      <div class="card">
+        <div class="card-head">
+          <h2>Portfolio / Réalisations</h2>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-pri" onclick="openRealisationModal(null)">+ Ajouter une réalisation</button>
+            <button class="btn btn-ghost" onclick="loadRealisationsView()" title="Rafraîchir">↻</button>
+          </div>
+        </div>
+        <p id="realisations-source" style="font-size:.85rem;color:var(--ink-soft);margin-bottom:14px"></p>
+        <div id="realisations-list">Chargement…</div>
+      </div>
+    </section>
+
+    <!-- MODALE RÉALISATION -->
+    <div id="realisation-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.5);align-items:flex-start;overflow-y:auto;padding:24px" onclick="if(event.target===this)closeRealisationModal()">
+      <div style="background:#fff;max-width:820px;margin:0 auto;border-radius:12px;padding:26px;box-shadow:0 20px 60px rgba(0,0,0,.35)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+          <h2 id="rm-title" style="margin:0">Modifier une réalisation</h2>
+          <button class="btn btn-ghost" onclick="closeRealisationModal()" style="font-size:1.5rem;padding:4px 12px">×</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="field"><label>Titre*</label><input type="text" id="rm-title-input" required></div>
+          <div class="field"><label>Identifiant (slug)*</label><input type="text" id="rm-id" required placeholder="rollup-one-health"></div>
+          <div class="field"><label>Catégorie</label>
+            <select id="rm-category">
+              <option value="imprimerie">Imprimerie</option>
+              <option value="grand-format">Grand format</option>
+              <option value="textile">Textile</option>
+              <option value="packaging">Packaging</option>
+              <option value="digital">Digital</option>
+              <option value="evenementiel">Événementiel</option>
+            </select>
+          </div>
+          <div class="field"><label>Client (optionnel)</label><input type="text" id="rm-client" placeholder="OMS, MSF, MTN..."></div>
+        </div>
+        <div class="field"><label>Description courte</label><textarea id="rm-description" rows="2" placeholder="Production événementielle, 500 exemplaires..."></textarea></div>
+        <div class="field"><label>Ordre d'affichage</label><input type="number" id="rm-sortOrder" value="50"></div>
+        <div class="field"><label class="pc-check"><input type="checkbox" id="rm-active" checked> ✓ Visible sur le site</label></div>
+
+        <h3 style="margin-top:14px">Image</h3>
+        <div class="pc-image-edit">
+          <div class="pc-image-preview"><img id="rm-image-preview" src="" style="max-width:160px;max-height:120px;display:none;border-radius:8px"></div>
+          <div style="flex:1">
+            <div class="field"><label>URL ou chemin d\'image</label><input type="text" id="rm-image" placeholder="assets/images/realisations/rollup-one-health.jpg" oninput="const v=this.value;document.getElementById('rm-image-preview').src=v?v.split('/').map(encodeURIComponent).join('/'):'';document.getElementById('rm-image-preview').style.display=v?'':'none'"></div>
+            <div style="margin-top:10px;padding:8px;background:#F0FDF4;border-left:3px solid #22C55E;border-radius:4px;font-size:.82rem">
+              💡 <b>Astuce :</b> pour uploader une nouvelle image,
+              <a href="https://github.com/NGAMS237/pictocraft/upload/main/assets/images/realisations" target="_blank" style="color:#166534;font-weight:700">upload-la sur GitHub</a>.
+            </div>
+            <details style="margin-top:10px" open>
+              <summary style="cursor:pointer;font-weight:700;color:var(--brand);padding:6px 0;font-size:.88rem">🖼️ Galerie rapide (dossiers products/services/realisations/team)</summary>
+              <div style="display:flex;gap:6px;align-items:center;margin:6px 0;font-size:.78rem;color:var(--ink-soft)">
+                <button type="button" class="btn btn-sec" style="padding:4px 10px;font-size:.78rem" onclick="refreshRealGallery()">🔄 Actualiser</button>
+              </div>
+              <div id="quick-gallery-real" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:6px;max-height:260px;overflow-y:auto;padding:8px;background:var(--gray-100);border-radius:6px;margin-top:6px">Chargement…</div>
+            </details>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;justify-content:space-between;margin-top:22px;flex-wrap:wrap">
+          <button class="btn btn-danger" onclick="deleteRealisation()" id="rm-delete-btn">🗑 Supprimer</button>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-ghost" onclick="closeRealisationModal()">Annuler</button>
+            <button class="btn btn-pri" onclick="saveRealisation()">💾 Enregistrer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- IMAGES -->
     <section class="section" id="s-images">
       <div class="alert alert-success" style="background:#F0FDF4;border-left:4px solid #22C55E;color:#166534">
         <span>✅</span>
@@ -497,6 +568,7 @@ function switchTab(name){
   if (name === 'quotes') loadQuotes();
   if (name === 'reviews') loadReviews();
   if (name === 'products') loadProductsView();
+  if (name === 'realisations') loadRealisationsView();
   if (name === 'images') loadImages();
   if (name === 'settings') loadSettingsView();
   if (name === 'dashboard') loadDashboard();
@@ -673,6 +745,206 @@ async function loadProductsView(){
         </tr>`;
       }).join('') + '</tbody></table>';
   } catch(e) { $('#products-list').innerHTML = '<div class="alert alert-warn">Erreur : ' + e.message + '</div>'; }
+}
+
+// ===================================================
+// RÉALISATIONS - CRUD Supabase
+// ===================================================
+let CURRENT_REALISATIONS = null;
+const REALISATIONS_TABLE = 'pictocraft_realisations_config';
+
+async function loadRealisationsView(){
+  try {
+    let data, source = 'static';
+    try {
+      const cfgArr = await fetch(SUPABASE_URL+'/rest/v1/'+REALISATIONS_TABLE+'?active=eq.true&order=created_at.desc&limit=1&_='+Date.now(),
+        {headers:{apikey:SUPABASE_KEY, 'Cache-Control':'no-cache'}, cache:'no-store'}).then(r=>r.json());
+      if (cfgArr && cfgArr.length && cfgArr[0].config) {
+        data = cfgArr[0].config; source = 'supabase';
+      }
+    } catch(e){}
+    if (!data) data = await fetch('data/realisations.json?v='+Date.now(), {cache:'no-store'}).then(r=>r.json());
+    CURRENT_REALISATIONS = data;
+
+    let lastUpdate = '';
+    try {
+      const meta = await fetch(SUPABASE_URL+'/rest/v1/'+REALISATIONS_TABLE+'?active=eq.true&select=created_at&order=created_at.desc&limit=1',
+        {headers:{apikey:SUPABASE_KEY}}).then(r=>r.json());
+      if (meta && meta[0]) {
+        const d = new Date(meta[0].created_at);
+        const min = Math.round((Date.now()-d.getTime())/60000);
+        lastUpdate = min<1 ? " • Modifié à l'instant" : min<60 ? ` • Modifié il y a ${min} min` : ` • Modifié le ${d.toLocaleString('fr-FR')}`;
+      }
+    } catch(_) {}
+
+    $('#realisations-source').innerHTML = source === 'supabase'
+      ? `<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+           <div><span style="color:var(--success)">✓</span> <b>Données LIVE Supabase</b> · ${data.realisations.length} réalisations${lastUpdate}</div>
+           <a href="realisations.html?nocache=${Date.now()}" target="_blank" class="btn btn-sec" style="padding:6px 12px;font-size:.82rem;text-decoration:none">🔗 Voir sur le site</a>
+         </div>`
+      : `📁 Données statiques (data/realisations.json) — modif publiée sur Supabase au save · <b>${data.realisations.length}</b> réalisations`;
+
+    const sorted = [...data.realisations].sort((a,b)=>(a.sortOrder||999)-(b.sortOrder||999));
+    $('#realisations-list').innerHTML = `
+      <table><thead><tr><th style="width:50px">Ordre</th><th style="width:70px">Image</th><th>Titre</th><th>Catégorie</th><th>Client</th><th>Visible</th><th>Action</th></tr></thead><tbody>` +
+      sorted.map(r => {
+        const visible = r.active !== false;
+        const cat = (data.categories||[]).find(c=>c.slug===r.category);
+        const imgSrc = r.image && r.image.startsWith('http') ? r.image : (r.image ? r.image.split('/').map(encodeURIComponent).join('/') : '');
+        return `<tr style="${visible?'':'opacity:.5'}">
+          <td><b>${r.sortOrder||'-'}</b></td>
+          <td><img src="${escapeHtml(imgSrc)}" alt="" style="width:50px;height:50px;object-fit:cover;border-radius:6px;background:var(--gray-100)" onerror="this.style.background='var(--gray-200)';this.src=''"></td>
+          <td><b>${escapeHtml(r.title)}</b><br><small style="color:var(--ink-soft)">${escapeHtml(r.id)}</small></td>
+          <td>${cat?escapeHtml(cat.name):escapeHtml(r.category||'')}</td>
+          <td>${escapeHtml(r.client||'-')}</td>
+          <td><button class="btn btn-${visible?'success':'danger'}" style="padding:5px 10px;font-size:.72rem" onclick="toggleRealisationActive('${escapeHtml(r.id)}')">${visible?'✓ Visible':'✗ Masqué'}</button></td>
+          <td><button class="btn btn-sec" style="padding:5px 12px;font-size:.78rem" onclick="openRealisationModal('${escapeHtml(r.id)}')">✏ Modifier</button></td>
+        </tr>`;
+      }).join('') + '</tbody></table>';
+  } catch(e) { $('#realisations-list').innerHTML = '<div class="alert alert-warn">Erreur : '+e.message+'</div>'; }
+}
+
+async function publishRealisationsConfig(){
+  if (!CURRENT_REALISATIONS) throw new Error('Pas de config chargée');
+  const r1 = await fetch(SUPABASE_URL+'/rest/v1/'+REALISATIONS_TABLE+'?active=eq.true', {
+    method:'PATCH',
+    headers: Object.assign({}, authHeaders(), {'Prefer':'return=minimal'}),
+    body: JSON.stringify({active:false})
+  });
+  if (!r1.ok && r1.status !== 204) throw new Error('Désactivation: HTTP '+r1.status);
+  const r2 = await fetch(SUPABASE_URL+'/rest/v1/'+REALISATIONS_TABLE, {
+    method:'POST',
+    headers: Object.assign({}, authHeaders(), {'Prefer':'return=minimal'}),
+    body: JSON.stringify({version:new Date().toISOString(), config:CURRENT_REALISATIONS, active:true})
+  });
+  if (!r2.ok && r2.status !== 204 && r2.status !== 201) throw new Error('Insertion: HTTP '+r2.status);
+  return true;
+}
+
+async function toggleRealisationActive(id){
+  if (!CURRENT_REALISATIONS) return;
+  const r = CURRENT_REALISATIONS.realisations.find(x=>x.id===id);
+  if (!r) return;
+  r.active = !(r.active !== false);
+  try { await publishRealisationsConfig(); loadRealisationsView(); } catch(e){ alert('Erreur: '+e.message); }
+}
+
+function openRealisationModal(id){
+  const modal = $('#realisation-modal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  loadRealGallery();
+  if (id) {
+    const r = CURRENT_REALISATIONS.realisations.find(x=>x.id===id);
+    if (!r) return;
+    $('#rm-title').textContent = 'Modifier « '+r.title+' »';
+    $('#rm-id').value = r.id;
+    $('#rm-id').disabled = true;
+    $('#rm-title-input').value = r.title||'';
+    $('#rm-category').value = r.category||'imprimerie';
+    $('#rm-client').value = r.client||'';
+    $('#rm-description').value = r.description||'';
+    $('#rm-sortOrder').value = r.sortOrder||50;
+    $('#rm-active').checked = r.active !== false;
+    $('#rm-image').value = r.image||'';
+    if (r.image) {
+      $('#rm-image-preview').src = r.image.startsWith('http')?r.image:r.image.split('/').map(encodeURIComponent).join('/');
+      $('#rm-image-preview').style.display = '';
+    } else $('#rm-image-preview').style.display = 'none';
+    $('#rm-delete-btn').style.display = '';
+  } else {
+    $('#rm-title').textContent = 'Ajouter une réalisation';
+    $('#rm-id').value = ''; $('#rm-id').disabled = false;
+    $('#rm-title-input').value = ''; $('#rm-category').value = 'imprimerie';
+    $('#rm-client').value = ''; $('#rm-description').value = '';
+    $('#rm-sortOrder').value = ((CURRENT_REALISATIONS?.realisations?.length||0)+1)*10;
+    $('#rm-active').checked = true; $('#rm-image').value = '';
+    $('#rm-image-preview').style.display = 'none';
+    $('#rm-delete-btn').style.display = 'none';
+  }
+}
+
+function closeRealisationModal(){
+  $('#realisation-modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+async function saveRealisation(){
+  const id = $('#rm-id').value.trim().toLowerCase().replace(/[^a-z0-9-]/g,'-');
+  const title = $('#rm-title-input').value.trim();
+  if (!id || !title) { alert('Identifiant et titre requis.'); return; }
+  if (!CURRENT_REALISATIONS) await loadRealisationsView();
+
+  const isNew = !$('#rm-id').disabled;
+  if (isNew && CURRENT_REALISATIONS.realisations.some(x=>x.id===id)) {
+    alert('Une réalisation avec cet identifiant existe déjà.'); return;
+  }
+  const idx = CURRENT_REALISATIONS.realisations.findIndex(x=>x.id===id);
+  const r = idx>=0 ? CURRENT_REALISATIONS.realisations[idx] : {};
+  r.id = id;
+  r.title = title;
+  r.category = $('#rm-category').value;
+  r.client = $('#rm-client').value.trim();
+  r.description = $('#rm-description').value.trim();
+  r.sortOrder = parseInt($('#rm-sortOrder').value)||50;
+  r.active = $('#rm-active').checked;
+  r.image = $('#rm-image').value.trim();
+
+  if (idx>=0) CURRENT_REALISATIONS.realisations[idx] = r;
+  else CURRENT_REALISATIONS.realisations.push(r);
+
+  try {
+    await publishRealisationsConfig();
+    closeRealisationModal();
+    alert('✓ Réalisation '+(isNew?'créée':'modifiée')+' et publiée.');
+    loadRealisationsView();
+  } catch(e) { alert('Erreur: '+e.message); }
+}
+
+async function deleteRealisation(){
+  const id = $('#rm-id').value;
+  if (!id || !confirm('Supprimer définitivement « '+$('#rm-title-input').value+' » ?')) return;
+  CURRENT_REALISATIONS.realisations = CURRENT_REALISATIONS.realisations.filter(x=>x.id!==id);
+  try {
+    await publishRealisationsConfig();
+    closeRealisationModal();
+    loadRealisationsView();
+  } catch(e) { alert('Erreur: '+e.message); }
+}
+
+// Galerie séparée pour réalisations
+async function loadRealGallery(){
+  const wrap = document.getElementById('quick-gallery-real');
+  if (!wrap) return;
+  wrap.innerHTML = '<div style="color:var(--gray-500);padding:20px;text-align:center;grid-column:1/-1">⏳ Chargement…</div>';
+  try {
+    let images;
+    if (GALLERY_CACHE && (Date.now()-GALLERY_CACHE_AT)<5*60*1000) {
+      images = GALLERY_CACHE;
+    } else {
+      const lists = await Promise.all(GALLERY_FOLDERS.map(fetchGitHubFolder));
+      images = lists.flat();
+      GALLERY_CACHE = images; GALLERY_CACHE_AT = Date.now();
+    }
+    const bust = Math.floor(Date.now()/60000);
+    wrap.innerHTML = images.map(img => {
+      const encoded = img.split('/').map(encodeURIComponent).join('/');
+      const safeAttr = img.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+      return `<div style="cursor:pointer;border:2px solid transparent;border-radius:4px;overflow:hidden;background:#fff"
+               onmouseover="this.style.borderColor='var(--brand)'" onmouseout="this.style.borderColor='transparent'"
+               onclick="pickRealImage('${safeAttr}')" title="${img}">
+        <img src="${encoded}?v=${bust}" alt="" loading="lazy" style="width:100%;aspect-ratio:1;object-fit:cover;display:block" onerror="this.style.display='none'">
+      </div>`;
+    }).join('');
+  } catch(e) {
+    wrap.innerHTML = '<div style="color:#B91C1C;padding:10px;grid-column:1/-1">Erreur : '+e.message+'</div>';
+  }
+}
+function refreshRealGallery(){ GALLERY_CACHE = null; loadRealGallery(); }
+function pickRealImage(path){
+  $('#rm-image').value = path;
+  $('#rm-image-preview').src = path.split('/').map(encodeURIComponent).join('/');
+  $('#rm-image-preview').style.display = '';
 }
 
 // ===================================================
