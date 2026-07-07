@@ -16,8 +16,9 @@
     if (_productsCache) return _productsCache;
     // 1. Essai Supabase : config active (admin)
     try {
-      const r = await fetch(`${SUPABASE_URL}/rest/v1/pictocraft_products_config?active=eq.true&order=created_at.desc&limit=1&_=` + Math.floor(Date.now()/60000), {
-        headers: { 'apikey': SUPABASE_KEY }
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/pictocraft_products_config?active=eq.true&order=created_at.desc&limit=1&_=` + Date.now(), {
+        headers: { 'apikey': SUPABASE_KEY, 'Cache-Control': 'no-cache' },
+        cache: 'no-store'
       });
       if (r.ok) {
         const arr = await r.json();
@@ -28,7 +29,7 @@
       }
     } catch(e) { /* silencieux : fallback statique */ }
     // 2. Fallback : products.json statique
-    const r = await fetch('data/products.json?v=' + Date.now());
+    const r = await fetch('data/products.json?v=' + Date.now(), { cache: 'no-store' });
     if (!r.ok) throw new Error('Erreur chargement produits : ' + r.status);
     _productsCache = await r.json();
     return _productsCache;

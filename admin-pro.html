@@ -634,8 +634,21 @@ async function loadProductsView(){
     if (!data) data = await fetch('data/products.json?v='+Date.now()).then(r=>r.json());
     CURRENT_PRODUCTS = data;
 
+    let lastUpdate = '';
+    try {
+      const meta = await fetch(SUPABASE_URL+'/rest/v1/pictocraft_products_config?active=eq.true&select=created_at&order=created_at.desc&limit=1', {headers:{apikey:SUPABASE_KEY}}).then(r=>r.json());
+      if (meta && meta[0]) {
+        const d = new Date(meta[0].created_at);
+        const min = Math.round((Date.now() - d.getTime())/60000);
+        lastUpdate = min < 1 ? " • Modifié à l'instant" : min < 60 ? ` • Modifié il y a ${min} min` : ` • Modifié le ${d.toLocaleString('fr-FR')}`;
+      }
+    } catch(_) {}
+    const siteUrl = 'produits.html?nocache=' + Date.now();
     $('#products-source').innerHTML = source === 'supabase'
-      ? `<span style="color:var(--success)">✓</span> Données live depuis Supabase · <b>${data.products.length}</b> produits · <b>${data.categories.length}</b> catégories`
+      ? `<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+           <div><span style="color:var(--success)">✓</span> <b>Données LIVE Supabase</b> · ${data.products.length} produits · ${data.categories.length} catégories${lastUpdate}</div>
+           <a href="${siteUrl}" target="_blank" class="btn btn-sec" style="padding:6px 12px;font-size:.82rem;text-decoration:none">🔗 Voir sur le site (sans cache)</a>
+         </div>`
       : `📁 Données statiques (data/products.json) — toute modif sera publiée sur Supabase au save · <b>${data.products.length}</b> produits`;
 
     const sorted = [...data.products].sort((a,b) => (a.sortOrder||999) - (b.sortOrder||999));
