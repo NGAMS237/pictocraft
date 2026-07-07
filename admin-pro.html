@@ -130,16 +130,26 @@ tr:hover{background:var(--gray-100)}
 <div id="login" class="login-wrap">
   <div class="login-card">
     <h1>🔐 Administration Pictocraft</h1>
-    <p class="subtitle">Connectez-vous pour gérer le site</p>
+    <p class="subtitle">Entrez votre NIP à 4 chiffres</p>
     <div id="login-error" class="login-error"></div>
     <form id="login-form" onsubmit="return false">
-      <div class="field"><label>Email</label><input type="email" id="login-email" required autocomplete="email"></div>
-      <div class="field"><label>Mot de passe</label><input type="password" id="login-password" required autocomplete="current-password"></div>
-      <button type="submit">Se connecter</button>
+      <div class="field">
+        <label style="text-align:center;display:block">Code d'accès (NIP)</label>
+        <input type="password" id="login-pin" required maxlength="4" pattern="[0-9]{4}" inputmode="numeric" autofocus
+               style="text-align:center;font-size:2rem;letter-spacing:.6em;font-weight:800;padding:16px"
+               placeholder="••••" autocomplete="off">
+      </div>
+      <button type="submit">Se connecter →</button>
     </form>
-    <p style="text-align:center;margin-top:18px;font-size:.78rem;color:var(--ink-soft)">
-      Pas encore de compte ?<br>
-      Demandez à l'administrateur principal de vous en créer un via le dashboard Supabase.
+    <div id="reset-panel" style="display:none;margin-top:14px;padding:12px;background:#F0F9FF;border-radius:8px;border:1px solid #BAE6FD;font-size:.85rem;color:#075985">
+      <div id="reset-msg"></div>
+    </div>
+    <p style="text-align:center;margin-top:16px;font-size:.82rem;color:var(--ink-soft)">
+      NIP oublié ?
+      <a href="#" onclick="sendResetEmail();return false" style="color:var(--brand);font-weight:700">Recevoir un lien par email</a>
+    </p>
+    <p style="text-align:center;margin-top:10px;font-size:.72rem;color:var(--ink-soft);opacity:.7">
+      NIP par défaut : <code>1234</code> — à changer dès la 1ère connexion
     </p>
   </div>
 </div>
@@ -348,15 +358,18 @@ let CURRENT_USER = null;
 // ===================================================
 // Auth
 // ===================================================
-async function login(email, password){
+const ADMIN_EMAIL = 'afterworkquebec2025@gmail.com';
+async function loginWithPin(pin){
+  // Convertit le NIP 4 chiffres en password interne (Supabase exige 6+ chars)
+  const password = 'picto' + pin;
   const r = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
     method:'POST',
     headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY},
-    body: JSON.stringify({email, password})
+    body: JSON.stringify({email: ADMIN_EMAIL, password})
   });
   if (!r.ok) {
     const e = await r.json().catch(()=>({}));
-    throw new Error(e.error_description || e.msg || 'Email ou mot de passe incorrect');
+    throw new Error('NIP incorrect. Si tu l as oublié, clique sur "Recevoir un lien par email".');
   }
   const data = await r.json();
   ACCESS_TOKEN = data.access_token;
@@ -364,6 +377,28 @@ async function login(email, password){
   localStorage.setItem('pictocraft_token', ACCESS_TOKEN);
   localStorage.setItem('pictocraft_user', JSON.stringify(CURRENT_USER));
   return data;
+}
+
+async function sendResetEmail(){
+  const panel = document.getElementById('reset-panel');
+  const msg = document.getElementById('reset-msg');
+  panel.style.display = 'block';
+  msg.innerHTML = '⏳ Envoi en cours…';
+  try {
+    const r = await fetch(`${SUPABASE_URL}/auth/v1/recover`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','apikey':SUPABASE_KEY},
+      body: JSON.stringify({ email: ADMIN_EMAIL, redirect_to: window.location.origin + window.location.pathname.replace('admin-pro.html','admin-reset.html') })
+    });
+    if (r.ok || r.status === 200) {
+      msg.innerHTML = '✅ Un email a été envoyé à <b>' + ADMIN_EMAIL + '</b>.<br>Clique le lien pour choisir un nouveau NIP.<br><small>Vérifie aussi tes spams.</small>';
+    } else {
+      const e = await r.text();
+      msg.innerHTML = '❌ Erreur : ' + e.slice(0,150);
+    }
+  } catch(e) {
+    msg.innerHTML = '❌ Erreur : ' + e.message;
+  }
 }
 
 function logout(){
@@ -874,7 +909,19 @@ async function loadSettingsView(){
         <tr><th>TVA activée</th><td>${s.tax.enabled ? 'Oui ('+(s.tax.rate*100).toFixed(2)+'%)' : 'Non'}</td></tr>
       </table>
       <p style="margin-top:14px;font-size:.85rem;color:var(--ink-soft)">Pour modifier ces paramètres, édite <code>data/settings.json</code> dans le repo GitHub.</p>
+
+      <div class="card" style="margin-top:24px">
+        <h3 style="color:var(--brand-dark);margin-bottom:8px">🔑 Changer mon NIP</h3>
+        <p style="color:var(--ink-soft);font-size:.88rem;margin-bottom:12px">Change ton NIP à 4 chiffres. À faire dès la 1ère connexion pour la sécurité.</p>
+        <div class="form-row">
+          <div class="field"><label>Nouveau NIP (4 chiffres)</label><input type="password" id="pin-new" maxlength="4" pattern="[0-9]{4}" inputmode="numeric" style="text-align:center;font-size:1.5rem;letter-spacing:.4em;font-weight:800"></div>
+          <div class="field"><label>Confirmer</label><input type="password" id="pin-confirm" maxlength="4" pattern="[0-9]{4}" inputmode="numeric" style="text-align:center;font-size:1.5rem;letter-spacing:.4em;font-weight:800"></div>
+        </div>
+        <button class="btn btn-pri" onclick="changePin()">🔑 Enregistrer nouveau NIP</button>
+        <div id="pin-msg" style="margin-top:10px"></div>
+      </div>
     `;
+    
   } catch(e) { $('#settings-view').innerHTML = '<div class="alert alert-warn">' + e.message + '</div>'; }
 }
 
@@ -960,6 +1007,33 @@ async function deleteImage(name){
 }
 
 // ===================================================
+// Changer NIP
+// ===================================================
+async function changePin(){
+  const p1 = document.getElementById('pin-new').value.trim();
+  const p2 = document.getElementById('pin-confirm').value.trim();
+  const msg = document.getElementById('pin-msg');
+  if (!/^[0-9]{4}$/.test(p1)) { msg.innerHTML = '<div class="alert alert-warn">Le NIP doit avoir 4 chiffres.</div>'; return; }
+  if (p1 !== p2) { msg.innerHTML = '<div class="alert alert-warn">Les NIP ne correspondent pas.</div>'; return; }
+
+  msg.innerHTML = '<div style="color:var(--ink-soft)">⏳ Enregistrement…</div>';
+  try {
+    const newPassword = 'picto' + p1;
+    const r = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      method: 'PUT',
+      headers: {'Content-Type':'application/json', 'apikey':SUPABASE_KEY, 'Authorization':'Bearer '+ACCESS_TOKEN},
+      body: JSON.stringify({password: newPassword})
+    });
+    if (!r.ok) throw new Error(await r.text());
+    msg.innerHTML = '<div class="alert alert-success">✅ NIP changé avec succès. Utilise le nouveau lors de la prochaine connexion.</div>';
+    document.getElementById('pin-new').value = '';
+    document.getElementById('pin-confirm').value = '';
+  } catch(e) {
+    msg.innerHTML = '<div class="alert alert-warn">Erreur : ' + e.message.slice(0,150) + '</div>';
+  }
+}
+
+// ===================================================
 // Init
 // ===================================================
 async function start(){
@@ -972,12 +1046,19 @@ async function start(){
 document.getElementById('login-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const err = $('#login-error'); err.classList.remove('show');
+  const pin = $('#login-pin').value.trim();
+  if (!/^[0-9]{4}$/.test(pin)) {
+    err.textContent = 'Le NIP doit contenir exactement 4 chiffres.';
+    err.classList.add('show'); return;
+  }
   try {
-    await login($('#login-email').value, $('#login-password').value);
+    await loginWithPin(pin);
     start();
   } catch(e) {
     err.textContent = e.message;
     err.classList.add('show');
+    $('#login-pin').value = '';
+    $('#login-pin').focus();
   }
 });
 

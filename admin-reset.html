@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Nouveau NIP — Admin Pictocraft</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#003C78;--brand-dark:#002952;--accent:#960F2D;--accent-dark:#6B0A21;--ink-soft:#4A4A4A;--gray-200:#E5E5E9;--success:#2E7D5F}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope',system-ui,sans-serif;background:linear-gradient(135deg,var(--brand-dark) 0%,var(--brand) 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#fff;border-radius:16px;padding:40px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+h1{font-family:'Bricolage Grotesque';color:var(--brand-dark);text-align:center;font-size:1.4rem;margin-bottom:6px}
+.subtitle{text-align:center;color:var(--ink-soft);font-size:.9rem;margin-bottom:24px}
+label{display:block;font-size:.78rem;font-weight:700;color:var(--brand-dark);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px;text-align:center}
+input{width:100%;padding:16px 14px;border:1.5px solid var(--gray-200);border-radius:8px;font-family:inherit;font-size:2rem;letter-spacing:.6em;font-weight:800;text-align:center;background:#fff}
+input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(0,60,120,.12)}
+button{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.95rem;margin-top:14px}
+button:hover{background:var(--accent-dark)}
+button:disabled{opacity:.6;cursor:wait}
+.msg{padding:12px 14px;border-radius:8px;margin-bottom:14px;font-size:.88rem}
+.msg-error{background:#FEE2E2;color:#B91C1C}
+.msg-success{background:#D1FAE5;color:#065F46}
+.hint{margin-top:16px;font-size:.78rem;color:var(--ink-soft);text-align:center}
+a{color:var(--brand);font-weight:700}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>🔑 Nouveau NIP</h1>
+  <p class="subtitle">Choisis un NIP à 4 chiffres pour l'admin</p>
+  <div id="msg" class="msg" style="display:none"></div>
+  <form id="reset-form" onsubmit="return false">
+    <div style="margin-bottom:14px">
+      <label>Nouveau NIP (4 chiffres)</label>
+      <input type="password" id="new-pin" required maxlength="4" pattern="[0-9]{4}" inputmode="numeric" autofocus placeholder="••••" autocomplete="off">
+    </div>
+    <div style="margin-bottom:14px">
+      <label>Confirmer</label>
+      <input type="password" id="confirm-pin" required maxlength="4" pattern="[0-9]{4}" inputmode="numeric" placeholder="••••" autocomplete="off">
+    </div>
+    <button type="submit">Enregistrer mon NIP →</button>
+  </form>
+  <p class="hint">
+    <a href="admin-pro.html">← Retour au login</a>
+  </p>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://dfdmasejsoibxrvubegu.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_FUNJl2eCG1rDiEZOUJsQdA_GQIl2YZM';
+
+function showMsg(text, type){
+  const m = document.getElementById('msg');
+  m.style.display = 'block';
+  m.className = 'msg msg-' + (type || 'error');
+  m.innerHTML = text;
+}
+
+// Récupère les tokens depuis l'URL (hash après clic sur email Supabase)
+function getHashParams(){
+  const h = window.location.hash.substring(1);
+  const params = {};
+  h.split('&').forEach(p => { const [k,v] = p.split('='); params[k] = decodeURIComponent(v||''); });
+  return params;
+}
+
+document.getElementById('reset-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const pin1 = document.getElementById('new-pin').value.trim();
+  const pin2 = document.getElementById('confirm-pin').value.trim();
+  if (!/^[0-9]{4}$/.test(pin1)) { showMsg('Le NIP doit avoir exactement 4 chiffres.'); return; }
+  if (pin1 !== pin2) { showMsg('Les 2 NIP ne correspondent pas.'); return; }
+
+  const hash = getHashParams();
+  const token = hash.access_token;
+  if (!token) {
+    showMsg("Lien de reset invalide ou expiré. Retour au login et redemande un email.");
+    return;
+  }
+
+  const btn = document.querySelector('button[type=submit]');
+  btn.disabled = true; btn.textContent = '⏳ Enregistrement…';
+
+  try {
+    // Supabase attend password >= 6 chars → on préfixe "picto"
+    const newPassword = 'picto' + pin1;
+    const r = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type':'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify({ password: newPassword })
+    });
+    if (!r.ok) {
+      const err = await r.text();
+      throw new Error(err.slice(0,200));
+    }
+    showMsg('✅ NIP enregistré. Redirection vers le login…', 'success');
+    setTimeout(() => { window.location = 'admin-pro.html'; }, 2000);
+  } catch(err) {
+    showMsg('Erreur : ' + err.message);
+    btn.disabled = false; btn.textContent = 'Enregistrer mon NIP →';
+  }
+});
+
+// Vérifier qu'on a bien un token à l'arrivée
+if (!getHashParams().access_token) {
+  showMsg('Cette page doit être ouverte depuis un lien reçu par email. <a href="admin-pro.html">Retour au login</a>');
+  document.getElementById('reset-form').style.display = 'none';
+}
+</script>
+</body>
+</html>
