@@ -271,7 +271,11 @@ tr:hover{background:var(--gray-100)}
                   (plus fiable que l'upload direct).
                 </div>
                 <details style="margin-top:10px" open>
-                  <summary style="cursor:pointer;font-weight:700;color:var(--brand);padding:6px 0;font-size:.88rem">🖼️ Galerie rapide — choisir une image en 1 clic</summary>
+                  <summary style="cursor:pointer;font-weight:700;color:var(--brand);padding:6px 0;font-size:.88rem">🖼️ Galerie rapide — lit le dossier GitHub en direct</summary>
+                  <div style="display:flex;gap:6px;align-items:center;margin:6px 0;font-size:.78rem;color:var(--ink-soft)">
+                    <button type="button" class="btn btn-sec" style="padding:4px 10px;font-size:.78rem" onclick="refreshGallery()">🔄 Actualiser</button>
+                    <span>Images scannées depuis <code>assets/images/{products,services,realisations,team}</code></span>
+                  </div>
                   <div id="quick-gallery" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:6px;max-height:280px;overflow-y:auto;padding:8px;background:var(--gray-100);border-radius:6px;margin-top:6px">Chargement…</div>
                 </details>
                 <button type="button" class="btn btn-ghost" style="margin-top:10px" onclick="document.getElementById(\'pm-image-file\').click()">⬆ Ou uploader une nouvelle image</button>
@@ -695,23 +699,73 @@ async function toggleProductActive(slug) {
   } catch(e) { alert('Erreur : ' + e.message); }
 }
 
-async function loadQuickGallery(){
+// Cache des résultats GitHub pour ne pas cogner l'API à chaque ouverture de modale
+let GALLERY_CACHE = null;
+let GALLERY_CACHE_AT = 0;
+const GALLERY_FOLDERS = [
+  'assets/images/products',
+  'assets/images/services',
+  'assets/images/realisations',
+  'assets/images/team'
+];
+
+async function fetchGitHubFolder(folder){
+  // API publique GitHub - 60 requêtes/heure/IP sans token (largement suffisant)
+  const url = `https://api.github.com/repos/NGAMS237/pictocraft/contents/${folder}?ref=main`;
+  const r = await fetch(url);
+  if (!r.ok) return [];
+  const items = await r.json();
+  return items
+    .filter(f => f.type === 'file' && /\.(jpe?g|png|webp|svg|gif|avif)$/i.test(f.name))
+    .map(f => folder + '/' + f.name);
+}
+
+async function loadQuickGallery(forceRefresh){
+  const wrap = document.getElementById('quick-gallery');
+  if (!wrap) return;
+  wrap.innerHTML = '<div style="color:var(--gray-500);padding:20px;text-align:center;grid-column:1/-1">⏳ Chargement des images depuis GitHub…</div>';
+
   try {
-    const data = await fetch('data/image-gallery.json?v='+Math.floor(Date.now()/60000)).then(r=>r.json());
-    const wrap = document.getElementById('quick-gallery');
-    if (!wrap) return;
-    wrap.innerHTML = data.images.map(img => `
+    // Cache 5 min sauf si forceRefresh
+    const now = Date.now();
+    let images;
+    if (!forceRefresh && GALLERY_CACHE && (now - GALLERY_CACHE_AT) < 5*60*1000) {
+      images = GALLERY_CACHE;
+    } else {
+      const lists = await Promise.all(GALLERY_FOLDERS.map(fetchGitHubFolder));
+      images = lists.flat();
+      // Fallback statique si GitHub API rate-limité
+      if (!images.length) {
+        try {
+          const data = await fetch('data/image-gallery.json?v='+Math.floor(now/60000)).then(r=>r.json());
+          images = data.images || [];
+        } catch(_) {}
+      }
+      GALLERY_CACHE = images;
+      GALLERY_CACHE_AT = now;
+    }
+
+    if (!images.length) {
+      wrap.innerHTML = '<div style="color:var(--gray-500);padding:20px;text-align:center;grid-column:1/-1">Aucune image trouvée. Upload-en via <a href="https://github.com/NGAMS237/pictocraft/upload/main/assets/images/products" target="_blank">GitHub</a>.</div>';
+      return;
+    }
+
+    wrap.innerHTML = images.map(img => `
       <div style="cursor:pointer;border:2px solid transparent;border-radius:4px;overflow:hidden;background:#fff;transition:border-color .15s"
            onmouseover="this.style.borderColor='var(--brand)'"
            onmouseout="this.style.borderColor='transparent'"
            onclick="pickImage('${img}')" title="${img}">
-        <img src="${img}" alt="" loading="lazy" style="width:100%;aspect-ratio:1;object-fit:cover;display:block" onerror="this.style.display='none'">
+        <img src="${img}?v=${Math.floor(Date.now()/60000)}" alt="" loading="lazy" style="width:100%;aspect-ratio:1;object-fit:cover;display:block" onerror="this.style.display='none'">
       </div>
     `).join('');
   } catch(e) {
-    const wrap = document.getElementById('quick-gallery');
-    if (wrap) wrap.innerHTML = '<div style="color:#B91C1C;padding:10px">Erreur galerie : ' + e.message + '</div>';
+    wrap.innerHTML = '<div style="color:#B91C1C;padding:10px;grid-column:1/-1">Erreur galerie : ' + e.message + '<br><button type="button" class="btn btn-sec" onclick="loadQuickGallery(true)" style="margin-top:6px">🔄 Réessayer</button></div>';
   }
+}
+
+function refreshGallery(){
+  GALLERY_CACHE = null;
+  loadQuickGallery(true);
 }
 
 function pickImage(path){

@@ -134,6 +134,42 @@
   </div>
 </div>
 
+<!-- À LA UNE — Photo équipe -->
+<section class="reveal" style="background:linear-gradient(135deg,var(--brand,#E11D48) 0%,#7F1D1D 100%);padding:56px 0;color:#fff;overflow:hidden">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:40px;align-items:center">
+      <div style="border-radius:14px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35);transform:rotate(-1.5deg);border:4px solid rgba(255,255,255,.15)">
+        <img src="assets/images/team/equipe-pictocraft.jpg?v=20260707"
+             alt="L'équipe Picto Craft SARL en exposition"
+             style="width:100%;height:auto;display:block;aspect-ratio:16/11;object-fit:cover">
+      </div>
+      <div>
+        <span class="kicker" style="color:#FCD34D;letter-spacing:.15em">✨ À LA UNE</span>
+        <h2 style="color:#fff;font-size:clamp(1.6rem,3vw,2.4rem);margin:12px 0 14px;line-height:1.15">Une équipe passionnée, à votre service</h2>
+        <p style="color:rgba(255,255,255,.92);font-size:1.05rem;line-height:1.6;margin-bottom:18px">
+          Découvrez les visages qui font vivre Picto Craft au quotidien. De l'accueil client à l'atelier d'impression, une équipe soudée qui met son savoir-faire au service de vos projets.
+        </p>
+        <p style="color:rgba(255,255,255,.85);font-size:.95rem;margin-bottom:24px;font-style:italic">
+          « L'énergie créative au service de vos projets. »
+        </p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a href="a-propos.html" class="btn-primary" style="background:#fff;color:var(--brand,#E11D48);border:0">Rencontrer l'équipe →</a>
+          <a href="contact.html" class="btn-secondary" style="border-color:#fff;color:#fff">Nous contacter</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+@media (max-width: 900px) {
+  section[style*="À LA UNE"] .container > div,
+  section .container > div[style*="grid-template-columns:1.15fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
+
 <!-- PRODUITS POPULAIRES -->
 <section class="reveal">
   <div class="container">
@@ -473,7 +509,7 @@
         <a href="a-propos.html" class="btn-primary">En savoir plus →</a>
       </div>
       <div class="story-visual reveal-right">
-        <img src="assets/images/gallery/team1.jpg" alt="Équipe Picto Craft">
+        <img src="assets/images/team/equipe-pictocraft.jpg" alt="L'équipe Picto Craft SARL">
         <div class="quote-overlay"><span>« Vos idées,<br>notre savoir-faire. »</span></div>
       </div>
     </div>
