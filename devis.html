@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Configurez votre devis en ligne — Pictocraft</title>
 <meta name="description" content="Configurez votre devis en ligne en quelques clics : flyers, cartes de visite, brochures, bâches, t-shirts, roll-ups et plus. Prix instantané, validation par WhatsApp.">
 <meta name="robots" content="index,follow">
@@ -93,7 +96,7 @@
 <script src="assets/js/config.js?v=20260707d"></script>
 <script src="assets/js/binder.js?v=20260707d"></script>
 <script src="assets/js/main.js?v=20260707d"></script>
-<script src="assets/js/products-loader.js?v=20260707d"></script>
+<script src="assets/js/products-loader-v3.js?v=20260708b"></script>
 <script>
 (async function(){
   const grid = document.getElementById('grid');
@@ -167,7 +170,13 @@
   search.addEventListener('input', () => { q = search.value.trim().toLowerCase(); renderGrid(); });
 
   try {
-    const data = await PictocraftProducts.loadProducts();
+    const _SUP='https://dfdmasejsoibxrvubegu.supabase.co', _KEY='sb_publishable_FUNJl2eCG1rDiEZOUJsQdA_GQIl2YZM';
+    let data;
+    try {
+      const r = await fetch(_SUP+'/rest/v1/pictocraft_products_config?active=eq.true&order=created_at.desc&limit=1&_='+Date.now(), {headers:{apikey:_KEY}, cache:'no-store'});
+      if (r.ok) { const arr = await r.json(); if (arr && arr.length) data = arr[0].config; }
+    } catch(_){}
+    if (!data) data = await fetch('data/products.json?v='+Date.now(), {cache:'no-store'}).then(r=>r.json());
     allProducts = data.products || [];
     allCategories = data.categories || [];
     renderFilters();

@@ -87,7 +87,7 @@
 <script src="assets/js/config.js?v=20260707d"></script>
 <script src="assets/js/binder.js?v=20260707d"></script>
 <script src="assets/js/main.js?v=20260707d"></script>
-<script src="assets/js/products-loader.js?v=20260707d"></script>
+<script src="assets/js/products-loader-v3.js?v=20260708b"></script>
 <script>
 (async function(){
   const grid = document.getElementById('grid');
@@ -165,12 +165,29 @@
   }
   search.addEventListener('input', () => { q = search.value.trim().toLowerCase(); renderGrid(); });
 
+  // Fetch INLINE Supabase (bypass total du cache navigateur du loader externe)
+  async function fetchProductsLive(){
+    const SUP='https://dfdmasejsoibxrvubegu.supabase.co';
+    const KEY='sb_publishable_FUNJl2eCG1rDiEZOUJsQdA_GQIl2YZM';
+    try {
+      const r = await fetch(SUP+'/rest/v1/pictocraft_products_config?active=eq.true&order=created_at.desc&limit=1&_='+Date.now(),
+        {headers:{apikey:KEY}, cache:'no-store'});
+      if (r.ok) {
+        const arr = await r.json();
+        if (arr && arr.length && arr[0].config && arr[0].config.products) return arr[0].config;
+      }
+    } catch(_){}
+    // Fallback : JSON statique
+    const r2 = await fetch('data/products.json?v='+Date.now(), {cache:'no-store'});
+    return await r2.json();
+  }
   try {
-    const data = await PictocraftProducts.loadProducts();
+    const data = await fetchProductsLive();
     allProducts = data.products || [];
     allCategories = data.categories || [];
     renderFilters();
     renderGrid();
+    console.log('[Pictocraft] Chargé', allProducts.length, 'produits');
   } catch (err) {
     grid.innerHTML = '<div class="devis-empty" style="color:#B91C1C">Impossible de charger les produits : ' + err.message + '</div>';
   }
