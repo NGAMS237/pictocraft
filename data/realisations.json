@@ -2,26 +2,155 @@
   "version": "1.0",
   "updatedAt": "2026-06-26",
   "categories": [
-    { "slug": "tous", "name": "Tous" },
-    { "slug": "imprimerie", "name": "Imprimerie" },
-    { "slug": "grand-format", "name": "Grand format" },
-    { "slug": "textile", "name": "Textile" },
-    { "slug": "packaging", "name": "Packaging" },
-    { "slug": "digital", "name": "Digital" },
-    { "slug": "evenementiel", "name": "Événementiel" }
+    {
+      "slug": "tous",
+      "name": "Tous"
+    },
+    {
+      "slug": "imprimerie",
+      "name": "Imprimerie"
+    },
+    {
+      "slug": "grand-format",
+      "name": "Grand format"
+    },
+    {
+      "slug": "textile",
+      "name": "Textile"
+    },
+    {
+      "slug": "packaging",
+      "name": "Packaging"
+    },
+    {
+      "slug": "digital",
+      "name": "Digital"
+    },
+    {
+      "slug": "evenementiel",
+      "name": "Événementiel"
+    }
   ],
   "realisations": [
-    { "id":"rollup-one-health", "title":"Roll-up One Health", "category":"evenementiel", "client":"OMS", "description":"Production événementielle", "image":"assets/images/products/rollup-onehealth.jpg", "active":true, "sortOrder":10 },
-    { "id":"rollup-ftic", "title":"Roll-up FTIC 80×200", "category":"evenementiel", "client":"FTIC", "description":"Salon professionnel", "image":"assets/images/products/rollup-ftic.jpg", "active":true, "sortOrder":20 },
-    { "id":"rollup-echo", "title":"Roll-up campagne Echo", "category":"evenementiel", "client":"ONG internationale", "description":"Campagne d'information terrain", "image":"assets/images/products/rollup-echo.jpg", "active":true, "sortOrder":30 },
-    { "id":"bache-grand-format", "title":"Bâche grand format", "category":"grand-format", "client":"Campagne extérieure", "description":"Communication extérieure 3m × 2m", "image":"assets/images/products/billboard.jpg", "active":true, "sortOrder":40 },
-    { "id":"brochure-entreprise", "title":"Brochure d'entreprise", "category":"imprimerie", "client":"Client B2B", "description":"32 pages, dos carré collé", "image":"assets/images/products/brochures.jpg", "active":true, "sortOrder":50 },
-    { "id":"magazine-institutionnel", "title":"Magazine institutionnel", "category":"imprimerie", "client":"Institution publique", "description":"Tirage 2 500 exemplaires, A4 reliure agrafée", "image":"assets/images/products/magazines.jpg", "active":true, "sortOrder":60 },
-    { "id":"cartes-visite-premium", "title":"Cartes de visite premium", "category":"imprimerie", "client":"Cabinet conseil", "description":"Pelliculage soft-touch · 400g · dorure", "image":"assets/images/products/cartes-visite.jpg", "active":true, "sortOrder":70 },
-    { "id":"flyers-a5-sensibilisation", "title":"Flyers A5 quadrichromie", "category":"imprimerie", "client":"ONG locale", "description":"Campagne sensibilisation · 10 000 ex.", "image":"assets/images/products/flyers.jpg", "active":true, "sortOrder":80 },
-    { "id":"posters-chan", "title":"Posters événementiels", "category":"grand-format", "client":"CHAN — Cameroun", "description":"Affichage urbain grand format", "image":"assets/images/products/poster.jpg", "active":true, "sortOrder":90 },
-    { "id":"tshirts-serigraphie", "title":"T-shirts sérigraphiés", "category":"textile", "client":"Équipe événement", "description":"250 ex. · 2 couleurs · face avant + dos", "image":"assets/images/products/textile.jpg", "active":true, "sortOrder":100 },
-    { "id":"packaging-produit", "title":"Packaging produit", "category":"packaging", "client":"Marque alimentaire", "description":"Branding alimentaire complet", "image":"assets/images/products/emballage.jpg", "active":true, "sortOrder":110 },
-    { "id":"chevalets-table", "title":"Chevalets de table", "category":"imprimerie", "client":"Restaurant", "description":"100 ex. plastifiés double face", "image":"assets/images/products/chevalet.jpg", "active":true, "sortOrder":120 }
+    {
+      "id": "rollup-one-health",
+      "title": "Roll-up One Health",
+      "category": "evenementiel",
+      "client": "OMS",
+      "description": "Production événementielle",
+      "image": "assets/images/realisations/rollup-one-health.jpg",
+      "active": true,
+      "sortOrder": 10
+    },
+    {
+      "id": "rollup-ftic",
+      "title": "Roll-up FTIC 80×200",
+      "category": "evenementiel",
+      "client": "FTIC",
+      "description": "Salon professionnel",
+      "image": "assets/images/realisations/rollup-ftic.jpg",
+      "active": true,
+      "sortOrder": 20
+    },
+    {
+      "id": "rollup-echo",
+      "title": "Roll-up campagne Echo",
+      "category": "evenementiel",
+      "client": "ONG internationale",
+      "description": "Campagne d'information terrain",
+      "image": "assets/images/realisations/rollup-echo.jpg",
+      "active": true,
+      "sortOrder": 30
+    },
+    {
+      "id": "bache-grand-format",
+      "title": "Bâche grand format",
+      "category": "grand-format",
+      "client": "Campagne extérieure",
+      "description": "Communication extérieure 3m × 2m",
+      "image": "assets/images/realisations/bache-grand-format.jpg",
+      "active": true,
+      "sortOrder": 40
+    },
+    {
+      "id": "brochure-entreprise",
+      "title": "Brochure d'entreprise",
+      "category": "imprimerie",
+      "client": "Client B2B",
+      "description": "32 pages, dos carré collé",
+      "image": "assets/images/realisations/brochure-entreprise.jpg",
+      "active": true,
+      "sortOrder": 50
+    },
+    {
+      "id": "magazine-institutionnel",
+      "title": "Magazine institutionnel",
+      "category": "imprimerie",
+      "client": "Institution publique",
+      "description": "Tirage 2 500 exemplaires, A4 reliure agrafée",
+      "image": "assets/images/realisations/magazine-institutionnel.jpg",
+      "active": true,
+      "sortOrder": 60
+    },
+    {
+      "id": "cartes-visite-premium",
+      "title": "Cartes de visite premium",
+      "category": "imprimerie",
+      "client": "Cabinet conseil",
+      "description": "Pelliculage soft-touch · 400g · dorure",
+      "image": "assets/images/realisations/cartes-visite-premium.jpg",
+      "active": true,
+      "sortOrder": 70
+    },
+    {
+      "id": "flyers-a5-sensibilisation",
+      "title": "Flyers A5 quadrichromie",
+      "category": "imprimerie",
+      "client": "ONG locale",
+      "description": "Campagne sensibilisation · 10 000 ex.",
+      "image": "assets/images/realisations/flyers-a5-sensibilisation.jpg",
+      "active": true,
+      "sortOrder": 80
+    },
+    {
+      "id": "posters-chan",
+      "title": "Posters événementiels",
+      "category": "grand-format",
+      "client": "CHAN — Cameroun",
+      "description": "Affichage urbain grand format",
+      "image": "assets/images/realisations/posters-chan.jpg",
+      "active": true,
+      "sortOrder": 90
+    },
+    {
+      "id": "tshirts-serigraphie",
+      "title": "T-shirts sérigraphiés",
+      "category": "textile",
+      "client": "Équipe événement",
+      "description": "250 ex. · 2 couleurs · face avant + dos",
+      "image": "assets/images/realisations/tshirts-serigraphie.jpg",
+      "active": true,
+      "sortOrder": 100
+    },
+    {
+      "id": "packaging-produit",
+      "title": "Packaging produit",
+      "category": "packaging",
+      "client": "Marque alimentaire",
+      "description": "Branding alimentaire complet",
+      "image": "assets/images/realisations/packaging-produit.jpg",
+      "active": true,
+      "sortOrder": 110
+    },
+    {
+      "id": "chevalets-table",
+      "title": "Chevalets de table",
+      "category": "imprimerie",
+      "client": "Restaurant",
+      "description": "100 ex. plastifiés double face",
+      "image": "assets/images/realisations/chevalets-table.jpg",
+      "active": true,
+      "sortOrder": 120
+    }
   ]
 }

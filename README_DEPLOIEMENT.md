@@ -326,3 +326,101 @@ Si l'upload renvoie une erreur, regarde le message JSON renvoyé par `api/upload
 - Tous les uploads via formulaire HTML
 
 → Pour GitHub Pages, continuer à utiliser `/admin-pro.html` (Supabase Auth) qui marche partout.
+
+---
+
+## 15. Phase 6 — Cohérence images + upload fonctionnel
+
+### 19 placeholders SVG générés pour produits sans photo dédiée
+
+Au lieu de réutiliser la même image `textile.jpg` pour tous les produits textile, chaque produit a maintenant son propre placeholder SVG avec :
+- Couleur unique (palette colorée par catégorie)
+- Emoji représentatif (☕ mugs, 👕 polos, 🧢 casquettes, 🔋 powerbank, etc.)
+- Nom du produit + branding Pictocraft
+
+Fichiers : `assets/images/products/{slug}.svg` (mugs.svg, stylos.svg, gourdes.svg, parapluies.svg, porte-cles.svg, powerbank.svg, blocs-notes.svg, polos.svg, casquettes.svg, sacs-pub.svg, chemises-rabats.svg, tickets.svg, badges.svg, invitations.svg, menus.svg, depliants.svg, etiquettes.svg, packaging-simple.svg, stickers.svg).
+
+Le client peut à tout moment remplacer ces placeholders par de vraies photos via l'admin.
+
+### Dossiers créés pour services & réalisations
+
+- `assets/images/services/` — 6 images renommées (imprimerie.jpg, communication-visuelle.jpg, digital-web.jpg, evenementiel.jpg, serigraphie-textile.jpg, packaging.jpg)
+- `assets/images/realisations/` — 12 images renommées (rollup-one-health.jpg, brochure-entreprise.jpg, cartes-visite-premium.jpg, etc.)
+
+Chaque service et chaque réalisation a maintenant son propre fichier image nommé clairement.
+
+### Cache-busting automatique sur les images
+
+Toutes les pages front (produits.html, devis.html, services.html, realisations.html) ajoutent automatiquement `?v=timestamp` aux URL d'images. Le timestamp change toutes les minutes, donc :
+- Quand tu modifies une image dans l'admin, elle apparaît sur le site en moins d'1 minute
+- Aucune ancienne image ne reste bloquée dans le cache navigateur du visiteur
+
+### Comment modifier l'image d'un produit / réalisation / service
+
+**Depuis GitHub Pages (Supabase) :**
+1. [/admin-pro.html](https://ngams237.github.io/pictocraft/admin-pro.html) → NIP 4 chiffres
+2. Onglet 🛍️ Produits → ✏ Modifier
+3. Bouton **⬆ Uploader une nouvelle image** → fichier local
+4. Feedback : "Upload en cours…" → "OK image uploadée"
+5. Aperçu affiché immédiatement
+6. 💾 Enregistrer → publié sur Supabase
+7. Site public rafraîchit dans < 1 min
+
+**Depuis Hostinger (PHP) :**
+1. `/admin/login.php` → NIP
+2. Onglet 🛍️ Produits (ou 🎯 Services ou 🖼️ Réalisations)
+3. Modifier → champ file "Uploader nouvelle image"
+4. `api/upload.php` valide MIME + magic bytes + taille et écrit dans le bon dossier
+5. `products.json` (ou services.json ou realisations.json) est mis à jour automatiquement
+6. Sauvegarde automatique dans `backups/` avant écriture
+
+### Corriger les permissions si upload échoue sur Hostinger
+
+Si tu vois *"Dossier de destination non accessible en écriture"* :
+
+1. Gestionnaire de fichiers Hostinger → sélectionne :
+   - `data/`
+   - `backups/`
+   - `assets/images/products/`
+   - `assets/images/realisations/`
+   - `assets/images/services/`
+   - `assets/images/uploads/`
+2. Clic droit → **Permissions** → **755**
+3. ✓ Appliquer récursivement
+4. Retente l'upload
+
+### Tester l'upload sur Hostinger
+
+```bash
+# Après avoir uploadé les fichiers sur Hostinger :
+# 1. Test que PHP fonctionne
+curl https://tondomaine.com/api/upload.php
+# Doit renvoyer JSON {"ok":false,"message":"Non authentifié..."}
+
+# 2. Test que /admin/login.php fonctionne
+curl https://tondomaine.com/admin/login.php
+# Doit renvoyer un HTML avec formulaire
+```
+
+### Vérifier que le front lit bien les JSON
+
+1. Ouvre [/data/products.json](https://ngams237.github.io/pictocraft/data/products.json) → doit renvoyer 28 produits
+2. Ouvre [/data/services.json](https://ngams237.github.io/pictocraft/data/services.json) → 6 services
+3. Ouvre [/data/realisations.json](https://ngams237.github.io/pictocraft/data/realisations.json) → 12 réalisations
+4. Ouvre [/produits.html](https://ngams237.github.io/pictocraft/produits.html) puis DevTools (F12) → Network → tu dois voir les JSON chargés
+
+### Ce qui restait en dur
+
+**Dans realisations.html (ancienne version) :** 12 items hardcodés → **maintenant lus depuis realisations.json**
+
+**Dans services.html (ancienne version) :** contenu statique → **maintenant lu depuis services.json** avec sections ancrées dynamiques
+
+**Dans index.html :** grille de 8 produits sur la home → toujours hardcodée par choix design (pour rester rapide au chargement de la home). Les mêmes produits sont accessibles via /produits.html qui elle est 100% dynamique.
+
+### Prochaines améliorations recommandées
+
+1. **Rendre les 8 cards de la home aussi dynamiques** (lecture products.json) pour que l'admin puisse aussi changer les stars produits de la home
+2. **Compression automatique** des images uploadées (côté client via canvas) pour éviter les 5 Mo bruts
+3. **Éditeur d'options de devis** dans l'admin (pour les produits configurables : format, papier, finition avec multiplicateurs) — actuellement seulement disponible via édition JSON avancée
+4. **Journal des modifications** (qui a modifié quoi et quand) dans le dashboard admin
+5. **Import CSV en lot** pour ajouter 50 produits d'un coup depuis un tableur

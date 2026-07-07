@@ -3,64 +3,136 @@
   "updatedAt": "2026-06-26",
   "services": [
     {
-      "id": "imprimerie", "anchor": "imprimerie", "active": true, "sortOrder": 1,
+      "id": "imprimerie",
+      "anchor": "imprimerie",
+      "active": true,
+      "sortOrder": 1,
       "title": "Imprimerie offset & numérique",
       "shortDescription": "Vos supports imprimés professionnels, finitions premium, tirages courts et longs.",
       "fullDescription": "PictoCraft réalise tous vos supports imprimés professionnels avec un rendu impeccable. Notre atelier combine presses offset traditionnelles et machines numériques de dernière génération pour produire flyers, cartes de visite, brochures, affiches, catalogues et papeterie d'entreprise avec une qualité constante, quelle que soit la quantité.",
       "icon": "printer",
-      "image": "assets/images/products/flyers.jpg",
-      "examples": ["Flyers & dépliants","Cartes de visite","Brochures & catalogues","Affiches & posters","Papeterie professionnelle"],
-      "primaryCta":   { "label": "Configurer un devis", "href": "devis.html" }
+      "image": "assets/images/services/imprimerie.jpg",
+      "examples": [
+        "Flyers & dépliants",
+        "Cartes de visite",
+        "Brochures & catalogues",
+        "Affiches & posters",
+        "Papeterie professionnelle"
+      ],
+      "primaryCta": {
+        "label": "Configurer un devis",
+        "href": "devis.html"
+      }
     },
     {
-      "id": "communication-visuelle", "anchor": "communication-visuelle", "active": true, "sortOrder": 2,
+      "id": "communication-visuelle",
+      "anchor": "communication-visuelle",
+      "active": true,
+      "sortOrder": 2,
       "title": "Communication visuelle",
       "shortDescription": "Identité visuelle, logos, chartes graphiques, supports de marque.",
       "fullDescription": "Nous accompagnons les entreprises dans la création d'une identité visuelle forte et cohérente : conception de logos, chartes graphiques, affiches, visuels publicitaires, habillages et supports de marque. Notre équipe de directeurs artistiques et infographistes traduit votre vision en supports impactants.",
       "icon": "palette",
-      "image": "assets/images/gallery/logo-mockup.jpg",
-      "examples": ["Création de logo","Charte graphique","Affiches publicitaires","Visuels réseaux sociaux","Supports de marque"],
-      "primaryCta":   { "label": "Demander conseil", "href": "contact.html" }
+      "image": "assets/images/services/communication-visuelle.jpg",
+      "examples": [
+        "Création de logo",
+        "Charte graphique",
+        "Affiches publicitaires",
+        "Visuels réseaux sociaux",
+        "Supports de marque"
+      ],
+      "primaryCta": {
+        "label": "Demander conseil",
+        "href": "contact.html"
+      }
     },
     {
-      "id": "digital-web", "anchor": "digital-web", "active": true, "sortOrder": 3,
+      "id": "digital-web",
+      "anchor": "digital-web",
+      "active": true,
+      "sortOrder": 3,
       "title": "Digital & Web",
       "shortDescription": "Sites internet, contenus digitaux, vidéo et réseaux sociaux.",
       "fullDescription": "PictoCraft conçoit des supports digitaux pour renforcer votre présence en ligne : sites vitrines, sites catalogues avec paiement mobile, visuels digitaux, montage vidéo professionnel et contenus pour réseaux sociaux. Tout est pensé pour l'écosystème digital camerounais.",
       "icon": "monitor",
-      "image": "assets/images/gallery/workspace.jpg",
-      "examples": ["Site vitrine","Site catalogue","Visuels réseaux sociaux","Montage vidéo","Catalogue PDF"],
-      "primaryCta":   { "label": "Demander un projet", "href": "contact.html" }
+      "image": "assets/images/services/digital-web.jpg",
+      "examples": [
+        "Site vitrine",
+        "Site catalogue",
+        "Visuels réseaux sociaux",
+        "Montage vidéo",
+        "Catalogue PDF"
+      ],
+      "primaryCta": {
+        "label": "Demander un projet",
+        "href": "contact.html"
+      }
     },
     {
-      "id": "evenementiel", "anchor": "evenementiel", "active": true, "sortOrder": 4,
+      "id": "evenementiel",
+      "anchor": "evenementiel",
+      "active": true,
+      "sortOrder": 4,
       "title": "Événementiel",
       "shortDescription": "Roll-ups, bâches, badges, stands, signalétique pour vos événements.",
       "fullDescription": "Nous produisons les supports nécessaires pour vos salons, conférences, lancements, campagnes et cérémonies. Roll-ups, bâches grand format, badges PVC, stands et comptoirs, signalétique complète : tout est livré clé en main, prêt à installer.",
       "icon": "event",
-      "image": "assets/images/products/rollup-echo.jpg",
-      "examples": ["Roll-up & kakémonos","Bâches événementielles","Badges","Signalétique","Stands & comptoirs"],
-      "primaryCta":   { "label": "Demander un devis", "href": "devis.html" }
+      "image": "assets/images/services/evenementiel.jpg",
+      "examples": [
+        "Roll-up & kakémonos",
+        "Bâches événementielles",
+        "Badges",
+        "Signalétique",
+        "Stands & comptoirs"
+      ],
+      "primaryCta": {
+        "label": "Demander un devis",
+        "href": "devis.html"
+      }
     },
     {
-      "id": "serigraphie-textile", "anchor": "serigraphie-textile", "active": true, "sortOrder": 5,
+      "id": "serigraphie-textile",
+      "anchor": "serigraphie-textile",
+      "active": true,
+      "sortOrder": 5,
       "title": "Sérigraphie & Textile",
       "shortDescription": "T-shirts, polos, casquettes, objets publicitaires personnalisés.",
       "fullDescription": "Personnalisez vos équipes, événements et campagnes marketing avec nos services de sérigraphie, flex, sublimation et broderie sur textile. Nous travaillons les t-shirts, polos, casquettes, sacs et objets publicitaires (mugs, stylos, gourdes, parapluies) avec des techniques durables.",
       "icon": "shirt",
-      "image": "assets/images/products/textile.jpg",
-      "examples": ["T-shirts personnalisés","Polos brodés","Casquettes & bonnets","Mugs, stylos, sacs","Objets publicitaires"],
-      "primaryCta":   { "label": "Demander un devis", "href": "devis.html" }
+      "image": "assets/images/services/serigraphie-textile.jpg",
+      "examples": [
+        "T-shirts personnalisés",
+        "Polos brodés",
+        "Casquettes & bonnets",
+        "Mugs, stylos, sacs",
+        "Objets publicitaires"
+      ],
+      "primaryCta": {
+        "label": "Demander un devis",
+        "href": "devis.html"
+      }
     },
     {
-      "id": "packaging", "anchor": "packaging", "active": true, "sortOrder": 6,
+      "id": "packaging",
+      "anchor": "packaging",
+      "active": true,
+      "sortOrder": 6,
       "title": "Packaging & Étiquettes",
       "shortDescription": "Emballages personnalisés, étiquettes, stickers pour vos produits.",
       "fullDescription": "Habillez vos produits avec des emballages sur-mesure : boîtes cadeaux, étuis, fourreaux, sachets, étiquettes adhésives et stickers. Découpe à la forme, finitions premium, formats personnalisés — nous travaillons aussi bien pour l'alimentaire, la cosmétique que le retail.",
       "icon": "package",
-      "image": "assets/images/products/emballage.jpg",
-      "examples": ["Boîtes & étuis","Étiquettes adhésives","Stickers personnalisés","Emballages produit","Fourreaux et sachets"],
-      "primaryCta":   { "label": "Demander conseil", "href": "contact.html" }
+      "image": "assets/images/services/packaging.jpg",
+      "examples": [
+        "Boîtes & étuis",
+        "Étiquettes adhésives",
+        "Stickers personnalisés",
+        "Emballages produit",
+        "Fourreaux et sachets"
+      ],
+      "primaryCta": {
+        "label": "Demander conseil",
+        "href": "contact.html"
+      }
     }
   ]
 }

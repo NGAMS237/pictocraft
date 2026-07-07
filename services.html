@@ -151,6 +151,8 @@ const SVCICON = {
 };
 
 const escapeHtml = s => String(s||'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+const CACHE_V = Math.floor(Date.now() / 60000);
+const bust = url => !url ? '' : (url.startsWith('http') ? url : (url.includes('?') ? url + '&v='+CACHE_V : url + '?v='+CACHE_V));
 
 async function loadServices(){
   try {
@@ -187,9 +189,9 @@ async function loadServices(){
                   <a href="contact.html" class="btn-outline">Nous contacter</a>
                 </div>
               </div>
-              <div class="svc-image"><img src="${escapeHtml(s.image)}" alt="${escapeHtml(s.title)}" loading="lazy"></div>
+              <div class="svc-image"><img src="${bust(escapeHtml(s.image))}" alt="${escapeHtml(s.title)}" loading="lazy"></div>
             ` : `
-              <div class="svc-image"><img src="${escapeHtml(s.image)}" alt="${escapeHtml(s.title)}" loading="lazy"></div>
+              <div class="svc-image"><img src="${bust(escapeHtml(s.image))}" alt="${escapeHtml(s.title)}" loading="lazy"></div>
               <div>
                 <span class="kicker">Pôle ${s.sortOrder}</span>
                 <h2>${escapeHtml(s.title)}</h2>

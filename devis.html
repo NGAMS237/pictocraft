@@ -105,6 +105,8 @@
   let q = '';
 
   function escapeHtml(s){return String(s||'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));}
+  const CACHE_V = Math.floor(Date.now() / 60000);
+  function bust(url){return !url ? '' : (url.startsWith('http') ? url : (url.includes('?') ? url + '&v='+CACHE_V : url + '?v='+CACHE_V));}
 
   function renderGrid(){
     const filtered = allProducts.filter(p => {
@@ -129,7 +131,7 @@
       return `
         <a href="${href}" class="devis-card">
           <div class="devis-card-img">
-            <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.background='#003C78'">
+            <img src="${bust(escapeHtml(p.image))}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.style.background='#003C78'">
             ${cat ? `<span class="devis-card-cat">${escapeHtml(cat.name)}</span>` : ''}
             ${badge}
           </div>

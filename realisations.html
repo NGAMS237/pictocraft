@@ -92,6 +92,8 @@
 <script>
 (async function(){
   const escapeHtml = s => String(s||'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+  const CACHE_V = Math.floor(Date.now() / 60000);
+  const bust = url => !url ? '' : (url.startsWith('http') ? url : (url.includes('?') ? url + '&v='+CACHE_V : url + '?v='+CACHE_V));
   const grid = document.getElementById('real-grid');
   const filtersEl = document.getElementById('real-filters');
   let all = [], cats = [], activeCat = 'tous';
@@ -106,7 +108,7 @@
       const cat = cats.find(c => c.slug === r.category);
       return `
         <div class="gallery-item">
-          <img src="${escapeHtml(r.image)}" alt="${escapeHtml(r.title)}" loading="lazy" onerror="this.style.background='#003C78'">
+          <img src="${bust(escapeHtml(r.image))}" alt="${escapeHtml(r.title)}" loading="lazy" onerror="this.style.background='#003C78'">
           <div class="gallery-caption">
             ${cat ? `<div class="cat">${escapeHtml(cat.name)}</div>` : ''}
             <h3>${escapeHtml(r.title)}</h3>

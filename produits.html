@@ -93,6 +93,8 @@
   let allProducts = [], allCategories = [], activeCat = 'all', q = '';
 
   const escapeHtml = s => String(s||'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+  const CACHE_V = Math.floor(Date.now() / 60000); // change toutes les minutes
+  const bust = url => !url ? '' : (url.startsWith('http') ? url : (url.includes('?') ? url + '&v='+CACHE_V : url + '?v='+CACHE_V));
   const fmt = (n,c) => Number(n||0).toLocaleString('fr-FR') + ' ' + (c||'FCFA');
 
   function renderGrid(){
@@ -118,7 +120,7 @@
       return `
         <a href="${href}" class="devis-card">
           <div class="devis-card-img">
-            <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy">
+            <img src="${bust(escapeHtml(p.image))}" alt="${escapeHtml(p.name)}" loading="lazy">
             ${cat ? `<span class="devis-card-cat">${escapeHtml(cat.name)}</span>` : ''}
             ${badge}
           </div>
