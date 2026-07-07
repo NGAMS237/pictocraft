@@ -645,7 +645,7 @@ async function loadProductsView(){
         const cat = data.categories.find(c => c.slug === p.category);
         const visible = p.active !== false;
         const isConfig = p.configurable !== false && p.quotable !== false && !!p.calcMode;
-        const imgSrc = p.image && p.image.startsWith('http') ? p.image : (p.image || '');
+        const imgSrc = p.image && p.image.startsWith('http') ? p.image : (p.image ? p.image.split('/').map(encodeURIComponent).join('/') : '');
         return `<tr style="${visible?'':'opacity:.5'}">
           <td><b>${p.sortOrder||'-'}</b></td>
           <td><img src="${escapeHtml(imgSrc)}" alt="" style="width:50px;height:50px;object-fit:cover;border-radius:6px;background:var(--gray-100)" onerror="this.style.background='var(--gray-200)';this.src=''"></td>
@@ -750,14 +750,19 @@ async function loadQuickGallery(forceRefresh){
       return;
     }
 
-    wrap.innerHTML = images.map(img => `
+    // Encoder les espaces et caractères spéciaux dans les URLs (bloc.png OK, "carte visite.png" doit devenir "carte%20visite.png")
+    const bust = Math.floor(Date.now()/60000);
+    wrap.innerHTML = images.map(img => {
+      const encoded = img.split('/').map(encodeURIComponent).join('/');
+      const safeAttr = img.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+      return `
       <div style="cursor:pointer;border:2px solid transparent;border-radius:4px;overflow:hidden;background:#fff;transition:border-color .15s"
            onmouseover="this.style.borderColor='var(--brand)'"
            onmouseout="this.style.borderColor='transparent'"
-           onclick="pickImage('${img}')" title="${img}">
-        <img src="${img}?v=${Math.floor(Date.now()/60000)}" alt="" loading="lazy" style="width:100%;aspect-ratio:1;object-fit:cover;display:block" onerror="this.style.display='none'">
-      </div>
-    `).join('');
+           onclick="pickImage('${safeAttr}')" title="${img}">
+        <img src="${encoded}?v=${bust}" alt="" loading="lazy" style="width:100%;aspect-ratio:1;object-fit:cover;display:block" onerror="this.style.display='none'">
+      </div>`;
+    }).join('');
   } catch(e) {
     wrap.innerHTML = '<div style="color:#B91C1C;padding:10px;grid-column:1/-1">Erreur galerie : ' + e.message + '<br><button type="button" class="btn btn-sec" onclick="loadQuickGallery(true)" style="margin-top:6px">🔄 Réessayer</button></div>';
   }
@@ -769,8 +774,10 @@ function refreshGallery(){
 }
 
 function pickImage(path){
-  document.getElementById('pm-image').value = path;
-  document.getElementById('pm-image-preview').src = path;
+  document.getElementById('pm-image').value = path; // conserver le path original (avec espaces éventuels)
+  // Encoder les composants (espaces → %20) pour l'attribut src
+  const encoded = path.split('/').map(encodeURIComponent).join('/');
+  document.getElementById('pm-image-preview').src = encoded;
   document.getElementById('pm-image-preview').style.display = '';
   // Feedback visuel
   const wrap = document.getElementById('quick-gallery');
@@ -813,7 +820,7 @@ function openProductModal(slug) {
     $('#pm-active').checked = p.active !== false;
     $('#pm-configurable').checked = (p.configurable !== false) && !!p.calcMode;
     $('#pm-image').value = p.image || '';
-    if (p.image) { $('#pm-image-preview').src = p.image; $('#pm-image-preview').style.display = ''; }
+    if (p.image) { $('#pm-image-preview').src = p.image.startsWith('http') ? p.image : p.image.split('/').map(encodeURIComponent).join('/'); $('#pm-image-preview').style.display = ''; }
     else $('#pm-image-preview').style.display = 'none';
     $('#pm-calcMode').value = p.calcMode || '';
     $('#pm-basePrice').value = p.basePrice || '';
