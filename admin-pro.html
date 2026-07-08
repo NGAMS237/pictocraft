@@ -1326,6 +1326,7 @@ async function loadSettingsView(){
         <tr><th>Adresse</th><td>${escapeHtml(s.company.address)}</td></tr>
         <tr><th>Tél principal</th><td>${escapeHtml(s.contact.phone1)}</td></tr>
         <tr><th>Tél secondaire</th><td>${escapeHtml(s.contact.phone2)}</td></tr>
+        ${s.contact.phone3 ? `<tr><th>Tél Camtel</th><td>${escapeHtml(s.contact.phone3)}</td></tr>` : ''}
         <tr><th>WhatsApp</th><td>${escapeHtml(s.contact.whatsapp)}</td></tr>
         <tr><th>Email principal</th><td>${escapeHtml(s.contact.email1)}</td></tr>
         <tr><th>TVA activée</th><td>${s.tax.enabled ? 'Oui ('+(s.tax.rate*100).toFixed(2)+'%)' : 'Non'}</td></tr>

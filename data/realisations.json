@@ -44,16 +44,6 @@
       "size": "tall"
     },
     {
-      "id": "rollup-onehealth",
-      "title": "Roll-up One Health",
-      "category": "evenementiel",
-      "client": "OMS",
-      "description": "Production événementielle salon santé",
-      "image": "assets/images/products/rollup-onehealth.jpg",
-      "active": true,
-      "sortOrder": 20
-    },
-    {
       "id": "rollup-ftic",
       "title": "Roll-up FTIC 80×200",
       "category": "evenementiel",
