@@ -1,5 +1,5 @@
 {
-  "version": "2.0",
+  "version": "3.0",
   "updatedAt": "2026-07-07",
   "categories": [
     {
@@ -16,15 +16,15 @@
     },
     {
       "slug": "textile",
-      "name": "Textile"
+      "name": "Textile & Sérigraphie"
     },
     {
       "slug": "packaging",
-      "name": "Packaging"
+      "name": "Packaging & Étiquettes"
     },
     {
-      "slug": "digital",
-      "name": "Digital"
+      "slug": "objets-pub",
+      "name": "Objets publicitaires"
     },
     {
       "slug": "evenementiel",
@@ -33,24 +33,35 @@
   ],
   "realisations": [
     {
-      "id": "rollup-one-health",
+      "id": "kakemono-pictocraft",
+      "title": "Kakémono Pictocraft",
+      "category": "evenementiel",
+      "client": "Salon Yaoundé 2026",
+      "description": "Roll-up 85×200 cm avec logo, services et QR code",
+      "image": "assets/images/products/kakemono.png",
+      "active": true,
+      "sortOrder": 10,
+      "size": "tall"
+    },
+    {
+      "id": "rollup-onehealth",
       "title": "Roll-up One Health",
       "category": "evenementiel",
       "client": "OMS",
-      "description": "Production événementielle",
-      "image": "assets/images/products/kakemono.png",
+      "description": "Production événementielle salon santé",
+      "image": "assets/images/products/rollup-onehealth.jpg",
       "active": true,
-      "sortOrder": 10
+      "sortOrder": 20
     },
     {
       "id": "rollup-ftic",
       "title": "Roll-up FTIC 80×200",
       "category": "evenementiel",
       "client": "FTIC",
-      "description": "Salon professionnel",
-      "image": "assets/images/products/kakemono.png",
+      "description": "Salon professionnel télécoms",
+      "image": "assets/images/products/rollup-ftic.jpg",
       "active": true,
-      "sortOrder": 20
+      "sortOrder": 30
     },
     {
       "id": "rollup-echo",
@@ -58,29 +69,73 @@
       "category": "evenementiel",
       "client": "ONG internationale",
       "description": "Campagne d'information terrain",
-      "image": "assets/images/products/kakemono.png",
-      "active": true,
-      "sortOrder": 30
-    },
-    {
-      "id": "bache-grand-format",
-      "title": "Bâche grand format",
-      "category": "grand-format",
-      "client": "Campagne extérieure",
-      "description": "Communication extérieure 3m × 2m",
-      "image": "assets/images/products/grand format.png",
+      "image": "assets/images/products/rollup-echo.jpg",
       "active": true,
       "sortOrder": 40
     },
     {
-      "id": "brochure-entreprise",
-      "title": "Brochure d'entreprise",
-      "category": "imprimerie",
+      "id": "bache-veraluz",
+      "title": "Bâche immobilière Veraluz",
+      "category": "grand-format",
+      "client": "Veraluz",
+      "description": "Bâche publicitaire 3×2m installée en façade",
+      "image": "assets/images/products/grand format.png",
+      "active": true,
+      "sortOrder": 50,
+      "size": "wide"
+    },
+    {
+      "id": "billboard-yaounde",
+      "title": "Panneau publicitaire",
+      "category": "grand-format",
       "client": "Client B2B",
-      "description": "32 pages, dos carré collé",
+      "description": "Affichage extérieur grand format",
+      "image": "assets/images/products/billboard.jpg",
+      "active": true,
+      "sortOrder": 60,
+      "size": "wide"
+    },
+    {
+      "id": "posters-chan",
+      "title": "Posters CHAN Cameroun",
+      "category": "grand-format",
+      "client": "CHAN 2026",
+      "description": "Affichage urbain grand format",
+      "image": "assets/images/products/poster.jpg",
+      "active": true,
+      "sortOrder": 70
+    },
+    {
+      "id": "affiche-themen",
+      "title": "Affiche The Men Belleza",
+      "category": "grand-format",
+      "client": "The Men Belleza y Estética",
+      "description": "Poster salon coiffure/barbier",
+      "image": "assets/images/products/affiche.jpg",
+      "active": true,
+      "sortOrder": 80,
+      "size": "tall"
+    },
+    {
+      "id": "brochure-veraluz",
+      "title": "Brochure Veraluz",
+      "category": "imprimerie",
+      "client": "Veraluz Immobilier",
+      "description": "Brochure 12 pages, dos carré collé, papier couché brillant",
       "image": "assets/images/products/brochure.png",
       "active": true,
-      "sortOrder": 50
+      "sortOrder": 90,
+      "size": "wide"
+    },
+    {
+      "id": "brochures-corpo",
+      "title": "Brochures corporate",
+      "category": "imprimerie",
+      "client": "Client B2B",
+      "description": "Série de brochures 32 pages, quadri recto/verso",
+      "image": "assets/images/products/brochures.jpg",
+      "active": true,
+      "sortOrder": 100
     },
     {
       "id": "magazine-institutionnel",
@@ -88,69 +143,245 @@
       "category": "imprimerie",
       "client": "Institution publique",
       "description": "Tirage 2 500 exemplaires, A4 reliure agrafée",
-      "image": "assets/images/products/brochure.png",
+      "image": "assets/images/products/magazines.jpg",
       "active": true,
-      "sortOrder": 60
+      "sortOrder": 110
     },
     {
-      "id": "cartes-visite-premium",
-      "title": "Cartes de visite premium",
+      "id": "cartes-visite-pictocraft",
+      "title": "Cartes de visite Pictocraft",
       "category": "imprimerie",
-      "client": "Cabinet conseil",
-      "description": "Pelliculage soft-touch · 400g · dorure",
+      "client": "Pictocraft SARL",
+      "description": "Cartes de visite premium, dorure à chaud, coins arrondis",
       "image": "assets/images/products/carte visite.png",
       "active": true,
-      "sortOrder": 70
+      "sortOrder": 120
     },
     {
-      "id": "flyers-a5-sensibilisation",
-      "title": "Flyers A5 quadrichromie",
+      "id": "cartes-visite-corpo",
+      "title": "Cartes de visite corporate",
       "category": "imprimerie",
-      "client": "ONG locale",
-      "description": "Campagne sensibilisation · 10 000 ex.",
-      "image": "assets/images/products/brochure.png",
+      "client": "Divers",
+      "description": "Impression quadri sur 350g avec pelliculage soft-touch",
+      "image": "assets/images/products/cartes-visite.jpg",
       "active": true,
-      "sortOrder": 80
+      "sortOrder": 130
     },
     {
-      "id": "posters-chan",
-      "title": "Posters événementiels",
-      "category": "grand-format",
-      "client": "CHAN — Cameroun",
-      "description": "Affichage urbain grand format",
-      "image": "assets/images/products/affiche.jpg",
+      "id": "flyers-cfa-beacaf",
+      "title": "Flyers CFA BEACAF",
+      "category": "imprimerie",
+      "client": "CFA BEACAF",
+      "description": "Campagne de sensibilisation, 10 000 exemplaires A5",
+      "image": "assets/images/products/flyers.jpg",
       "active": true,
-      "sortOrder": 90
+      "sortOrder": 140,
+      "size": "wide"
+    },
+    {
+      "id": "flyers-format",
+      "title": "Flyers commerciaux",
+      "category": "imprimerie",
+      "client": "PME locale",
+      "description": "Impression flyers A5 quadri 135g",
+      "image": "assets/images/products/flyers2.jpg",
+      "active": true,
+      "sortOrder": 150
+    },
+    {
+      "id": "flyers-promo",
+      "title": "Flyers promotionnels",
+      "category": "imprimerie",
+      "client": "Restaurant",
+      "description": "Distribution rue, 5 000 exemplaires",
+      "image": "assets/images/products/flyers3.jpg",
+      "active": true,
+      "sortOrder": 160
+    },
+    {
+      "id": "blocs-notes",
+      "title": "Blocs-notes personnalisés",
+      "category": "imprimerie",
+      "client": "Cabinet conseil",
+      "description": "A5 collé en tête, 50 feuillets, couverture rigide",
+      "image": "assets/images/products/bloc.png",
+      "active": true,
+      "sortOrder": 170,
+      "size": "tall"
+    },
+    {
+      "id": "chemise-rabat",
+      "title": "Chemises à rabats",
+      "category": "imprimerie",
+      "client": "Cabinet d'avocats",
+      "description": "Chemises porte-documents corporate avec rabats",
+      "image": "assets/images/products/chemise a rabat.png",
+      "active": true,
+      "sortOrder": 180
+    },
+    {
+      "id": "menu-restaurant",
+      "title": "Menu de restaurant",
+      "category": "imprimerie",
+      "client": "Restaurant chic",
+      "description": "Menu plastifié A4, format restaurant premium",
+      "image": "assets/images/products/menu.png",
+      "active": true,
+      "sortOrder": 190,
+      "size": "tall"
+    },
+    {
+      "id": "ticket-invitation",
+      "title": "Cartes d'invitation",
+      "category": "imprimerie",
+      "client": "Événement privé",
+      "description": "Tickets d'entrée numérotés avec dorure",
+      "image": "assets/images/products/ticket.png",
+      "active": true,
+      "sortOrder": 200
+    },
+    {
+      "id": "chevalet-table",
+      "title": "Chevalets de table",
+      "category": "imprimerie",
+      "client": "Restaurant",
+      "description": "Chevalets de table 3 faces, restauration",
+      "image": "assets/images/products/chevalet.jpg",
+      "active": true,
+      "sortOrder": 210
+    },
+    {
+      "id": "packaging-emball",
+      "title": "Packaging alimentaire",
+      "category": "packaging",
+      "client": "Marque alimentaire",
+      "description": "Emballage carton personnalisé quadri",
+      "image": "assets/images/products/emball.png",
+      "active": true,
+      "sortOrder": 220,
+      "size": "wide"
+    },
+    {
+      "id": "emballage-luxe",
+      "title": "Emballage haut de gamme",
+      "category": "packaging",
+      "client": "Marque premium",
+      "description": "Boîte cadeau avec vernis sélectif",
+      "image": "assets/images/products/emballage.jpg",
+      "active": true,
+      "sortOrder": 230
+    },
+    {
+      "id": "etiquettes-pack",
+      "title": "Étiquettes adhésives",
+      "category": "packaging",
+      "client": "Cosmétiques",
+      "description": "Découpe sur mesure, résistance humidité",
+      "image": "assets/images/products/etiqutte.png",
+      "active": true,
+      "sortOrder": 240
+    },
+    {
+      "id": "tshirts-pictocraft",
+      "title": "T-shirts Pictocraft SARL",
+      "category": "textile",
+      "client": "Équipe Pictocraft",
+      "description": "T-shirts noirs sérigraphiés pour équipe salon",
+      "image": "assets/images/products/polo.png",
+      "active": true,
+      "sortOrder": 250,
+      "size": "wide"
     },
     {
       "id": "tshirts-serigraphie",
       "title": "T-shirts sérigraphiés",
       "category": "textile",
-      "client": "Équipe événement",
-      "description": "250 ex. · 2 couleurs · face avant + dos",
-      "image": "assets/images/products/polo.png",
+      "client": "Événement corporate",
+      "description": "Sérigraphie 3 couleurs sur coton 180g",
+      "image": "assets/images/products/textile.jpg",
       "active": true,
-      "sortOrder": 100
+      "sortOrder": 260
     },
     {
-      "id": "packaging-produit",
-      "title": "Packaging produit",
-      "category": "packaging",
-      "client": "Marque alimentaire",
-      "description": "Branding alimentaire complet",
-      "image": "assets/images/products/emball.png",
+      "id": "seri-quadri",
+      "title": "Sérigraphie quadrichromique",
+      "category": "textile",
+      "client": "Marque de mode",
+      "description": "Impression textile résistante haute qualité",
+      "image": "assets/images/products/seri.png",
       "active": true,
-      "sortOrder": 110
+      "sortOrder": 270
     },
     {
-      "id": "chevalets-table",
-      "title": "Chevalets de table",
-      "category": "imprimerie",
-      "client": "Restaurant",
-      "description": "100 ex. plastifiés double face",
-      "image": "assets/images/products/chevalet.jpg",
+      "id": "mugs-corpo",
+      "title": "Mugs publicitaires",
+      "category": "objets-pub",
+      "client": "Startup tech",
+      "description": "Mugs céramique 350ml sublimation quadri",
+      "image": "assets/images/products/mug.png",
       "active": true,
-      "sortOrder": 120
+      "sortOrder": 280
+    },
+    {
+      "id": "casquettes-brodee",
+      "title": "Casquettes brodées",
+      "category": "objets-pub",
+      "client": "Équipe sport",
+      "description": "Broderie logo sur casquettes coton",
+      "image": "assets/images/products/casquette.png",
+      "active": true,
+      "sortOrder": 290
+    },
+    {
+      "id": "tour-cou",
+      "title": "Tours de cou événement",
+      "category": "objets-pub",
+      "client": "Salon professionnel",
+      "description": "Cordons badges avec logo tissé",
+      "image": "assets/images/products/corde.png",
+      "active": true,
+      "sortOrder": 300,
+      "size": "tall"
+    },
+    {
+      "id": "sacs-tote",
+      "title": "Sacs publicitaires (tote bags)",
+      "category": "objets-pub",
+      "client": "ONG",
+      "description": "Sacs coton bio sérigraphiés",
+      "image": "assets/images/products/sac.png",
+      "active": true,
+      "sortOrder": 310
+    },
+    {
+      "id": "stylos-marques",
+      "title": "Stylos personnalisés",
+      "category": "objets-pub",
+      "client": "Salon B2B",
+      "description": "Stylos gomme marquage laser",
+      "image": "assets/images/products/stylos.png",
+      "active": true,
+      "sortOrder": 320
+    },
+    {
+      "id": "parapluies-corpo",
+      "title": "Parapluies corporate",
+      "category": "objets-pub",
+      "client": "Banque",
+      "description": "Parapluies automatiques marqués",
+      "image": "assets/images/products/parapluie.png",
+      "active": true,
+      "sortOrder": 330
+    },
+    {
+      "id": "porte-cles-pub",
+      "title": "Porte-clés publicitaires",
+      "category": "objets-pub",
+      "client": "Cabinet dentaire",
+      "description": "Porte-clés métal gravure laser",
+      "image": "assets/images/products/porte cle.png",
+      "active": true,
+      "sortOrder": 340
     }
   ]
 }
